@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,7 +51,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <li>
      * <p>
      * <code>FilterPolicy</code> – The filter policy JSON that is assigned to
-     * the subscription.
+     * the subscription. For more information, see <a href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     * >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
      * </li>
      * <li>
@@ -92,6 +95,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <p>
      * <code>TopicArn</code> – The topic ARN that the subscription is associated
      * with.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The following attribute applies only to Amazon Kinesis Data Firehose
+     * delivery stream subscriptions:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>SubscriptionRoleArn</code> – The ARN of the IAM role that has the
+     * following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Permission to write to the Kinesis Data Firehose delivery stream
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SNS listed as a trusted entity
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Specifying a valid ARN for this attribute is required for Kinesis Data
+     * Firehose delivery stream subscriptions. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     * >Fanout to Kinesis Data Firehose delivery streams</a> in the <i>Amazon
+     * SNS Developer Guide</i>.
      * </p>
      * </li>
      * </ul>
@@ -126,7 +161,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <li>
      * <p>
      * <code>FilterPolicy</code> – The filter policy JSON that is assigned to
-     * the subscription.
+     * the subscription. For more information, see <a href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     * >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
      * </li>
      * <li>
@@ -170,6 +208,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * The following attribute applies only to Amazon Kinesis Data Firehose
+     * delivery stream subscriptions:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>SubscriptionRoleArn</code> – The ARN of the IAM role that has the
+     * following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Permission to write to the Kinesis Data Firehose delivery stream
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SNS listed as a trusted entity
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Specifying a valid ARN for this attribute is required for Kinesis Data
+     * Firehose delivery stream subscriptions. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     * >Fanout to Kinesis Data Firehose delivery streams</a> in the <i>Amazon
+     * SNS Developer Guide</i>.
+     * </p>
+     * </li>
+     * </ul>
      *
      * @return <p>
      *         A map of the subscription's attributes. Attributes in this map
@@ -198,7 +268,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *         <li>
      *         <p>
      *         <code>FilterPolicy</code> – The filter policy JSON that is
-     *         assigned to the subscription.
+     *         assigned to the subscription. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     *         >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     *         Guide</i>.
      *         </p>
      *         </li>
      *         <li>
@@ -246,6 +319,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *         </p>
      *         </li>
      *         </ul>
+     *         <p>
+     *         The following attribute applies only to Amazon Kinesis Data
+     *         Firehose delivery stream subscriptions:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>SubscriptionRoleArn</code> – The ARN of the IAM role that
+     *         has the following:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         Permission to write to the Kinesis Data Firehose delivery stream
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon SNS listed as a trusted entity
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         Specifying a valid ARN for this attribute is required for Kinesis
+     *         Data Firehose delivery stream subscriptions. For more
+     *         information, see <a href=
+     *         "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     *         >Fanout to Kinesis Data Firehose delivery streams</a> in the
+     *         <i>Amazon SNS Developer Guide</i>.
+     *         </p>
+     *         </li>
+     *         </ul>
      */
     public java.util.Map<String, String> getAttributes() {
         return attributes;
@@ -279,7 +384,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <li>
      * <p>
      * <code>FilterPolicy</code> – The filter policy JSON that is assigned to
-     * the subscription.
+     * the subscription. For more information, see <a href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     * >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
      * </li>
      * <li>
@@ -323,6 +431,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * The following attribute applies only to Amazon Kinesis Data Firehose
+     * delivery stream subscriptions:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>SubscriptionRoleArn</code> – The ARN of the IAM role that has the
+     * following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Permission to write to the Kinesis Data Firehose delivery stream
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SNS listed as a trusted entity
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Specifying a valid ARN for this attribute is required for Kinesis Data
+     * Firehose delivery stream subscriptions. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     * >Fanout to Kinesis Data Firehose delivery streams</a> in the <i>Amazon
+     * SNS Developer Guide</i>.
+     * </p>
+     * </li>
+     * </ul>
      *
      * @param attributes <p>
      *            A map of the subscription's attributes. Attributes in this map
@@ -351,7 +491,11 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *            <li>
      *            <p>
      *            <code>FilterPolicy</code> – The filter policy JSON that is
-     *            assigned to the subscription.
+     *            assigned to the subscription. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     *            >Amazon SNS Message Filtering</a> in the <i>Amazon SNS
+     *            Developer Guide</i>.
      *            </p>
      *            </li>
      *            <li>
@@ -399,6 +543,39 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            The following attribute applies only to Amazon Kinesis Data
+     *            Firehose delivery stream subscriptions:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>SubscriptionRoleArn</code> – The ARN of the IAM role
+     *            that has the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Permission to write to the Kinesis Data Firehose delivery
+     *            stream
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon SNS listed as a trusted entity
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Specifying a valid ARN for this attribute is required for
+     *            Kinesis Data Firehose delivery stream subscriptions. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     *            >Fanout to Kinesis Data Firehose delivery streams</a> in the
+     *            <i>Amazon SNS Developer Guide</i>.
+     *            </p>
+     *            </li>
+     *            </ul>
      */
     public void setAttributes(java.util.Map<String, String> attributes) {
         this.attributes = attributes;
@@ -432,7 +609,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <li>
      * <p>
      * <code>FilterPolicy</code> – The filter policy JSON that is assigned to
-     * the subscription.
+     * the subscription. For more information, see <a href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     * >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
      * </li>
      * <li>
@@ -477,6 +657,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * </li>
      * </ul>
      * <p>
+     * The following attribute applies only to Amazon Kinesis Data Firehose
+     * delivery stream subscriptions:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>SubscriptionRoleArn</code> – The ARN of the IAM role that has the
+     * following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Permission to write to the Kinesis Data Firehose delivery stream
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SNS listed as a trusted entity
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Specifying a valid ARN for this attribute is required for Kinesis Data
+     * Firehose delivery stream subscriptions. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     * >Fanout to Kinesis Data Firehose delivery streams</a> in the <i>Amazon
+     * SNS Developer Guide</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
@@ -507,7 +719,11 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *            <li>
      *            <p>
      *            <code>FilterPolicy</code> – The filter policy JSON that is
-     *            assigned to the subscription.
+     *            assigned to the subscription. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     *            >Amazon SNS Message Filtering</a> in the <i>Amazon SNS
+     *            Developer Guide</i>.
      *            </p>
      *            </li>
      *            <li>
@@ -552,6 +768,39 @@ public class GetSubscriptionAttributesResult implements Serializable {
      *            <p>
      *            <code>TopicArn</code> – The topic ARN that the subscription is
      *            associated with.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            The following attribute applies only to Amazon Kinesis Data
+     *            Firehose delivery stream subscriptions:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>SubscriptionRoleArn</code> – The ARN of the IAM role
+     *            that has the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Permission to write to the Kinesis Data Firehose delivery
+     *            stream
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon SNS listed as a trusted entity
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Specifying a valid ARN for this attribute is required for
+     *            Kinesis Data Firehose delivery stream subscriptions. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     *            >Fanout to Kinesis Data Firehose delivery streams</a> in the
+     *            <i>Amazon SNS Developer Guide</i>.
      *            </p>
      *            </li>
      *            </ul>
@@ -591,7 +840,10 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <li>
      * <p>
      * <code>FilterPolicy</code> – The filter policy JSON that is assigned to
-     * the subscription.
+     * the subscription. For more information, see <a href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+     * >Amazon SNS Message Filtering</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
      * </li>
      * <li>
@@ -632,6 +884,38 @@ public class GetSubscriptionAttributesResult implements Serializable {
      * <p>
      * <code>TopicArn</code> – The topic ARN that the subscription is associated
      * with.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The following attribute applies only to Amazon Kinesis Data Firehose
+     * delivery stream subscriptions:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>SubscriptionRoleArn</code> – The ARN of the IAM role that has the
+     * following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Permission to write to the Kinesis Data Firehose delivery stream
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SNS listed as a trusted entity
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Specifying a valid ARN for this attribute is required for Kinesis Data
+     * Firehose delivery stream subscriptions. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/sns/latest/dg/sns-kinesis-subscriber.html"
+     * >Fanout to Kinesis Data Firehose delivery streams</a> in the <i>Amazon
+     * SNS Developer Guide</i>.
      * </p>
      * </li>
      * </ul>

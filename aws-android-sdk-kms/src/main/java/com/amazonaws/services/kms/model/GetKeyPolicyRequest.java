@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,19 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets a key policy attached to the specified customer master key (CMK). You
- * cannot perform this operation on a CMK in a different AWS account.
+ * Gets a key policy attached to the specified customer master key (CMK).
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a CMK in a
+ * different AWS account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:GetKeyPolicy</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations</b>: <a>PutKeyPolicy</a>
  * </p>
  */
 public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Serializable {

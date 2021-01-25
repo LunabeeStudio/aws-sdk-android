@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ public class ListIdentitiesResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - <br/>
+     * <b>Length: </b>1 - 65535<br/>
      * <b>Pattern: </b>[\S]+<br/>
      */
     private String nextToken;
@@ -192,7 +192,7 @@ public class ListIdentitiesResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - <br/>
+     * <b>Length: </b>1 - 65535<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @return <p>
@@ -209,7 +209,7 @@ public class ListIdentitiesResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - <br/>
+     * <b>Length: </b>1 - 65535<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @param nextToken <p>
@@ -229,7 +229,7 @@ public class ListIdentitiesResult implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - <br/>
+     * <b>Length: </b>1 - 65535<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @param nextToken <p>

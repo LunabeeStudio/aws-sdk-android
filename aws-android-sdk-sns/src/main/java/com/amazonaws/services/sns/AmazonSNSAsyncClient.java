@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,11 +38,17 @@ import com.amazonaws.services.sns.model.*;
  * you to build distributed web-enabled applications. Applications can use
  * Amazon SNS to easily push real-time notification messages to interested
  * subscribers over multiple delivery protocols. For more information about this
- * product see <a
- * href="http://aws.amazon.com/sns/">https://aws.amazon.com/sns</a>. For
- * detailed information about Amazon SNS features and their associated API
- * calls, see the <a href="https://docs.aws.amazon.com/sns/latest/dg/">Amazon
- * SNS Developer Guide</a>.
+ * product see the <a href="http://aws.amazon.com/sns/">Amazon SNS product
+ * page</a>. For detailed information about Amazon SNS features and their
+ * associated API calls, see the <a
+ * href="https://docs.aws.amazon.com/sns/latest/dg/">Amazon SNS Developer
+ * Guide</a>.
+ * </p>
+ * <p>
+ * For information on the permissions you need to use this API, see <a href=
+ * "https://docs.aws.amazon.com/sns/latest/dg/sns-authentication-and-access-control.html"
+ * >Identity and access management in Amazon SNS</a> in the <i>Amazon SNS
+ * Developer Guide.</i>
  * </p>
  * <p>
  * We also provide SDKs that enable you to access Amazon SNS from your preferred
@@ -523,26 +529,62 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates a platform application object for one of the supported push
-     * notification services, such as APNS and FCM, to which devices and mobile
-     * apps may register. You must specify PlatformPrincipal and
-     * PlatformCredential attributes when using the
-     * <code>CreatePlatformApplication</code> action. The PlatformPrincipal is
-     * received from the notification service. For APNS/APNS_SANDBOX,
-     * PlatformPrincipal is "SSL certificate". For FCM, PlatformPrincipal is not
-     * applicable. For ADM, PlatformPrincipal is "client id". The
-     * PlatformCredential is also received from the notification service. For
-     * WNS, PlatformPrincipal is "Package Security Identifier". For MPNS,
-     * PlatformPrincipal is "TLS certificate". For Baidu, PlatformPrincipal is
-     * "API key".
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging),
+     * to which devices and mobile apps may register. You must specify
+     * <code>PlatformPrincipal</code> and <code>PlatformCredential</code>
+     * attributes when using the <code>CreatePlatformApplication</code> action.
      * </p>
      * <p>
-     * For APNS/APNS_SANDBOX, PlatformCredential is "private key". For FCM,
-     * PlatformCredential is "API key". For ADM, PlatformCredential is
-     * "client secret". For WNS, PlatformCredential is "secret key". For MPNS,
-     * PlatformCredential is "private key". For Baidu, PlatformCredential is
-     * "secret key". The PlatformApplicationArn that is returned when using
-     * <code>CreatePlatformApplication</code> is then used as an attribute for
-     * the <code>CreatePlatformEndpoint</code> action.
+     * <code>PlatformPrincipal</code> and <code>PlatformCredential</code> are
+     * received from the notification service.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>ADM</code>, <code>PlatformPrincipal</code> is
+     * <code>client id</code> and <code>PlatformCredential</code> is
+     * <code>client secret</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>Baidu</code>, <code>PlatformPrincipal</code> is
+     * <code>API key</code> and <code>PlatformCredential</code> is
+     * <code>secret key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>APNS</code> and <code>APNS_SANDBOX</code>,
+     * <code>PlatformPrincipal</code> is <code>SSL certificate</code> and
+     * <code>PlatformCredential</code> is <code>private key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>GCM</code> (Firebase Cloud Messaging), there is no
+     * <code>PlatformPrincipal</code> and the <code>PlatformCredential</code> is
+     * <code>API key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>MPNS</code>, <code>PlatformPrincipal</code> is
+     * <code>TLS certificate</code> and <code>PlatformCredential</code> is
+     * <code>private key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>WNS</code>, <code>PlatformPrincipal</code> is
+     * <code>Package Security Identifier</code> and
+     * <code>PlatformCredential</code> is <code>secret key</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * You can use the returned <code>PlatformApplicationArn</code> as an
+     * attribute for the <code>CreatePlatformEndpoint</code> action.
      * </p>
      * 
      * @param createPlatformApplicationRequest <p>
@@ -575,26 +617,62 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates a platform application object for one of the supported push
-     * notification services, such as APNS and FCM, to which devices and mobile
-     * apps may register. You must specify PlatformPrincipal and
-     * PlatformCredential attributes when using the
-     * <code>CreatePlatformApplication</code> action. The PlatformPrincipal is
-     * received from the notification service. For APNS/APNS_SANDBOX,
-     * PlatformPrincipal is "SSL certificate". For FCM, PlatformPrincipal is not
-     * applicable. For ADM, PlatformPrincipal is "client id". The
-     * PlatformCredential is also received from the notification service. For
-     * WNS, PlatformPrincipal is "Package Security Identifier". For MPNS,
-     * PlatformPrincipal is "TLS certificate". For Baidu, PlatformPrincipal is
-     * "API key".
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging),
+     * to which devices and mobile apps may register. You must specify
+     * <code>PlatformPrincipal</code> and <code>PlatformCredential</code>
+     * attributes when using the <code>CreatePlatformApplication</code> action.
      * </p>
      * <p>
-     * For APNS/APNS_SANDBOX, PlatformCredential is "private key". For FCM,
-     * PlatformCredential is "API key". For ADM, PlatformCredential is
-     * "client secret". For WNS, PlatformCredential is "secret key". For MPNS,
-     * PlatformCredential is "private key". For Baidu, PlatformCredential is
-     * "secret key". The PlatformApplicationArn that is returned when using
-     * <code>CreatePlatformApplication</code> is then used as an attribute for
-     * the <code>CreatePlatformEndpoint</code> action.
+     * <code>PlatformPrincipal</code> and <code>PlatformCredential</code> are
+     * received from the notification service.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>ADM</code>, <code>PlatformPrincipal</code> is
+     * <code>client id</code> and <code>PlatformCredential</code> is
+     * <code>client secret</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>Baidu</code>, <code>PlatformPrincipal</code> is
+     * <code>API key</code> and <code>PlatformCredential</code> is
+     * <code>secret key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>APNS</code> and <code>APNS_SANDBOX</code>,
+     * <code>PlatformPrincipal</code> is <code>SSL certificate</code> and
+     * <code>PlatformCredential</code> is <code>private key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>GCM</code> (Firebase Cloud Messaging), there is no
+     * <code>PlatformPrincipal</code> and the <code>PlatformCredential</code> is
+     * <code>API key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>MPNS</code>, <code>PlatformPrincipal</code> is
+     * <code>TLS certificate</code> and <code>PlatformCredential</code> is
+     * <code>private key</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>WNS</code>, <code>PlatformPrincipal</code> is
+     * <code>Package Security Identifier</code> and
+     * <code>PlatformCredential</code> is <code>secret key</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * You can use the returned <code>PlatformApplicationArn</code> as an
+     * attribute for the <code>CreatePlatformEndpoint</code> action.
      * </p>
      * 
      * @param createPlatformApplicationRequest <p>
@@ -636,12 +714,11 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates an endpoint for a device and mobile app on one of the supported
-     * push notification services, such as FCM and APNS.
-     * <code>CreatePlatformEndpoint</code> requires the PlatformApplicationArn
-     * that is returned from <code>CreatePlatformApplication</code>. The
-     * EndpointArn that is returned when using
-     * <code>CreatePlatformEndpoint</code> can then be used by the
-     * <code>Publish</code> action to send a message to a mobile app or by the
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. <code>CreatePlatformEndpoint</code> requires the
+     * <code>PlatformApplicationArn</code> that is returned from
+     * <code>CreatePlatformApplication</code>. You can use the returned
+     * <code>EndpointArn</code> to send a message to a mobile app or by the
      * <code>Subscribe</code> action for subscription to a topic. The
      * <code>CreatePlatformEndpoint</code> action is idempotent, so if the
      * requester already owns an endpoint with the same device token and
@@ -689,12 +766,11 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates an endpoint for a device and mobile app on one of the supported
-     * push notification services, such as FCM and APNS.
-     * <code>CreatePlatformEndpoint</code> requires the PlatformApplicationArn
-     * that is returned from <code>CreatePlatformApplication</code>. The
-     * EndpointArn that is returned when using
-     * <code>CreatePlatformEndpoint</code> can then be used by the
-     * <code>Publish</code> action to send a message to a mobile app or by the
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. <code>CreatePlatformEndpoint</code> requires the
+     * <code>PlatformApplicationArn</code> that is returned from
+     * <code>CreatePlatformApplication</code>. You can use the returned
+     * <code>EndpointArn</code> to send a message to a mobile app or by the
      * <code>Subscribe</code> action for subscription to a topic. The
      * <code>CreatePlatformEndpoint</code> action is idempotent, so if the
      * requester already owns an endpoint with the same device token and
@@ -751,7 +827,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates a topic to which notifications can be published. Users can create
-     * at most 100,000 topics. For more information, see <a
+     * at most 100,000 standard topics (at most 1,000 FIFO topics). For more
+     * information, see <a
      * href="http://aws.amazon.com/sns/">https://aws.amazon.com/sns</a>. This
      * action is idempotent, so if the requester already owns a topic with the
      * specified name, that topic's ARN is returned without creating a new
@@ -793,7 +870,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Creates a topic to which notifications can be published. Users can create
-     * at most 100,000 topics. For more information, see <a
+     * at most 100,000 standard topics (at most 1,000 FIFO topics). For more
+     * information, see <a
      * href="http://aws.amazon.com/sns/">https://aws.amazon.com/sns</a>. This
      * action is idempotent, so if the requester already owns a topic with the
      * specified name, that topic's ARN is returned without creating a new
@@ -930,7 +1008,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Deletes a platform application object for one of the supported push
-     * notification services, such as APNS and FCM. For more information, see <a
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging).
+     * For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -966,7 +1045,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Deletes a platform application object for one of the supported push
-     * notification services, such as APNS and FCM. For more information, see <a
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging).
+     * For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1092,8 +1172,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Retrieves the endpoint attributes for a device on one of the supported
-     * push notification services, such as FCM and APNS. For more information,
-     * see <a
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1129,8 +1209,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Retrieves the endpoint attributes for a device on one of the supported
-     * push notification services, such as FCM and APNS. For more information,
-     * see <a
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1175,8 +1255,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Retrieves the attributes of the platform application object for the
-     * supported push notification services, such as APNS and FCM. For more
-     * information, see <a
+     * supported push notification services, such as APNS and GCM (Firebase
+     * Cloud Messaging). For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1212,8 +1292,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Retrieves the attributes of the platform application object for the
-     * supported push notification services, such as APNS and FCM. For more
-     * information, see <a
+     * supported push notification services, such as APNS and GCM (Firebase
+     * Cloud Messaging). For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1493,11 +1573,11 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Lists the endpoints and endpoint attributes for devices in a supported
-     * push notification service, such as FCM and APNS. The results for
-     * <code>ListEndpointsByPlatformApplication</code> are paginated and return
-     * a limited list of endpoints, up to 100. If additional records are
-     * available after the first page results, then a NextToken string will be
-     * returned. To receive the next page, you call
+     * push notification service, such as GCM (Firebase Cloud Messaging) and
+     * APNS. The results for <code>ListEndpointsByPlatformApplication</code> are
+     * paginated and return a limited list of endpoints, up to 100. If
+     * additional records are available after the first page results, then a
+     * NextToken string will be returned. To receive the next page, you call
      * <code>ListEndpointsByPlatformApplication</code> again using the NextToken
      * string received from the previous call. When there are no more records to
      * return, NextToken will be null. For more information, see <a
@@ -1539,11 +1619,11 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Lists the endpoints and endpoint attributes for devices in a supported
-     * push notification service, such as FCM and APNS. The results for
-     * <code>ListEndpointsByPlatformApplication</code> are paginated and return
-     * a limited list of endpoints, up to 100. If additional records are
-     * available after the first page results, then a NextToken string will be
-     * returned. To receive the next page, you call
+     * push notification service, such as GCM (Firebase Cloud Messaging) and
+     * APNS. The results for <code>ListEndpointsByPlatformApplication</code> are
+     * paginated and return a limited list of endpoints, up to 100. If
+     * additional records are available after the first page results, then a
+     * NextToken string will be returned. To receive the next page, you call
      * <code>ListEndpointsByPlatformApplication</code> again using the NextToken
      * string received from the previous call. When there are no more records to
      * return, NextToken will be null. For more information, see <a
@@ -1691,14 +1771,14 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Lists the platform application objects for the supported push
-     * notification services, such as APNS and FCM. The results for
-     * <code>ListPlatformApplications</code> are paginated and return a limited
-     * list of applications, up to 100. If additional records are available
-     * after the first page results, then a NextToken string will be returned.
-     * To receive the next page, you call <code>ListPlatformApplications</code>
-     * using the NextToken string received from the previous call. When there
-     * are no more records to return, NextToken will be null. For more
-     * information, see <a
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging).
+     * The results for <code>ListPlatformApplications</code> are paginated and
+     * return a limited list of applications, up to 100. If additional records
+     * are available after the first page results, then a NextToken string will
+     * be returned. To receive the next page, you call
+     * <code>ListPlatformApplications</code> using the NextToken string received
+     * from the previous call. When there are no more records to return,
+     * <code>NextToken</code> will be null. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -1736,14 +1816,14 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Lists the platform application objects for the supported push
-     * notification services, such as APNS and FCM. The results for
-     * <code>ListPlatformApplications</code> are paginated and return a limited
-     * list of applications, up to 100. If additional records are available
-     * after the first page results, then a NextToken string will be returned.
-     * To receive the next page, you call <code>ListPlatformApplications</code>
-     * using the NextToken string received from the previous call. When there
-     * are no more records to return, NextToken will be null. For more
-     * information, see <a
+     * notification services, such as APNS and GCM (Firebase Cloud Messaging).
+     * The results for <code>ListPlatformApplications</code> are paginated and
+     * return a limited list of applications, up to 100. If additional records
+     * are available after the first page results, then a NextToken string will
+     * be returned. To receive the next page, you call
+     * <code>ListPlatformApplications</code> using the NextToken string received
+     * from the previous call. When there are no more records to return,
+     * <code>NextToken</code> will be null. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -2208,8 +2288,9 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
 
     /**
      * <p>
-     * Sends a message to an Amazon SNS topic or sends a text message (SMS
-     * message) directly to a phone number.
+     * Sends a message to an Amazon SNS topic, a text message (SMS message)
+     * directly to a phone number, or a message to a mobile platform endpoint
+     * (when you specify the <code>TargetArn</code>).
      * </p>
      * <p>
      * If you send a message to a topic, Amazon SNS delivers the message to each
@@ -2233,6 +2314,12 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
      * >Send Custom Platform-Specific Payloads in Messages to Mobile
      * Devices</a>.
      * </p>
+     * <important>
+     * <p>
+     * You can publish messages only to topics and endpoints in the same AWS
+     * Region.
+     * </p>
+     * </important>
      * 
      * @param publishRequest <p>
      *            Input for Publish action.
@@ -2273,8 +2360,9 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
 
     /**
      * <p>
-     * Sends a message to an Amazon SNS topic or sends a text message (SMS
-     * message) directly to a phone number.
+     * Sends a message to an Amazon SNS topic, a text message (SMS message)
+     * directly to a phone number, or a message to a mobile platform endpoint
+     * (when you specify the <code>TargetArn</code>).
      * </p>
      * <p>
      * If you send a message to a topic, Amazon SNS delivers the message to each
@@ -2298,6 +2386,12 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
      * >Send Custom Platform-Specific Payloads in Messages to Mobile
      * Devices</a>.
      * </p>
+     * <important>
+     * <p>
+     * You can publish messages only to topics and endpoints in the same AWS
+     * Region.
+     * </p>
+     * </important>
      * 
      * @param publishRequest <p>
      *            Input for Publish action.
@@ -2423,8 +2517,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Sets the attributes for an endpoint for a device on one of the supported
-     * push notification services, such as FCM and APNS. For more information,
-     * see <a
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -2461,8 +2555,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Sets the attributes for an endpoint for a device on one of the supported
-     * push notification services, such as FCM and APNS. For more information,
-     * see <a
+     * push notification services, such as GCM (Firebase Cloud Messaging) and
+     * APNS. For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>.
      * </p>
@@ -2507,8 +2601,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Sets the attributes of the platform application object for the supported
-     * push notification services, such as APNS and FCM. For more information,
-     * see <a
+     * push notification services, such as APNS and GCM (Firebase Cloud
+     * Messaging). For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>. For information on configuring
      * attributes for message delivery status, see <a
@@ -2548,8 +2642,8 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
     /**
      * <p>
      * Sets the attributes of the platform application object for the supported
-     * push notification services, such as APNS and FCM. For more information,
-     * see <a
+     * push notification services, such as APNS and GCM (Firebase Cloud
+     * Messaging). For more information, see <a
      * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
      * Amazon SNS Mobile Push Notifications</a>. For information on configuring
      * attributes for message delivery status, see <a
@@ -2605,8 +2699,16 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
      * <code>MessageAttributes.entry.N</code> parameter. For more information,
      * see <a href=
      * "https://docs.aws.amazon.com/sns/latest/dg/sms_publish-to-phone.html"
-     * >Sending an SMS Message</a> in the <i>Amazon SNS Developer Guide</i>.
+     * >Publishing to a mobile phone</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
+     * <note>
+     * <p>
+     * To use this operation, you must grant the Amazon SNS service principal (
+     * <code>sns.amazonaws.com</code>) permission to perform the
+     * <code>s3:ListBucket</code> action.
+     * </p>
+     * </note>
      * 
      * @param setSMSAttributesRequest <p>
      *            The input for the SetSMSAttributes action.
@@ -2647,8 +2749,16 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
      * <code>MessageAttributes.entry.N</code> parameter. For more information,
      * see <a href=
      * "https://docs.aws.amazon.com/sns/latest/dg/sms_publish-to-phone.html"
-     * >Sending an SMS Message</a> in the <i>Amazon SNS Developer Guide</i>.
+     * >Publishing to a mobile phone</a> in the <i>Amazon SNS Developer
+     * Guide</i>.
      * </p>
+     * <note>
+     * <p>
+     * To use this operation, you must grant the Amazon SNS service principal (
+     * <code>sns.amazonaws.com</code>) permission to perform the
+     * <code>s3:ListBucket</code> action.
+     * </p>
+     * </note>
      * 
      * @param setSMSAttributesRequest <p>
      *            The input for the SetSMSAttributes action.
@@ -2847,10 +2957,14 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
 
     /**
      * <p>
-     * Prepares to subscribe an endpoint by sending the endpoint a confirmation
-     * message. To actually create a subscription, the endpoint owner must call
-     * the <code>ConfirmSubscription</code> action with the token from the
-     * confirmation message. Confirmation tokens are valid for three days.
+     * Subscribes an endpoint to an Amazon SNS topic. If the endpoint type is
+     * HTTP/S or email, or if the endpoint and the topic are not in the same AWS
+     * account, the endpoint owner must run the <code>ConfirmSubscription</code>
+     * action to confirm the subscription.
+     * </p>
+     * <p>
+     * You call the <code>ConfirmSubscription</code> action with the token from
+     * the subscription response. Confirmation tokens are valid for three days.
      * </p>
      * <p>
      * This action is throttled at 100 transactions per second (TPS).
@@ -2888,10 +3002,14 @@ public class AmazonSNSAsyncClient extends AmazonSNSClient implements AmazonSNSAs
 
     /**
      * <p>
-     * Prepares to subscribe an endpoint by sending the endpoint a confirmation
-     * message. To actually create a subscription, the endpoint owner must call
-     * the <code>ConfirmSubscription</code> action with the token from the
-     * confirmation message. Confirmation tokens are valid for three days.
+     * Subscribes an endpoint to an Amazon SNS topic. If the endpoint type is
+     * HTTP/S or email, or if the endpoint and the topic are not in the same AWS
+     * account, the endpoint owner must run the <code>ConfirmSubscription</code>
+     * action to confirm the subscription.
+     * </p>
+     * <p>
+     * You call the <code>ConfirmSubscription</code> action with the token from
+     * the subscription response. Confirmation tokens are valid for three days.
      * </p>
      * <p>
      * This action is throttled at 100 transactions per second (TPS).

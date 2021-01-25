@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -49,6 +50,13 @@ class ViolationEventJsonMarshaller {
             MetricValue metricValue = violationEvent.getMetricValue();
             jsonWriter.name("metricValue");
             MetricValueJsonMarshaller.getInstance().marshall(metricValue, jsonWriter);
+        }
+        if (violationEvent.getViolationEventAdditionalInfo() != null) {
+            ViolationEventAdditionalInfo violationEventAdditionalInfo = violationEvent
+                    .getViolationEventAdditionalInfo();
+            jsonWriter.name("violationEventAdditionalInfo");
+            ViolationEventAdditionalInfoJsonMarshaller.getInstance().marshall(
+                    violationEventAdditionalInfo, jsonWriter);
         }
         if (violationEvent.getViolationEventType() != null) {
             String violationEventType = violationEvent.getViolationEventType();

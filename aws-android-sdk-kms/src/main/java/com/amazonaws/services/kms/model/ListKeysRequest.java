@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,40 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Gets a list of all customer master keys (CMKs) in the caller's AWS account
  * and Region.
  * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a CMK in a
+ * different AWS account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:ListKeys</a> (IAM policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>CreateKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListAliases</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListResourceTags</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 public class ListKeysRequest extends AmazonWebServiceRequest implements Serializable {
     /**

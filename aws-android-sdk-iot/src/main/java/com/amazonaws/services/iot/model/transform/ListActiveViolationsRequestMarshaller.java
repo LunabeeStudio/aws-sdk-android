@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -59,6 +61,14 @@ public class ListActiveViolationsRequestMarshaller implements
         if (listActiveViolationsRequest.getSecurityProfileName() != null) {
             request.addParameter("securityProfileName",
                     StringUtils.fromString(listActiveViolationsRequest.getSecurityProfileName()));
+        }
+        if (listActiveViolationsRequest.getBehaviorCriteriaType() != null) {
+            request.addParameter("behaviorCriteriaType",
+                    StringUtils.fromString(listActiveViolationsRequest.getBehaviorCriteriaType()));
+        }
+        if (listActiveViolationsRequest.getListSuppressedAlerts() != null) {
+            request.addParameter("listSuppressedAlerts",
+                    StringUtils.fromBoolean(listActiveViolationsRequest.getListSuppressedAlerts()));
         }
         if (listActiveViolationsRequest.getNextToken() != null) {
             request.addParameter("nextToken",

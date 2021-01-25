@@ -21,16 +21,18 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Start a batch job to transcribe medical speech to text.
+ * Starts a batch job to transcribe medical speech to text.
  * </p>
  */
 public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest implements
         Serializable {
     /**
      * <p>
-     * The name of the medical transcription job. You can't use the strings "."
-     * or ".." by themselves as the job name. The name must also be unique
-     * within an AWS account.
+     * The name of the medical transcription job. You can't use the strings "
+     * <code>.</code>" or "<code>..</code>" by themselves as the job name. The
+     * name must also be unique within an AWS account. If you try to create a
+     * medical transcription job with the same name as a previous medical
+     * transcription job, you get a <code>ConflictException</code> error.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -48,10 +50,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      */
     private String languageCode;
 
@@ -78,7 +80,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      */
     private String mediaFormat;
 
@@ -117,6 +119,37 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * <b>Pattern: </b>[a-z0-9][\.\-a-z0-9]{1,61}[a-z0-9]<br/>
      */
     private String outputBucketName;
+
+    /**
+     * <p>
+     * You can specify a location in an Amazon S3 bucket to store the output of
+     * your medical transcription job.
+     * </p>
+     * <p>
+     * If you don't specify an output key, Amazon Transcribe Medical stores the
+     * output of your transcription job in the Amazon S3 bucket you specified.
+     * By default, the object key is "your-transcription-job-name.json".
+     * </p>
+     * <p>
+     * You can use output keys to specify the Amazon S3 prefix and file name of
+     * the transcription output. For example, specifying the Amazon S3 prefix,
+     * "folder1/folder2/", as an output key would lead to the output being
+     * stored as "folder1/folder2/your-transcription-job-name.json". If you
+     * specify "my-other-job-name.json" as the output key, the object key is
+     * changed to "my-other-job-name.json". You can use an output key to change
+     * both the prefix and the file name, for example
+     * "folder/my-other-job-name.json".
+     * </p>
+     * <p>
+     * If you specify an output key, you must also specify an S3 bucket in the
+     * <code>OutputBucketName</code> parameter.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9-_.!*'()/]{1,1024}$<br/>
+     */
+    private String outputKey;
 
     /**
      * <p>
@@ -194,10 +227,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -207,9 +240,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The name of the medical transcription job. You can't use the strings "."
-     * or ".." by themselves as the job name. The name must also be unique
-     * within an AWS account.
+     * The name of the medical transcription job. You can't use the strings "
+     * <code>.</code>" or "<code>..</code>" by themselves as the job name. The
+     * name must also be unique within an AWS account. If you try to create a
+     * medical transcription job with the same name as a previous medical
+     * transcription job, you get a <code>ConflictException</code> error.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -218,8 +253,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      *
      * @return <p>
      *         The name of the medical transcription job. You can't use the
-     *         strings "." or ".." by themselves as the job name. The name must
-     *         also be unique within an AWS account.
+     *         strings "<code>.</code>" or "<code>..</code>" by themselves as
+     *         the job name. The name must also be unique within an AWS account.
+     *         If you try to create a medical transcription job with the same
+     *         name as a previous medical transcription job, you get a
+     *         <code>ConflictException</code> error.
      *         </p>
      */
     public String getMedicalTranscriptionJobName() {
@@ -228,9 +266,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The name of the medical transcription job. You can't use the strings "."
-     * or ".." by themselves as the job name. The name must also be unique
-     * within an AWS account.
+     * The name of the medical transcription job. You can't use the strings "
+     * <code>.</code>" or "<code>..</code>" by themselves as the job name. The
+     * name must also be unique within an AWS account. If you try to create a
+     * medical transcription job with the same name as a previous medical
+     * transcription job, you get a <code>ConflictException</code> error.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -239,8 +279,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      *
      * @param medicalTranscriptionJobName <p>
      *            The name of the medical transcription job. You can't use the
-     *            strings "." or ".." by themselves as the job name. The name
-     *            must also be unique within an AWS account.
+     *            strings "<code>.</code>" or "<code>..</code>" by themselves as
+     *            the job name. The name must also be unique within an AWS
+     *            account. If you try to create a medical transcription job with
+     *            the same name as a previous medical transcription job, you get
+     *            a <code>ConflictException</code> error.
      *            </p>
      */
     public void setMedicalTranscriptionJobName(String medicalTranscriptionJobName) {
@@ -249,9 +292,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The name of the medical transcription job. You can't use the strings "."
-     * or ".." by themselves as the job name. The name must also be unique
-     * within an AWS account.
+     * The name of the medical transcription job. You can't use the strings "
+     * <code>.</code>" or "<code>..</code>" by themselves as the job name. The
+     * name must also be unique within an AWS account. If you try to create a
+     * medical transcription job with the same name as a previous medical
+     * transcription job, you get a <code>ConflictException</code> error.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -263,8 +308,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      *
      * @param medicalTranscriptionJobName <p>
      *            The name of the medical transcription job. You can't use the
-     *            strings "." or ".." by themselves as the job name. The name
-     *            must also be unique within an AWS account.
+     *            strings "<code>.</code>" or "<code>..</code>" by themselves as
+     *            the job name. The name must also be unique within an AWS
+     *            account. If you try to create a medical transcription job with
+     *            the same name as a previous medical transcription job, you get
+     *            a <code>ConflictException</code> error.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -284,10 +332,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @return <p>
      *         The language code for the language spoken in the input media
@@ -310,10 +358,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the language spoken in the input media
@@ -339,10 +387,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the language spoken in the input media
@@ -368,10 +416,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the language spoken in the input media
@@ -397,10 +445,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the language spoken in the input media
@@ -525,7 +573,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      *
      * @return <p>
      *         The audio format of the input media file.
@@ -542,7 +590,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      *
      * @param mediaFormat <p>
      *            The audio format of the input media file.
@@ -562,7 +610,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      *
      * @param mediaFormat <p>
      *            The audio format of the input media file.
@@ -582,7 +630,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      *
      * @param mediaFormat <p>
      *            The audio format of the input media file.
@@ -602,7 +650,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>mp3, mp4, wav, flac
+     * <b>Allowed Values: </b>mp3, mp4, wav, flac, ogg, amr, webm
      *
      * @param mediaFormat <p>
      *            The audio format of the input media file.
@@ -828,6 +876,189 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      */
     public StartMedicalTranscriptionJobRequest withOutputBucketName(String outputBucketName) {
         this.outputBucketName = outputBucketName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * You can specify a location in an Amazon S3 bucket to store the output of
+     * your medical transcription job.
+     * </p>
+     * <p>
+     * If you don't specify an output key, Amazon Transcribe Medical stores the
+     * output of your transcription job in the Amazon S3 bucket you specified.
+     * By default, the object key is "your-transcription-job-name.json".
+     * </p>
+     * <p>
+     * You can use output keys to specify the Amazon S3 prefix and file name of
+     * the transcription output. For example, specifying the Amazon S3 prefix,
+     * "folder1/folder2/", as an output key would lead to the output being
+     * stored as "folder1/folder2/your-transcription-job-name.json". If you
+     * specify "my-other-job-name.json" as the output key, the object key is
+     * changed to "my-other-job-name.json". You can use an output key to change
+     * both the prefix and the file name, for example
+     * "folder/my-other-job-name.json".
+     * </p>
+     * <p>
+     * If you specify an output key, you must also specify an S3 bucket in the
+     * <code>OutputBucketName</code> parameter.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9-_.!*'()/]{1,1024}$<br/>
+     *
+     * @return <p>
+     *         You can specify a location in an Amazon S3 bucket to store the
+     *         output of your medical transcription job.
+     *         </p>
+     *         <p>
+     *         If you don't specify an output key, Amazon Transcribe Medical
+     *         stores the output of your transcription job in the Amazon S3
+     *         bucket you specified. By default, the object key is
+     *         "your-transcription-job-name.json".
+     *         </p>
+     *         <p>
+     *         You can use output keys to specify the Amazon S3 prefix and file
+     *         name of the transcription output. For example, specifying the
+     *         Amazon S3 prefix, "folder1/folder2/", as an output key would lead
+     *         to the output being stored as
+     *         "folder1/folder2/your-transcription-job-name.json". If you
+     *         specify "my-other-job-name.json" as the output key, the object
+     *         key is changed to "my-other-job-name.json". You can use an output
+     *         key to change both the prefix and the file name, for example
+     *         "folder/my-other-job-name.json".
+     *         </p>
+     *         <p>
+     *         If you specify an output key, you must also specify an S3 bucket
+     *         in the <code>OutputBucketName</code> parameter.
+     *         </p>
+     */
+    public String getOutputKey() {
+        return outputKey;
+    }
+
+    /**
+     * <p>
+     * You can specify a location in an Amazon S3 bucket to store the output of
+     * your medical transcription job.
+     * </p>
+     * <p>
+     * If you don't specify an output key, Amazon Transcribe Medical stores the
+     * output of your transcription job in the Amazon S3 bucket you specified.
+     * By default, the object key is "your-transcription-job-name.json".
+     * </p>
+     * <p>
+     * You can use output keys to specify the Amazon S3 prefix and file name of
+     * the transcription output. For example, specifying the Amazon S3 prefix,
+     * "folder1/folder2/", as an output key would lead to the output being
+     * stored as "folder1/folder2/your-transcription-job-name.json". If you
+     * specify "my-other-job-name.json" as the output key, the object key is
+     * changed to "my-other-job-name.json". You can use an output key to change
+     * both the prefix and the file name, for example
+     * "folder/my-other-job-name.json".
+     * </p>
+     * <p>
+     * If you specify an output key, you must also specify an S3 bucket in the
+     * <code>OutputBucketName</code> parameter.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9-_.!*'()/]{1,1024}$<br/>
+     *
+     * @param outputKey <p>
+     *            You can specify a location in an Amazon S3 bucket to store the
+     *            output of your medical transcription job.
+     *            </p>
+     *            <p>
+     *            If you don't specify an output key, Amazon Transcribe Medical
+     *            stores the output of your transcription job in the Amazon S3
+     *            bucket you specified. By default, the object key is
+     *            "your-transcription-job-name.json".
+     *            </p>
+     *            <p>
+     *            You can use output keys to specify the Amazon S3 prefix and
+     *            file name of the transcription output. For example, specifying
+     *            the Amazon S3 prefix, "folder1/folder2/", as an output key
+     *            would lead to the output being stored as
+     *            "folder1/folder2/your-transcription-job-name.json". If you
+     *            specify "my-other-job-name.json" as the output key, the object
+     *            key is changed to "my-other-job-name.json". You can use an
+     *            output key to change both the prefix and the file name, for
+     *            example "folder/my-other-job-name.json".
+     *            </p>
+     *            <p>
+     *            If you specify an output key, you must also specify an S3
+     *            bucket in the <code>OutputBucketName</code> parameter.
+     *            </p>
+     */
+    public void setOutputKey(String outputKey) {
+        this.outputKey = outputKey;
+    }
+
+    /**
+     * <p>
+     * You can specify a location in an Amazon S3 bucket to store the output of
+     * your medical transcription job.
+     * </p>
+     * <p>
+     * If you don't specify an output key, Amazon Transcribe Medical stores the
+     * output of your transcription job in the Amazon S3 bucket you specified.
+     * By default, the object key is "your-transcription-job-name.json".
+     * </p>
+     * <p>
+     * You can use output keys to specify the Amazon S3 prefix and file name of
+     * the transcription output. For example, specifying the Amazon S3 prefix,
+     * "folder1/folder2/", as an output key would lead to the output being
+     * stored as "folder1/folder2/your-transcription-job-name.json". If you
+     * specify "my-other-job-name.json" as the output key, the object key is
+     * changed to "my-other-job-name.json". You can use an output key to change
+     * both the prefix and the file name, for example
+     * "folder/my-other-job-name.json".
+     * </p>
+     * <p>
+     * If you specify an output key, you must also specify an S3 bucket in the
+     * <code>OutputBucketName</code> parameter.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9-_.!*'()/]{1,1024}$<br/>
+     *
+     * @param outputKey <p>
+     *            You can specify a location in an Amazon S3 bucket to store the
+     *            output of your medical transcription job.
+     *            </p>
+     *            <p>
+     *            If you don't specify an output key, Amazon Transcribe Medical
+     *            stores the output of your transcription job in the Amazon S3
+     *            bucket you specified. By default, the object key is
+     *            "your-transcription-job-name.json".
+     *            </p>
+     *            <p>
+     *            You can use output keys to specify the Amazon S3 prefix and
+     *            file name of the transcription output. For example, specifying
+     *            the Amazon S3 prefix, "folder1/folder2/", as an output key
+     *            would lead to the output being stored as
+     *            "folder1/folder2/your-transcription-job-name.json". If you
+     *            specify "my-other-job-name.json" as the output key, the object
+     *            key is changed to "my-other-job-name.json". You can use an
+     *            output key to change both the prefix and the file name, for
+     *            example "folder/my-other-job-name.json".
+     *            </p>
+     *            <p>
+     *            If you specify an output key, you must also specify an S3
+     *            bucket in the <code>OutputBucketName</code> parameter.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartMedicalTranscriptionJobRequest withOutputKey(String outputKey) {
+        this.outputKey = outputKey;
         return this;
     }
 
@@ -1322,20 +1553,21 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONVERSATION, DICTATION
      *
      * @return <p>
-     *         The speech of clinician in the input audio.
-     *         <code>CONVERSATION</code> refers to conversations clinicians have
-     *         with patients. <code>DICTATION</code> refers to medical
-     *         professionals dictating their notes about a patient encounter.
+     *         The type of speech in the input audio. <code>CONVERSATION</code>
+     *         refers to conversations between two or more speakers, e.g., a
+     *         conversations between doctors and patients.
+     *         <code>DICTATION</code> refers to single-speaker dictated speech,
+     *         e.g., for clinical notes.
      *         </p>
      * @see Type
      */
@@ -1345,20 +1577,21 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONVERSATION, DICTATION
      *
      * @param type <p>
-     *            The speech of clinician in the input audio.
-     *            <code>CONVERSATION</code> refers to conversations clinicians
-     *            have with patients. <code>DICTATION</code> refers to medical
-     *            professionals dictating their notes about a patient encounter.
+     *            The type of speech in the input audio.
+     *            <code>CONVERSATION</code> refers to conversations between two
+     *            or more speakers, e.g., a conversations between doctors and
+     *            patients. <code>DICTATION</code> refers to single-speaker
+     *            dictated speech, e.g., for clinical notes.
      *            </p>
      * @see Type
      */
@@ -1368,10 +1601,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1381,10 +1614,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * <b>Allowed Values: </b>CONVERSATION, DICTATION
      *
      * @param type <p>
-     *            The speech of clinician in the input audio.
-     *            <code>CONVERSATION</code> refers to conversations clinicians
-     *            have with patients. <code>DICTATION</code> refers to medical
-     *            professionals dictating their notes about a patient encounter.
+     *            The type of speech in the input audio.
+     *            <code>CONVERSATION</code> refers to conversations between two
+     *            or more speakers, e.g., a conversations between doctors and
+     *            patients. <code>DICTATION</code> refers to single-speaker
+     *            dictated speech, e.g., for clinical notes.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1397,20 +1631,21 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONVERSATION, DICTATION
      *
      * @param type <p>
-     *            The speech of clinician in the input audio.
-     *            <code>CONVERSATION</code> refers to conversations clinicians
-     *            have with patients. <code>DICTATION</code> refers to medical
-     *            professionals dictating their notes about a patient encounter.
+     *            The type of speech in the input audio.
+     *            <code>CONVERSATION</code> refers to conversations between two
+     *            or more speakers, e.g., a conversations between doctors and
+     *            patients. <code>DICTATION</code> refers to single-speaker
+     *            dictated speech, e.g., for clinical notes.
      *            </p>
      * @see Type
      */
@@ -1420,10 +1655,10 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
 
     /**
      * <p>
-     * The speech of clinician in the input audio. <code>CONVERSATION</code>
-     * refers to conversations clinicians have with patients.
-     * <code>DICTATION</code> refers to medical professionals dictating their
-     * notes about a patient encounter.
+     * The type of speech in the input audio. <code>CONVERSATION</code> refers
+     * to conversations between two or more speakers, e.g., a conversations
+     * between doctors and patients. <code>DICTATION</code> refers to
+     * single-speaker dictated speech, e.g., for clinical notes.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1433,10 +1668,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
      * <b>Allowed Values: </b>CONVERSATION, DICTATION
      *
      * @param type <p>
-     *            The speech of clinician in the input audio.
-     *            <code>CONVERSATION</code> refers to conversations clinicians
-     *            have with patients. <code>DICTATION</code> refers to medical
-     *            professionals dictating their notes about a patient encounter.
+     *            The type of speech in the input audio.
+     *            <code>CONVERSATION</code> refers to conversations between two
+     *            or more speakers, e.g., a conversations between doctors and
+     *            patients. <code>DICTATION</code> refers to single-speaker
+     *            dictated speech, e.g., for clinical notes.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1470,6 +1706,8 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
             sb.append("Media: " + getMedia() + ",");
         if (getOutputBucketName() != null)
             sb.append("OutputBucketName: " + getOutputBucketName() + ",");
+        if (getOutputKey() != null)
+            sb.append("OutputKey: " + getOutputKey() + ",");
         if (getOutputEncryptionKMSKeyId() != null)
             sb.append("OutputEncryptionKMSKeyId: " + getOutputEncryptionKMSKeyId() + ",");
         if (getSettings() != null)
@@ -1500,6 +1738,7 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
         hashCode = prime * hashCode + ((getMedia() == null) ? 0 : getMedia().hashCode());
         hashCode = prime * hashCode
                 + ((getOutputBucketName() == null) ? 0 : getOutputBucketName().hashCode());
+        hashCode = prime * hashCode + ((getOutputKey() == null) ? 0 : getOutputKey().hashCode());
         hashCode = prime
                 * hashCode
                 + ((getOutputEncryptionKMSKeyId() == null) ? 0 : getOutputEncryptionKMSKeyId()
@@ -1551,6 +1790,11 @@ public class StartMedicalTranscriptionJobRequest extends AmazonWebServiceRequest
             return false;
         if (other.getOutputBucketName() != null
                 && other.getOutputBucketName().equals(this.getOutputBucketName()) == false)
+            return false;
+        if (other.getOutputKey() == null ^ this.getOutputKey() == null)
+            return false;
+        if (other.getOutputKey() != null
+                && other.getOutputKey().equals(this.getOutputKey()) == false)
             return false;
         if (other.getOutputEncryptionKMSKeyId() == null
                 ^ this.getOutputEncryptionKMSKeyId() == null)

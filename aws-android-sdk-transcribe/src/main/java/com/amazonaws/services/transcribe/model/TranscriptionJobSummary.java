@@ -61,10 +61,10 @@ public class TranscriptionJobSummary implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      */
     private String languageCode;
 
@@ -116,6 +116,31 @@ public class TranscriptionJobSummary implements Serializable {
      * </p>
      */
     private ContentRedaction contentRedaction;
+
+    /**
+     * <p>
+     * The object used to call your custom language model to your transcription
+     * job.
+     * </p>
+     */
+    private ModelSettings modelSettings;
+
+    /**
+     * <p>
+     * Whether automatic language identification was enabled for a transcription
+     * job.
+     * </p>
+     */
+    private Boolean identifyLanguage;
+
+    /**
+     * <p>
+     * A value between zero and one that Amazon Transcribe assigned to the
+     * language it identified in the source audio. A higher score indicates that
+     * Amazon Transcribe is more confident in the language it identified.
+     * </p>
+     */
+    private Float identifiedLanguageScore;
 
     /**
      * <p>
@@ -315,10 +340,10 @@ public class TranscriptionJobSummary implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @return <p>
      *         The language code for the input speech.
@@ -335,10 +360,10 @@ public class TranscriptionJobSummary implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the input speech.
@@ -358,10 +383,10 @@ public class TranscriptionJobSummary implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the input speech.
@@ -381,10 +406,10 @@ public class TranscriptionJobSummary implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the input speech.
@@ -404,10 +429,10 @@ public class TranscriptionJobSummary implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR, it-IT, ko-KR, es-ES, en-IN, hi-IN, ar-SA, ru-RU, zh-CN, nl-NL,
-     * id-ID, ta-IN, fa-IR, en-IE, en-AB, en-WL, pt-PT, te-IN, tr-TR, de-CH,
-     * he-IL, ms-MY, ja-JP, ar-AE
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, cy-GB, da-DK, de-CH, de-DE,
+     * en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR,
+     * fr-CA, fr-FR, ga-IE, gd-GB, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR,
+     * ms-MY, nl-NL, pt-BR, pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN
      *
      * @param languageCode <p>
      *            The language code for the input speech.
@@ -861,6 +886,183 @@ public class TranscriptionJobSummary implements Serializable {
     }
 
     /**
+     * <p>
+     * The object used to call your custom language model to your transcription
+     * job.
+     * </p>
+     *
+     * @return <p>
+     *         The object used to call your custom language model to your
+     *         transcription job.
+     *         </p>
+     */
+    public ModelSettings getModelSettings() {
+        return modelSettings;
+    }
+
+    /**
+     * <p>
+     * The object used to call your custom language model to your transcription
+     * job.
+     * </p>
+     *
+     * @param modelSettings <p>
+     *            The object used to call your custom language model to your
+     *            transcription job.
+     *            </p>
+     */
+    public void setModelSettings(ModelSettings modelSettings) {
+        this.modelSettings = modelSettings;
+    }
+
+    /**
+     * <p>
+     * The object used to call your custom language model to your transcription
+     * job.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param modelSettings <p>
+     *            The object used to call your custom language model to your
+     *            transcription job.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TranscriptionJobSummary withModelSettings(ModelSettings modelSettings) {
+        this.modelSettings = modelSettings;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Whether automatic language identification was enabled for a transcription
+     * job.
+     * </p>
+     *
+     * @return <p>
+     *         Whether automatic language identification was enabled for a
+     *         transcription job.
+     *         </p>
+     */
+    public Boolean isIdentifyLanguage() {
+        return identifyLanguage;
+    }
+
+    /**
+     * <p>
+     * Whether automatic language identification was enabled for a transcription
+     * job.
+     * </p>
+     *
+     * @return <p>
+     *         Whether automatic language identification was enabled for a
+     *         transcription job.
+     *         </p>
+     */
+    public Boolean getIdentifyLanguage() {
+        return identifyLanguage;
+    }
+
+    /**
+     * <p>
+     * Whether automatic language identification was enabled for a transcription
+     * job.
+     * </p>
+     *
+     * @param identifyLanguage <p>
+     *            Whether automatic language identification was enabled for a
+     *            transcription job.
+     *            </p>
+     */
+    public void setIdentifyLanguage(Boolean identifyLanguage) {
+        this.identifyLanguage = identifyLanguage;
+    }
+
+    /**
+     * <p>
+     * Whether automatic language identification was enabled for a transcription
+     * job.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param identifyLanguage <p>
+     *            Whether automatic language identification was enabled for a
+     *            transcription job.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TranscriptionJobSummary withIdentifyLanguage(Boolean identifyLanguage) {
+        this.identifyLanguage = identifyLanguage;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A value between zero and one that Amazon Transcribe assigned to the
+     * language it identified in the source audio. A higher score indicates that
+     * Amazon Transcribe is more confident in the language it identified.
+     * </p>
+     *
+     * @return <p>
+     *         A value between zero and one that Amazon Transcribe assigned to
+     *         the language it identified in the source audio. A higher score
+     *         indicates that Amazon Transcribe is more confident in the
+     *         language it identified.
+     *         </p>
+     */
+    public Float getIdentifiedLanguageScore() {
+        return identifiedLanguageScore;
+    }
+
+    /**
+     * <p>
+     * A value between zero and one that Amazon Transcribe assigned to the
+     * language it identified in the source audio. A higher score indicates that
+     * Amazon Transcribe is more confident in the language it identified.
+     * </p>
+     *
+     * @param identifiedLanguageScore <p>
+     *            A value between zero and one that Amazon Transcribe assigned
+     *            to the language it identified in the source audio. A higher
+     *            score indicates that Amazon Transcribe is more confident in
+     *            the language it identified.
+     *            </p>
+     */
+    public void setIdentifiedLanguageScore(Float identifiedLanguageScore) {
+        this.identifiedLanguageScore = identifiedLanguageScore;
+    }
+
+    /**
+     * <p>
+     * A value between zero and one that Amazon Transcribe assigned to the
+     * language it identified in the source audio. A higher score indicates that
+     * Amazon Transcribe is more confident in the language it identified.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param identifiedLanguageScore <p>
+     *            A value between zero and one that Amazon Transcribe assigned
+     *            to the language it identified in the source audio. A higher
+     *            score indicates that Amazon Transcribe is more confident in
+     *            the language it identified.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TranscriptionJobSummary withIdentifiedLanguageScore(Float identifiedLanguageScore) {
+        this.identifiedLanguageScore = identifiedLanguageScore;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -888,7 +1090,13 @@ public class TranscriptionJobSummary implements Serializable {
         if (getOutputLocationType() != null)
             sb.append("OutputLocationType: " + getOutputLocationType() + ",");
         if (getContentRedaction() != null)
-            sb.append("ContentRedaction: " + getContentRedaction());
+            sb.append("ContentRedaction: " + getContentRedaction() + ",");
+        if (getModelSettings() != null)
+            sb.append("ModelSettings: " + getModelSettings() + ",");
+        if (getIdentifyLanguage() != null)
+            sb.append("IdentifyLanguage: " + getIdentifyLanguage() + ",");
+        if (getIdentifiedLanguageScore() != null)
+            sb.append("IdentifiedLanguageScore: " + getIdentifiedLanguageScore());
         sb.append("}");
         return sb.toString();
     }
@@ -917,6 +1125,14 @@ public class TranscriptionJobSummary implements Serializable {
                 + ((getOutputLocationType() == null) ? 0 : getOutputLocationType().hashCode());
         hashCode = prime * hashCode
                 + ((getContentRedaction() == null) ? 0 : getContentRedaction().hashCode());
+        hashCode = prime * hashCode
+                + ((getModelSettings() == null) ? 0 : getModelSettings().hashCode());
+        hashCode = prime * hashCode
+                + ((getIdentifyLanguage() == null) ? 0 : getIdentifyLanguage().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getIdentifiedLanguageScore() == null) ? 0 : getIdentifiedLanguageScore()
+                        .hashCode());
         return hashCode;
     }
 
@@ -975,6 +1191,21 @@ public class TranscriptionJobSummary implements Serializable {
             return false;
         if (other.getContentRedaction() != null
                 && other.getContentRedaction().equals(this.getContentRedaction()) == false)
+            return false;
+        if (other.getModelSettings() == null ^ this.getModelSettings() == null)
+            return false;
+        if (other.getModelSettings() != null
+                && other.getModelSettings().equals(this.getModelSettings()) == false)
+            return false;
+        if (other.getIdentifyLanguage() == null ^ this.getIdentifyLanguage() == null)
+            return false;
+        if (other.getIdentifyLanguage() != null
+                && other.getIdentifyLanguage().equals(this.getIdentifyLanguage()) == false)
+            return false;
+        if (other.getIdentifiedLanguageScore() == null ^ this.getIdentifiedLanguageScore() == null)
+            return false;
+        if (other.getIdentifiedLanguageScore() != null
+                && other.getIdentifiedLanguageScore().equals(this.getIdentifiedLanguageScore()) == false)
             return false;
         return true;
     }

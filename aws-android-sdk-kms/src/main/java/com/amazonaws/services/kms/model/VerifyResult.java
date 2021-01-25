@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ import java.io.Serializable;
 public class VerifyResult implements Serializable {
     /**
      * <p>
-     * The unique identifier for the asymmetric CMK that was used to verify the
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the asymmetric CMK that was used to verify the
      * signature.
      * </p>
      * <p>
@@ -55,7 +57,9 @@ public class VerifyResult implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the asymmetric CMK that was used to verify the
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the asymmetric CMK that was used to verify the
      * signature.
      * </p>
      * <p>
@@ -63,8 +67,10 @@ public class VerifyResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The unique identifier for the asymmetric CMK that was used to
-     *         verify the signature.
+     *         The Amazon Resource Name (<a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *         >key ARN</a>) of the asymmetric CMK that was used to verify the
+     *         signature.
      *         </p>
      */
     public String getKeyId() {
@@ -73,7 +79,9 @@ public class VerifyResult implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the asymmetric CMK that was used to verify the
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the asymmetric CMK that was used to verify the
      * signature.
      * </p>
      * <p>
@@ -81,8 +89,10 @@ public class VerifyResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The unique identifier for the asymmetric CMK that was used to
-     *            verify the signature.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the asymmetric CMK that was used to verify
+     *            the signature.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -91,7 +101,9 @@ public class VerifyResult implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the asymmetric CMK that was used to verify the
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the asymmetric CMK that was used to verify the
      * signature.
      * </p>
      * <p>
@@ -102,8 +114,10 @@ public class VerifyResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The unique identifier for the asymmetric CMK that was used to
-     *            verify the signature.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the asymmetric CMK that was used to verify
+     *            the signature.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

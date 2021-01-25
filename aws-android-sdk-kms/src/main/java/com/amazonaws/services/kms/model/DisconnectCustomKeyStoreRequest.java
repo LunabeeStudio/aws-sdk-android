@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,10 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <note>
  * <p>
  * While a custom key store is disconnected, all attempts to create customer
- * master keys (CMKs) in the custom key store or to use existing CMKs in
- * cryptographic operations will fail. This action can prevent users from
+ * master keys (CMKs) in the custom key store or to use existing CMKs in <a
+ * href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+ * >cryptographic operations</a> will fail. This action can prevent users from
  * storing and accessing sensitive data.
  * </p>
  * </note>
@@ -52,6 +54,45 @@ import com.amazonaws.AmazonWebServiceRequest;
  * convenience and extensive integration of AWS KMS with the isolation and
  * control of a single-tenant key store.
  * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a custom
+ * key store in a different AWS account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DisconnectCustomKeyStore</a> (IAM policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>ConnectCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>CreateCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DeleteCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeCustomKeyStores</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>UpdateCustomKeyStore</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 public class DisconnectCustomKeyStoreRequest extends AmazonWebServiceRequest implements
         Serializable {

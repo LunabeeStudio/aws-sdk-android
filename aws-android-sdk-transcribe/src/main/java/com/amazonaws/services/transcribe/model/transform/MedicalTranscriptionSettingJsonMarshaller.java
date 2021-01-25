@@ -16,6 +16,7 @@
 package com.amazonaws.services.transcribe.model.transform;
 
 import com.amazonaws.services.transcribe.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -50,6 +51,11 @@ class MedicalTranscriptionSettingJsonMarshaller {
             Integer maxAlternatives = medicalTranscriptionSetting.getMaxAlternatives();
             jsonWriter.name("MaxAlternatives");
             jsonWriter.value(maxAlternatives);
+        }
+        if (medicalTranscriptionSetting.getVocabularyName() != null) {
+            String vocabularyName = medicalTranscriptionSetting.getVocabularyName();
+            jsonWriter.name("VocabularyName");
+            jsonWriter.value(vocabularyName);
         }
         jsonWriter.endObject();
     }

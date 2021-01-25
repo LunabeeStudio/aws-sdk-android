@@ -332,6 +332,7 @@ public class AmazonTextractClient extends AmazonWebServiceClient implements Amaz
         jsonErrorUnmarshallers.add(new IdempotentParameterMismatchExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InternalServerErrorExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidJobIdExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidKMSKeyExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidParameterExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidS3ObjectExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new LimitExceededExceptionUnmarshaller());
@@ -620,6 +621,7 @@ public class AmazonTextractClient extends AmazonWebServiceClient implements Amaz
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -716,6 +718,7 @@ public class AmazonTextractClient extends AmazonWebServiceClient implements Amaz
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -791,6 +794,7 @@ public class AmazonTextractClient extends AmazonWebServiceClient implements Amaz
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException
@@ -874,6 +878,7 @@ public class AmazonTextractClient extends AmazonWebServiceClient implements Amaz
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException

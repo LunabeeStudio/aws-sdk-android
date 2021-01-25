@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,7 +54,9 @@ public class GenerateDataKeyPairResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK that encrypted the private key.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the CMK that encrypted the private key.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -262,14 +264,18 @@ public class GenerateDataKeyPairResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK that encrypted the private key.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the CMK that encrypted the private key.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The identifier of the CMK that encrypted the private key.
+     *         The Amazon Resource Name (<a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *         >key ARN</a>) of the CMK that encrypted the private key.
      *         </p>
      */
     public String getKeyId() {
@@ -278,14 +284,18 @@ public class GenerateDataKeyPairResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK that encrypted the private key.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the CMK that encrypted the private key.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK that encrypted the private key.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the CMK that encrypted the private key.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -294,7 +304,9 @@ public class GenerateDataKeyPairResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK that encrypted the private key.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the CMK that encrypted the private key.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -304,7 +316,9 @@ public class GenerateDataKeyPairResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK that encrypted the private key.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the CMK that encrypted the private key.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

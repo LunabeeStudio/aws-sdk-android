@@ -72,12 +72,26 @@ class TranscriptionJobJsonUnmarshaller implements
             } else if (name.equals("Settings")) {
                 transcriptionJob.setSettings(SettingsJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("ModelSettings")) {
+                transcriptionJob.setModelSettings(ModelSettingsJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobExecutionSettings")) {
                 transcriptionJob.setJobExecutionSettings(JobExecutionSettingsJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
             } else if (name.equals("ContentRedaction")) {
                 transcriptionJob.setContentRedaction(ContentRedactionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifyLanguage")) {
+                transcriptionJob.setIdentifyLanguage(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LanguageOptions")) {
+                transcriptionJob.setLanguageOptions(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("IdentifiedLanguageScore")) {
+                transcriptionJob.setIdentifiedLanguageScore(FloatJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

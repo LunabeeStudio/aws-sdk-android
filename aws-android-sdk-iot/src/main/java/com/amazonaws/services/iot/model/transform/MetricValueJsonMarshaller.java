@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -48,6 +49,33 @@ class MetricValueJsonMarshaller {
             for (Integer portsItem : ports) {
                 if (portsItem != null) {
                     jsonWriter.value(portsItem);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (metricValue.getNumber() != null) {
+            Double number = metricValue.getNumber();
+            jsonWriter.name("number");
+            jsonWriter.value(number);
+        }
+        if (metricValue.getNumbers() != null) {
+            java.util.List<Double> numbers = metricValue.getNumbers();
+            jsonWriter.name("numbers");
+            jsonWriter.beginArray();
+            for (Double numbersItem : numbers) {
+                if (numbersItem != null) {
+                    jsonWriter.value(numbersItem);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (metricValue.getStrings() != null) {
+            java.util.List<String> strings = metricValue.getStrings();
+            jsonWriter.name("strings");
+            jsonWriter.beginArray();
+            for (String stringsItem : strings) {
+                if (stringsItem != null) {
+                    jsonWriter.value(stringsItem);
                 }
             }
             jsonWriter.endArray();

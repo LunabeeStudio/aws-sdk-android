@@ -18,7 +18,7 @@
 package com.amazonaws.mobile.client;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import android.util.Log;
 
 
@@ -54,7 +54,7 @@ public class AWSMobileClientCustomAuthTest extends AWSMobileClientTestBase {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        appContext = InstrumentationRegistry.getTargetContext();
+        appContext = ApplicationProvider.getApplicationContext();
         final CountDownLatch latch = new CountDownLatch(1);
         final AWSConfiguration awsConfiguration = new AWSConfiguration(appContext);
         awsConfiguration.setConfiguration("Auth1");
@@ -216,8 +216,8 @@ public class AWSMobileClientCustomAuthTest extends AWSMobileClientTestBase {
     private void confirmSignIn() {
         final Map<String, String> res = new HashMap<String, String>();
         final Map<String, String> clientMetaData = new HashMap<String, String>();
-        clientMetaData.put("challengeResponseAnswer", "1134");
-        res.put(CognitoServiceConstants.CHLG_RESP_ANSWER, "1134");
+        clientMetaData.put("challengeResponseAnswer", "1133");
+        res.put(CognitoServiceConstants.CHLG_RESP_ANSWER, "1133");
         auth.confirmSignIn(res, clientMetaData, new Callback<SignInResult>() {
             @Override
             public void onResult(final SignInResult signInResult) {

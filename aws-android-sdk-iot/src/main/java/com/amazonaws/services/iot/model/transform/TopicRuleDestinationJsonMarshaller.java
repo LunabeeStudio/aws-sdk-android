@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -36,6 +37,16 @@ class TopicRuleDestinationJsonMarshaller {
             jsonWriter.name("status");
             jsonWriter.value(status);
         }
+        if (topicRuleDestination.getCreatedAt() != null) {
+            java.util.Date createdAt = topicRuleDestination.getCreatedAt();
+            jsonWriter.name("createdAt");
+            jsonWriter.value(createdAt);
+        }
+        if (topicRuleDestination.getLastUpdatedAt() != null) {
+            java.util.Date lastUpdatedAt = topicRuleDestination.getLastUpdatedAt();
+            jsonWriter.name("lastUpdatedAt");
+            jsonWriter.value(lastUpdatedAt);
+        }
         if (topicRuleDestination.getStatusReason() != null) {
             String statusReason = topicRuleDestination.getStatusReason();
             jsonWriter.name("statusReason");
@@ -47,6 +58,12 @@ class TopicRuleDestinationJsonMarshaller {
             jsonWriter.name("httpUrlProperties");
             HttpUrlDestinationPropertiesJsonMarshaller.getInstance().marshall(httpUrlProperties,
                     jsonWriter);
+        }
+        if (topicRuleDestination.getVpcProperties() != null) {
+            VpcDestinationProperties vpcProperties = topicRuleDestination.getVpcProperties();
+            jsonWriter.name("vpcProperties");
+            VpcDestinationPropertiesJsonMarshaller.getInstance()
+                    .marshall(vpcProperties, jsonWriter);
         }
         jsonWriter.endObject();
     }

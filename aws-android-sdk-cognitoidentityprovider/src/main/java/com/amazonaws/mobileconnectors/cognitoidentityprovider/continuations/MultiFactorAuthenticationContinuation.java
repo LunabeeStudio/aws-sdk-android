@@ -26,6 +26,10 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.Authentic
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.util.CognitoServiceConstants;
 import com.amazonaws.services.cognitoidentityprovider.model.RespondToAuthChallengeResult;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This is a Continuation for multi-factor authentication.
  */
@@ -46,6 +50,8 @@ public class MultiFactorAuthenticationContinuation implements CognitoIdentityPro
     private final RespondToAuthChallengeResult challenge;
     private final boolean runInBackground;
     private final AuthenticationHandler callback;
+    private final Map<String, String> clientMetadata;
+
     private String mfaCode = null;
 
     /**
@@ -67,6 +73,29 @@ public class MultiFactorAuthenticationContinuation implements CognitoIdentityPro
         this.callback = callback;
         this.runInBackground = runInBackground;
         this.challenge = challenge;
+        this.clientMetadata = new HashMap<>();
+    }
+
+    /**
+     * <p>
+     * <code>clientMetadata</code> is a map of custom key-value pairs that you can provide as input for any
+     * custom work flows. Accessor method for <code>clientMetadata</code>.
+     * </p>
+     * @return ClientMetadata
+     */
+    public Map<String, String> getClientMetaData() {
+        return Collections.unmodifiableMap(clientMetadata);
+    }
+
+    /**
+     * Mutator for <code>clientMetadata</code>.
+     * @param clientMetadata Metadata to be passed as input to the lambda triggers.
+     */
+    public void setClientMetaData(Map<String, String> clientMetadata) {
+        this.clientMetadata.clear();
+        if (clientMetadata != null) {
+            this.clientMetadata.putAll(clientMetadata);
+        }
     }
 
     /**
@@ -104,7 +133,7 @@ public class MultiFactorAuthenticationContinuation implements CognitoIdentityPro
                     Runnable nextStep;
                     try {
 
-                        nextStep = user.respondToMfaChallenge(mfaCode, challenge, callback,
+                        nextStep = user.respondToMfaChallenge(clientMetadata, mfaCode, challenge, callback,
                                 RUN_IN_BACKGROUND);
                     } catch (final Exception e) {
                         nextStep = new Runnable() {
@@ -120,7 +149,7 @@ public class MultiFactorAuthenticationContinuation implements CognitoIdentityPro
         } else {
             Runnable nextStep;
             try {
-                nextStep = user.respondToMfaChallenge(mfaCode, challenge, callback, RUN_IN_CURRENT);
+                nextStep = user.respondToMfaChallenge(clientMetadata, mfaCode, challenge, callback, RUN_IN_CURRENT);
             } catch (final Exception e) {
                 nextStep = new Runnable() {
                     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +54,16 @@ public class AliasListEntry implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      */
     private String targetKeyId;
+
+    /**
+     * The new value for the creationDate property for this object.
+     */
+    private java.util.Date creationDate;
+
+    /**
+     * The new value for the lastUpdatedDate property for this object.
+     */
+    private java.util.Date lastUpdatedDate;
 
     /**
      * <p>
@@ -229,6 +239,76 @@ public class AliasListEntry implements Serializable {
     }
 
     /**
+     * Returns the value of the creationDate property for this object.
+     *
+     * @return The value of the creationDate property for this object.
+     */
+    public java.util.Date getCreationDate() {
+        return creationDate;
+    }
+
+    /**
+     * Sets the value of creationDate
+     *
+     * @param creationDate The new value for the creationDate property for this
+     *            object.
+     */
+    public void setCreationDate(java.util.Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    /**
+     * Sets the value of the creationDate property for this object.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param creationDate The new value for the creationDate property for this
+     *            object.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AliasListEntry withCreationDate(java.util.Date creationDate) {
+        this.creationDate = creationDate;
+        return this;
+    }
+
+    /**
+     * Returns the value of the lastUpdatedDate property for this object.
+     *
+     * @return The value of the lastUpdatedDate property for this object.
+     */
+    public java.util.Date getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    /**
+     * Sets the value of lastUpdatedDate
+     *
+     * @param lastUpdatedDate The new value for the lastUpdatedDate property for
+     *            this object.
+     */
+    public void setLastUpdatedDate(java.util.Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    /**
+     * Sets the value of the lastUpdatedDate property for this object.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param lastUpdatedDate The new value for the lastUpdatedDate property for
+     *            this object.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AliasListEntry withLastUpdatedDate(java.util.Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -244,7 +324,11 @@ public class AliasListEntry implements Serializable {
         if (getAliasArn() != null)
             sb.append("AliasArn: " + getAliasArn() + ",");
         if (getTargetKeyId() != null)
-            sb.append("TargetKeyId: " + getTargetKeyId());
+            sb.append("TargetKeyId: " + getTargetKeyId() + ",");
+        if (getCreationDate() != null)
+            sb.append("CreationDate: " + getCreationDate() + ",");
+        if (getLastUpdatedDate() != null)
+            sb.append("LastUpdatedDate: " + getLastUpdatedDate());
         sb.append("}");
         return sb.toString();
     }
@@ -258,6 +342,10 @@ public class AliasListEntry implements Serializable {
         hashCode = prime * hashCode + ((getAliasArn() == null) ? 0 : getAliasArn().hashCode());
         hashCode = prime * hashCode
                 + ((getTargetKeyId() == null) ? 0 : getTargetKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getCreationDate() == null) ? 0 : getCreationDate().hashCode());
+        hashCode = prime * hashCode
+                + ((getLastUpdatedDate() == null) ? 0 : getLastUpdatedDate().hashCode());
         return hashCode;
     }
 
@@ -285,6 +373,16 @@ public class AliasListEntry implements Serializable {
             return false;
         if (other.getTargetKeyId() != null
                 && other.getTargetKeyId().equals(this.getTargetKeyId()) == false)
+            return false;
+        if (other.getCreationDate() == null ^ this.getCreationDate() == null)
+            return false;
+        if (other.getCreationDate() != null
+                && other.getCreationDate().equals(this.getCreationDate()) == false)
+            return false;
+        if (other.getLastUpdatedDate() == null ^ this.getLastUpdatedDate() == null)
+            return false;
+        if (other.getLastUpdatedDate() != null
+                && other.getLastUpdatedDate().equals(this.getLastUpdatedDate()) == false)
             return false;
         return true;
     }

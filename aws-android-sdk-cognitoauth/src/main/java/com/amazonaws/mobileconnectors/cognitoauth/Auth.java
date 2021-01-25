@@ -17,6 +17,7 @@
 
 package com.amazonaws.mobileconnectors.cognitoauth;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -104,6 +105,11 @@ public final class Auth {
     private final String signOutRedirectUri;
 
     /**
+     * Optional string specifying the browser to open custom tabs. Defaults to Chrome if left null.
+     */
+    private String browserPackage;
+
+    /**
      * Scopes for the requested tokens.
      */
     private final Set<String> scopes;
@@ -141,6 +147,14 @@ public final class Auth {
     public void setPersistenceEnabled(boolean isPersistenceEnabled) {
         this.isPersistenceEnabled = isPersistenceEnabled;
         awsKeyValueStore.setPersistenceEnabled(this.isPersistenceEnabled);
+    }
+
+    /**
+     * Update the browser package to use for launching a custom tab.
+     * @param browserPackage the browser package to use for launching a custom tab.
+     */
+    public void setBrowserPackage(String browserPackage) {
+        this.browserPackage = browserPackage;
     }
 
     /**
@@ -612,6 +626,13 @@ public final class Auth {
     }
 
     /**
+     * @return Optional browser package set for this {@link Auth} instance.
+     */
+    public String getBrowserPackage() {
+        return browserPackage;
+    }
+
+    /**
      * @return Identity Provider set for this {@link Auth} instance.
      */
     public String getIdentityProvider() {
@@ -648,30 +669,31 @@ public final class Auth {
      *     get tokens from the authentication code. <i>Uri</i> is the redirect uri with the
      *     authentication code.
      * </p>
+     * @param activity Activity to launch custom tabs from and to listen for the intent completions.
      */
-    public void getSession() {
-        this.user.getSession(true);
+    public void getSession(final Activity activity) {
+        if (getBrowserPackage() != null) {
+            this.user.getSession(true, activity, getBrowserPackage());
+        } else {
+            this.user.getSession(true, activity);
+        }
+
     }
 
     /**
      * Use this method to get tokens for a user, the tokens are returned though the callback.
-     * {@link AuthHandler#onSuccess(AuthUserSession)}.
+     * {@link AuthHandler#onSuccess(AuthUserSession)}. If the tokens are not available, it will not
+     * launch the browser to re-authenticate.
      * <p>
      *     If a username is available, this method looks for valid cached tokens on the device.
      *     If the cached token have expired and the refresh token (if available) is used to get new
      *     tokens.
-     *     If valid tokens are not available locally or if the username is not set, Cognito Auth's
-     *     web interface is launched on Chrome Custom Tabs. The user credentials will be required to
-     *     authenticate.
-     *     <b>Note</b>: This SDK uses OAuth Code-Grant flow with PKCE, for authentication. To get
-     *     tokens after successful user authentication, the Amazom Cognito Auth returns the
-     *     authentication code through the redirect uri. Call {@link Auth#getTokens(Uri)} to
-     *     get tokens from the authentication code. <i>Uri</i> is the redirect uri with the
-     *     authentication code.
+     *     If valid tokens are not available locally or if the username is not set, the error callback
+     *     will be invoked. It will not launch a sign in experience.
      * </p>
      */
-    public void getSession(final boolean launchWebUIIfExpired) {
-        this.user.getSession(launchWebUIIfExpired);
+    public void getSessionWithoutWebUI() {
+        this.user.getSession(false, null);
     }
 
     /**
@@ -690,7 +712,11 @@ public final class Auth {
      * </p>
      */
     public void signOut() {
-        this.user.signOut(false);
+        if (getBrowserPackage() != null) {
+            this.user.signOut(false, getBrowserPackage());
+        } else {
+            this.user.signOut(false);
+        }
     }
 
     /**
@@ -700,7 +726,11 @@ public final class Auth {
      *                             but the session may still be alive from the browser.
      */
     public void signOut(final boolean clearLocalTokensOnly) {
-        this.user.signOut(clearLocalTokensOnly);
+        if (getBrowserPackage() != null) {
+            this.user.signOut(clearLocalTokensOnly, getBrowserPackage());
+        } else {
+            this.user.signOut(clearLocalTokensOnly);
+        }
     }
 
     /**
@@ -721,6 +751,13 @@ public final class Auth {
      */
     public void getTokens(final Uri uri) {
         this.user.getTokens(uri);
+    }
+
+    /**
+     * Properly handles the event where a user cancels the auth flow before completing it.
+     */
+    public void handleFlowCancelled() {
+        this.user.handleCustomTabsCancelled();
     }
 
     /**

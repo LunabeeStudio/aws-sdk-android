@@ -22,8 +22,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.amazonaws.util.json.JsonUtils.JsonEngine;
-
 import org.junit.Test;
 
 import java.io.IOException;
@@ -46,6 +44,24 @@ public class JsonUtilsTest {
             + "\"object\":{}"
             + "}";
 
+    private static final String JSON_STRING_WITH_ARRAYS = "{\"string\":\"string\","
+            + "\"long\":123,"
+            + "\"double\":123.45,"
+            + "\"null\":null,"
+            + "\"true\":true,"
+            + "\"false\":false,"
+            + "\"encoding\":\"Chloë\","
+            + "\"array\":[\"string\",123,123.45,null,true,false],"
+            + "\"array2\":[{\"key1\":\"string1\"},{\"key2\":\"string2\"}],"
+            + "\"array3\":[{\"key1\":123.45},{\"key2\":false}],"
+            + "\"array4\":[\"string\",123,[\"string\",123,123.45,null,true,false],123.45,null,true],"
+            + "\"array5\":[{\"key1\":\"string1\"},{\"key2\":[{\"key3\":\"string2\"}]},{\"key3\":\"string3\"}],"
+            + "\"array6\":[[],[[]]],"
+            + "\"array7\":[],"
+            + "\"array8\":[null],"
+            + "\"array9\":[\"A\",{\"B\":[[]]},\"C\",[[]],\"D\",null],"
+            + "\"object\":{}"
+            + "}";
     @Test
     public void testJsonToMap() {
         Map<String, String> map = JsonUtils.jsonToMap(JSON_STRING);
@@ -58,6 +74,29 @@ public class JsonUtilsTest {
         assertEquals("encoding", "Chloë", map.get("encoding"));
         assertNull("array is ignored", map.get("array"));
         assertNull("object is ignored", map.get("object"));
+    }
+
+    @Test
+    public void testJsonToMapWithList() {
+        Map<String, String> map = JsonUtils.jsonToStringMapWithList(new StringReader(JSON_STRING_WITH_ARRAYS));
+        Map<String, String> actualMap = new HashMap<>();
+        actualMap.put("string", "string");
+        actualMap.put("long", "123");
+        actualMap.put("double", "123.45");
+        actualMap.put("null", null);
+        actualMap.put("true", "true");
+        actualMap.put("false", "false");
+        actualMap.put("encoding", "Chloë");
+        actualMap.put("array", "[\"string\",\"123\",\"123.45\",null,\"true\",\"false\"]");
+        actualMap.put("array2", "[{\"key1\":\"string1\"},{\"key2\":\"string2\"}]");
+        actualMap.put("array3", "[{\"key1\":\"123.45\"},{\"key2\":\"false\"}]");
+        actualMap.put("array4", "[\"string\",\"123\",\"123.45\",null,\"true\"]");
+        actualMap.put("array5", "[{\"key1\":\"string1\"},{},{\"key3\":\"string3\"}]");
+        actualMap.put("array6", "[]");
+        actualMap.put("array7", "[]");
+        actualMap.put("array8", "[null]");
+        actualMap.put("array9", "[\"A\",{},\"C\",\"D\",null]");
+        assertEquals(actualMap, map);
     }
 
     @Test
@@ -183,21 +222,12 @@ public class JsonUtilsTest {
         }
         String json = JsonUtils.mapToString(map);
 
-        JsonUtils.setJsonEngine(JsonEngine.Jackson);
+        System.out.println("Serialize a 5000 properties map 1000 times");
         long start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             JsonUtils.jsonToMap(json);
         }
-        System.out.println("Serialize a 5000 properties map 1000 times");
-        System.out.println("Jackson read elapsed: "
-                + (System.nanoTime() - start) / 1000000 + "ms");
-
-        JsonUtils.setJsonEngine(JsonEngine.Gson);
-        start = System.nanoTime();
-        for (int i = 0; i < 1000; i++) {
-            JsonUtils.jsonToMap(json);
-        }
-        System.out.println("Gson read elapsed: "
+        System.out.println("Read elapsed: "
                 + (System.nanoTime() - start) / 1000000 + "ms");
     }
 
@@ -209,20 +239,11 @@ public class JsonUtilsTest {
         }
 
         System.out.println("Deserialize a JSON string with a 5000 properties map 1000 times");
-        JsonUtils.setJsonEngine(JsonEngine.Jackson);
         long start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             JsonUtils.mapToString(map);
         }
-        System.out.println("Jackson write elapsed: "
-                + (System.nanoTime() - start) / 1000000 + "ms");
-
-        JsonUtils.setJsonEngine(JsonEngine.Gson);
-        start = System.nanoTime();
-        for (int i = 0; i < 1000; i++) {
-            JsonUtils.mapToString(map);
-        }
-        System.out.println("Gson write elapsed: "
+        System.out.println("Write elapsed: "
                 + (System.nanoTime() - start) / 1000000 + "ms");
     }
 
@@ -231,21 +252,14 @@ public class JsonUtilsTest {
         Date d = new Date(1423875641895L);
         String target = "1423875641.895";
 
-        JsonUtils.setJsonEngine(JsonEngine.Gson);
         StringWriter out = new StringWriter();
-        // This is wrapped in an array so that Gson doesn't complain about
+        // This is wrapped in an array so that JsonWriter doesn't complain about
         // invalid JSON encoding
         JsonUtils.getJsonWriter(out)
                 .beginArray().value(d).endArray()
                 .close();
         assertEquals("[" + target + "]", out.toString());
         out.getBuffer().setLength(0); // clear string writer
-
-        JsonUtils.setJsonEngine(JsonEngine.Jackson);
-        JsonUtils.getJsonWriter(out)
-                .beginArray().value(d).endArray()
-                .close();
-        assertEquals("[" + target + "]", out.toString());
     }
 
     @Test
@@ -255,19 +269,12 @@ public class JsonUtilsTest {
         // byte buffer
         String target = "AAECAwQFBgcICQoLDA0ODw==";
 
-        JsonUtils.setJsonEngine(JsonEngine.Gson);
         StringWriter out = new StringWriter();
         JsonUtils.getJsonWriter(out)
                 .beginArray().value(bb).endArray()
                 .close();
         assertEquals("[\"" + target + "\"]", out.toString());
         out.getBuffer().setLength(0);
-
-        JsonUtils.setJsonEngine(JsonEngine.Jackson);
-        JsonUtils.getJsonWriter(out)
-                .beginArray().value(bb).endArray()
-                .close();
-        assertEquals("[\"" + target + "\"]", out.toString());
     }
 
     private ByteBuffer generateByteBuffer(int length) {
@@ -278,3 +285,4 @@ public class JsonUtilsTest {
         return ByteBuffer.wrap(bytes);
     }
 }
+

@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -29,6 +30,11 @@ class OTAUpdateFileJsonMarshaller {
             String fileName = oTAUpdateFile.getFileName();
             jsonWriter.name("fileName");
             jsonWriter.value(fileName);
+        }
+        if (oTAUpdateFile.getFileType() != null) {
+            Integer fileType = oTAUpdateFile.getFileType();
+            jsonWriter.name("fileType");
+            jsonWriter.value(fileType);
         }
         if (oTAUpdateFile.getFileVersion() != null) {
             String fileVersion = oTAUpdateFile.getFileVersion();
