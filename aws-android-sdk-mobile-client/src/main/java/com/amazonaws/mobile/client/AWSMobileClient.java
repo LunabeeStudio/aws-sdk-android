@@ -1179,6 +1179,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
             @Override
             public void run() {
                 try {
+                    CognitoUser previousUser = userpool.getCurrentUser();
                     userpool.getUser(username).getSession(
                         clientMetadata,
                         new AuthenticationHandler() {
@@ -1202,6 +1203,11 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                                     Log.w(TAG, "Failed to federate tokens during sign-in", e);
                                 } finally {
                                     setUserState(new UserStateDetails(UserState.SIGNED_IN, getSignInDetailsMap()));
+                                }
+
+                                // Clear previous user cached tokens
+                                if (previousUser != null && username != null && !username.equals(previousUser.getUserId())) {
+                                    previousUser.signOut();
                                 }
 
                                 signInCallback.onResult(SignInResult.DONE);
