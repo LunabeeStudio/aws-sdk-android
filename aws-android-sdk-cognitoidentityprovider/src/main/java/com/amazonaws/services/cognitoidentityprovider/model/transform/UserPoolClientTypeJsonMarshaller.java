@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -60,6 +61,22 @@ class UserPoolClientTypeJsonMarshaller {
             Integer refreshTokenValidity = userPoolClientType.getRefreshTokenValidity();
             jsonWriter.name("RefreshTokenValidity");
             jsonWriter.value(refreshTokenValidity);
+        }
+        if (userPoolClientType.getAccessTokenValidity() != null) {
+            Integer accessTokenValidity = userPoolClientType.getAccessTokenValidity();
+            jsonWriter.name("AccessTokenValidity");
+            jsonWriter.value(accessTokenValidity);
+        }
+        if (userPoolClientType.getIdTokenValidity() != null) {
+            Integer idTokenValidity = userPoolClientType.getIdTokenValidity();
+            jsonWriter.name("IdTokenValidity");
+            jsonWriter.value(idTokenValidity);
+        }
+        if (userPoolClientType.getTokenValidityUnits() != null) {
+            TokenValidityUnitsType tokenValidityUnits = userPoolClientType.getTokenValidityUnits();
+            jsonWriter.name("TokenValidityUnits");
+            TokenValidityUnitsTypeJsonMarshaller.getInstance().marshall(tokenValidityUnits,
+                    jsonWriter);
         }
         if (userPoolClientType.getReadAttributes() != null) {
             java.util.List<String> readAttributes = userPoolClientType.getReadAttributes();

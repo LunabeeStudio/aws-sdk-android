@@ -6,7 +6,7 @@ buildscript {
 
     dependencies {
         classpath 'com.amazonaws:aws-devicefarm-gradle-plugin:1.3'
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -21,3 +21,17 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+subprojects { project ->
+    afterEvaluate {
+        configureAndroidLibrary(project)
+    }
+}
+
+private void configureAndroidLibrary(Project project) {
+    project.android {
+        defaultConfig {
+            versionCode rootProject.findProperty('VERSION_CODE').toInteger()
+            versionName rootProject.findProperty('VERSION_NAME')
+        }
+    }
+}

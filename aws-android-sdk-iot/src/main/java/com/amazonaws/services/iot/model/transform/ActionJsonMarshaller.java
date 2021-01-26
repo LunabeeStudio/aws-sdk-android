@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -116,10 +117,20 @@ class ActionJsonMarshaller {
             jsonWriter.name("stepFunctions");
             StepFunctionsActionJsonMarshaller.getInstance().marshall(stepFunctions, jsonWriter);
         }
+        if (action.getTimestream() != null) {
+            TimestreamAction timestream = action.getTimestream();
+            jsonWriter.name("timestream");
+            TimestreamActionJsonMarshaller.getInstance().marshall(timestream, jsonWriter);
+        }
         if (action.getHttp() != null) {
             HttpAction http = action.getHttp();
             jsonWriter.name("http");
             HttpActionJsonMarshaller.getInstance().marshall(http, jsonWriter);
+        }
+        if (action.getKafka() != null) {
+            KafkaAction kafka = action.getKafka();
+            jsonWriter.name("kafka");
+            KafkaActionJsonMarshaller.getInstance().marshall(kafka, jsonWriter);
         }
         jsonWriter.endObject();
     }

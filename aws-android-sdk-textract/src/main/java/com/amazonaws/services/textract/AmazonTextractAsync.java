@@ -383,6 +383,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -480,6 +481,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -550,6 +552,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -623,6 +626,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      * @throws InvalidJobIdException
      * @throws InternalServerErrorException
      * @throws ThrottlingException
+     * @throws InvalidS3ObjectException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -672,6 +676,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException
@@ -733,6 +738,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException
@@ -790,6 +796,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException
@@ -850,6 +857,7 @@ public interface AmazonTextractAsync extends AmazonTextract {
      *         Textract.
      * @throws InvalidParameterException
      * @throws InvalidS3ObjectException
+     * @throws InvalidKMSKeyException
      * @throws UnsupportedDocumentException
      * @throws DocumentTooLargeException
      * @throws BadDocumentException

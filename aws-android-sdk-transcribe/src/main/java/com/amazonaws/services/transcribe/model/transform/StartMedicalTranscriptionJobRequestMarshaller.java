@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -92,6 +94,11 @@ public class StartMedicalTranscriptionJobRequestMarshaller
                 String outputBucketName = startMedicalTranscriptionJobRequest.getOutputBucketName();
                 jsonWriter.name("OutputBucketName");
                 jsonWriter.value(outputBucketName);
+            }
+            if (startMedicalTranscriptionJobRequest.getOutputKey() != null) {
+                String outputKey = startMedicalTranscriptionJobRequest.getOutputKey();
+                jsonWriter.name("OutputKey");
+                jsonWriter.value(outputKey);
             }
             if (startMedicalTranscriptionJobRequest.getOutputEncryptionKMSKeyId() != null) {
                 String outputEncryptionKMSKeyId = startMedicalTranscriptionJobRequest

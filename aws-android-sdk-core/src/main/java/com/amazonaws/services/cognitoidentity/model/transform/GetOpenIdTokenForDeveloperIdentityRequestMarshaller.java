@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.cognitoidentity.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -82,6 +85,21 @@ public class GetOpenIdTokenForDeveloperIdentityRequestMarshaller
                     if (loginsValue != null) {
                         jsonWriter.name(loginsEntry.getKey());
                         jsonWriter.value(loginsValue);
+                    }
+                }
+                jsonWriter.endObject();
+            }
+            if (getOpenIdTokenForDeveloperIdentityRequest.getPrincipalTags() != null) {
+                java.util.Map<String, String> principalTags = getOpenIdTokenForDeveloperIdentityRequest
+                        .getPrincipalTags();
+                jsonWriter.name("PrincipalTags");
+                jsonWriter.beginObject();
+                for (java.util.Map.Entry<String, String> principalTagsEntry : principalTags
+                        .entrySet()) {
+                    String principalTagsValue = principalTagsEntry.getValue();
+                    if (principalTagsValue != null) {
+                        jsonWriter.name(principalTagsEntry.getKey());
+                        jsonWriter.value(principalTagsValue);
                     }
                 }
                 jsonWriter.endObject();

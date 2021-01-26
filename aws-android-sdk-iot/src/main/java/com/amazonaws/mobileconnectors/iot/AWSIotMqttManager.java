@@ -89,6 +89,9 @@ public class AWSIotMqttManager {
     /** Default value for "connection established" hysteresis timer. */
     private static final Integer DEFAULT_CONNECTION_STABILITY_TIME_SECONDS = 10;
 
+    /** Regular expression pattern to tokenize a hostname into segments */
+    private static final String TOKENIZE_ENDPOINT_PATTERN = "[\\.:]";
+
     /** The underlying Paho Java MQTT client. */
     private MqttAsyncClient mqttClient;
 
@@ -159,6 +162,12 @@ public class AWSIotMqttManager {
     private boolean userDisconnect;
     /** Do we need to resubscribe upon reconnecting? */
     private boolean needResubscribe;
+
+    /**
+     * The session present flag tells the client whether the broker already has a
+     * persistent session available from previous interactions with the client.
+     */
+    private boolean sessionPresent;
 
     /** True if this is a clean Session with no state being persisted from a prior session */
     private boolean cleanSession = true;
@@ -681,7 +690,7 @@ public class AWSIotMqttManager {
         this.mqttClientId = mqttClientId;
         this.endpoint = endpoint;
         this.accountEndpointPrefix = null;
-        this.region = AwsIotEndpointUtility.getRegionFromIotEndpoint(endpoint);
+        this.region = getRegionFromIotEndpoint(endpoint);
 
         initDefaults();
     }
@@ -1158,6 +1167,7 @@ public class AWSIotMqttManager {
                     LOGGER.info("onSuccess: mqtt connection is successful.");
                     connectionState = MqttManagerConnectionState.Connected;
                     lastConnackTime = getSystemTimeMs();
+                    sessionPresent = asyncActionToken.getSessionPresent();
                     if (mqttMessageQueue.size() > 0) {
                         publishMessagesFromQueue();
                     }
@@ -1176,12 +1186,15 @@ public class AWSIotMqttManager {
 
                     if (!userDisconnect && autoReconnect) {
                         connectionState = MqttManagerConnectionState.Reconnecting;
+                        sessionPresent = asyncActionToken.getSessionPresent();
                         userConnectionCallback(e);
                         scheduleReconnect();
                     } else {
                         connectionState = MqttManagerConnectionState.Disconnected;
+                        sessionPresent = asyncActionToken.getSessionPresent();
                         userConnectionCallback(e);
                     }
+                    sessionPresent = asyncActionToken.getSessionPresent();
                 }
             });
         } catch (final MqttException e) {
@@ -1203,6 +1216,28 @@ public class AWSIotMqttManager {
             connectionState = MqttManagerConnectionState.Disconnected;
             userConnectionCallback(exception);
         }
+    }
+
+    /**
+     * Identifies the AWS Region of the given endpoint and returns the corresponding {@link Region}.
+     *
+     * @param endpoint endpoint from which to identify the AWS Region code.
+     * @return {@link Region} for the AWS Region code contained within the endpoint.
+     * @throws {@link IllegalArgumentException} if no valid AWS Region code can be found within endpoint.
+     */
+    private static Region getRegionFromIotEndpoint(String endpoint) {
+        String[] parts = endpoint.toLowerCase().split(TOKENIZE_ENDPOINT_PATTERN);
+        Region region;
+
+        for (String part : parts) {
+            region = Region.getRegion(part);
+
+            if (region != null) {
+                return region;
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot find AWS Region code within endpoint");
     }
 
     private String getEndpointWithHttpPort() {
@@ -1297,7 +1332,7 @@ public class AWSIotMqttManager {
                     public void onSuccess(IMqttToken asyncActionToken) {
                         LOGGER.info("Reconnect successful");
                         connectionState = MqttManagerConnectionState.Connected;
-
+                        sessionPresent = asyncActionToken.getSessionPresent();
                         lastConnackTime = getSystemTimeMs();
 
                         if (needResubscribe) {
@@ -1306,13 +1341,13 @@ public class AWSIotMqttManager {
                         if (mqttMessageQueue.size() > 0) {
                             publishMessagesFromQueue();
                         }
-
                         userConnectionCallback();
                     }
 
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable e) {
                         LOGGER.warn("Reconnect failed ", e);
+                        sessionPresent = asyncActionToken.getSessionPresent();
                         handleConnectionFailure(e);
                     }
                 });
@@ -1446,11 +1481,13 @@ public class AWSIotMqttManager {
                     mqttClient.subscribe(topic, qos.asInt(), null, new IMqttActionListener() {
                         @Override
                         public void onSuccess(IMqttToken asyncActionToken) {
+                            sessionPresent = asyncActionToken.getSessionPresent();
                             subscriptionStatusCallback.onSuccess();
                         }
 
                         @Override
                         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            sessionPresent = asyncActionToken.getSessionPresent();
                             subscriptionStatusCallback.onFailure(exception);
                         }
                     });
@@ -1966,5 +2003,12 @@ public class AWSIotMqttManager {
          * MQTT CONNECT message.
          */
         USERNAME_PASSWORD;
+    }
+
+    /**
+     * @return the session present flag from a connack
+     */
+    public boolean getSessionPresent() {
+        return sessionPresent;
     }
 }

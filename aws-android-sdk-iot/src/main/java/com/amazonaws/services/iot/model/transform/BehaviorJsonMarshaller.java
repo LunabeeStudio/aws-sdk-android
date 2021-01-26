@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -44,6 +45,11 @@ class BehaviorJsonMarshaller {
             BehaviorCriteria criteria = behavior.getCriteria();
             jsonWriter.name("criteria");
             BehaviorCriteriaJsonMarshaller.getInstance().marshall(criteria, jsonWriter);
+        }
+        if (behavior.getSuppressAlerts() != null) {
+            Boolean suppressAlerts = behavior.getSuppressAlerts();
+            jsonWriter.name("suppressAlerts");
+            jsonWriter.value(suppressAlerts);
         }
         jsonWriter.endObject();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -92,6 +92,16 @@ public class PublishRequestMarshaller implements
                 messageAttributesIndex++;
             }
             prefix = messageAttributesPrefix;
+        }
+        if (publishRequest.getMessageDeduplicationId() != null) {
+            prefix = "MessageDeduplicationId";
+            String messageDeduplicationId = publishRequest.getMessageDeduplicationId();
+            request.addParameter(prefix, StringUtils.fromString(messageDeduplicationId));
+        }
+        if (publishRequest.getMessageGroupId() != null) {
+            prefix = "MessageGroupId";
+            String messageGroupId = publishRequest.getMessageGroupId();
+            request.addParameter(prefix, StringUtils.fromString(messageGroupId));
         }
 
         return request;

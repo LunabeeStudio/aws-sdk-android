@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -50,6 +51,13 @@ class ActiveViolationJsonMarshaller {
             MetricValue lastViolationValue = activeViolation.getLastViolationValue();
             jsonWriter.name("lastViolationValue");
             MetricValueJsonMarshaller.getInstance().marshall(lastViolationValue, jsonWriter);
+        }
+        if (activeViolation.getViolationEventAdditionalInfo() != null) {
+            ViolationEventAdditionalInfo violationEventAdditionalInfo = activeViolation
+                    .getViolationEventAdditionalInfo();
+            jsonWriter.name("violationEventAdditionalInfo");
+            ViolationEventAdditionalInfoJsonMarshaller.getInstance().marshall(
+                    violationEventAdditionalInfo, jsonWriter);
         }
         if (activeViolation.getLastViolationTime() != null) {
             java.util.Date lastViolationTime = activeViolation.getLastViolationTime();

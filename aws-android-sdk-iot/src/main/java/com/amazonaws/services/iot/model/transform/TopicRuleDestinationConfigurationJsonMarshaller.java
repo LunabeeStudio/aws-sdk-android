@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -32,6 +33,13 @@ class TopicRuleDestinationConfigurationJsonMarshaller {
             jsonWriter.name("httpUrlConfiguration");
             HttpUrlDestinationConfigurationJsonMarshaller.getInstance().marshall(
                     httpUrlConfiguration, jsonWriter);
+        }
+        if (topicRuleDestinationConfiguration.getVpcConfiguration() != null) {
+            VpcDestinationConfiguration vpcConfiguration = topicRuleDestinationConfiguration
+                    .getVpcConfiguration();
+            jsonWriter.name("vpcConfiguration");
+            VpcDestinationConfigurationJsonMarshaller.getInstance().marshall(vpcConfiguration,
+                    jsonWriter);
         }
         jsonWriter.endObject();
     }

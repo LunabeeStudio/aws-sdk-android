@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ public class LogFactory {
      * Log tag longer than 23 will cause it to break on Android API level <= 23.
      */
     private static final String TAG = LogFactory.class.getSimpleName();
-    private static final String APACHE_COMMONS_LOGGING_LOGFACTORY = "org.apache.commons.logging.LogFactory";
+    private static final Map<String, Log> logMap = new HashMap<>();
+
     private static Level globalLogLevel = null;
-    private static Map<String, Log> logMap = new HashMap<String, Log>();
 
     /**
      * Get the logger for the clazz
@@ -39,7 +39,7 @@ public class LogFactory {
      *
      * @return logger
      */
-    public static synchronized Log getLog(Class clazz) {
+    public static synchronized Log getLog(Class<?> clazz) {
         return getLog(getTruncatedLogTag(clazz.getSimpleName()));
     }
 
@@ -53,20 +53,16 @@ public class LogFactory {
         logTag = getTruncatedLogTag(logTag);
 
         Log log = logMap.get(logTag);
-        if (log == null) {
-            if (checkApacheCommonsLoggingExists()) {
-                try {
-                    log = new ApacheCommonsLogging(logTag);
-                    logMap.put(logTag, log);
-                } catch (Exception e) {
-                    android.util.Log.w(TAG, "Could not create log from " + APACHE_COMMONS_LOGGING_LOGFACTORY, e);
-                }
-            }
-            if (log == null) {
-                log = new AndroidLog(logTag);
-                logMap.put(logTag, log);
-            }
+        if (log != null) {
+            return log;
         }
+
+        if (Environment.isJUnitTest()) {
+            log = new ConsoleLog(logTag);
+        } else {
+            log = new AndroidLog(logTag);
+        }
+        logMap.put(logTag, log);
         return log;
     }
 
@@ -78,18 +74,6 @@ public class LogFactory {
         return globalLogLevel;
     }
 
-    private static boolean checkApacheCommonsLoggingExists() {
-        try {
-            Class<?> classObject = Class.forName(APACHE_COMMONS_LOGGING_LOGFACTORY);
-            return true;
-        } catch (ClassNotFoundException cnfe) {
-            return false;
-        } catch (Exception ex) {
-            android.util.Log.e(TAG, ex.getMessage());
-            return false;
-        }
-    }
-
     /**
      * Truncate log tag to be within 23 characters in length as required by Android on certain API levels.
      *
@@ -98,15 +82,10 @@ public class LogFactory {
      */
     private static String getTruncatedLogTag(String logTag) {
         if (logTag.length() > 23) {
-            if (checkApacheCommonsLoggingExists()) {
-                Log log = new ApacheCommonsLogging(TAG);
-                log.warn("Truncating log tag length as it exceed 23, the limit imposed by Android on certain API Levels");
-            } else {
-                android.util.Log.w(TAG, "Truncating log tag length as it exceed 23, the limit imposed by Android on certain API Levels");
-            }
+            getLog(TAG).warn("Truncating log tag length as it exceed 23, " +
+                    "the limit imposed by Android on certain API Levels");
             logTag = logTag.substring(0, 23);
         }
-
         return logTag;
     }
 
@@ -120,7 +99,7 @@ public class LogFactory {
         ERROR(4),
         OFF(Integer.MAX_VALUE);
 
-        private int value;
+        private final int value;
 
         public int getValue()
         {

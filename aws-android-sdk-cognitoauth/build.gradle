@@ -1,24 +1,21 @@
+apply from: rootProject.file('publishing.gradle')
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 1
-        versionName '1.0'
+        minSdkVersion 16 // androidx.browser
+        targetSdkVersion 29
+
+        manifestPlaceholders = [
+                'authRedirectScheme': 'FOR_LIBRARY_CONSUMER_TO_OVERRIDE'
+        ]
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    lintOptions {
-        abortOnError false
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -26,9 +23,7 @@ dependencies {
     api (project(':aws-android-sdk-core')) {
         exclude group: 'com.google.android', module: 'android'
     }
+    implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider-asf:1.0.0'
-    implementation 'com.android.support:customtabs:25.4.0'
-
-    testImplementation 'junit:junit:4.12'
 }
 

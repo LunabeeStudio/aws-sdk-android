@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,9 +24,55 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Gets a list of all grants for the specified customer master key (CMK).
  * </p>
  * <p>
- * To perform this operation on a CMK in a different AWS account, specify the
- * key ARN in the value of the <code>KeyId</code> parameter.
+ * You must specify the CMK in all requests. You can filter the grant list by
+ * grant ID or grantee principal.
  * </p>
+ * <note>
+ * <p>
+ * The <code>GranteePrincipal</code> field in the <code>ListGrants</code>
+ * response usually contains the user or role designated as the grantee
+ * principal in the grant. However, when the grantee principal in the grant is
+ * an AWS service, the <code>GranteePrincipal</code> field contains the <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+ * >service principal</a>, which might represent several different grantee
+ * principals.
+ * </p>
+ * </note>
+ * <p>
+ * <b>Cross-account use</b>: Yes. To perform this operation on a CMK in a
+ * different AWS account, specify the key ARN in the value of the
+ * <code>KeyId</code> parameter.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:ListGrants</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>CreateGrant</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListRetirableGrants</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>RetireGrant</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>RevokeGrant</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 public class ListGrantsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -60,7 +106,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Returns only grants for the specified customer master key (CMK). This
+     * parameter is required.
      * </p>
      * <p>
      * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
@@ -91,6 +138,29 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      */
     private String keyId;
+
+    /**
+     * <p>
+     * Returns only the grant with the specified grant ID. The grant ID uniquely
+     * identifies the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     */
+    private String grantId;
+
+    /**
+     * <p>
+     * Returns only grants where the specified principal is the grantee
+     * principal for the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
+     */
+    private String granteePrincipal;
 
     /**
      * <p>
@@ -261,7 +331,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Returns only grants for the specified customer master key (CMK). This
+     * parameter is required.
      * </p>
      * <p>
      * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
@@ -292,7 +363,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key (CMK).
+     *         Returns only grants for the specified customer master key (CMK).
+     *         This parameter is required.
      *         </p>
      *         <p>
      *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
@@ -326,7 +398,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Returns only grants for the specified customer master key (CMK). This
+     * parameter is required.
      * </p>
      * <p>
      * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
@@ -357,7 +430,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Returns only grants for the specified customer master key
+     *            (CMK). This parameter is required.
      *            </p>
      *            <p>
      *            Specify the key ID or the Amazon Resource Name (ARN) of the
@@ -391,7 +465,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Returns only grants for the specified customer master key (CMK). This
+     * parameter is required.
      * </p>
      * <p>
      * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
@@ -425,7 +500,8 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Returns only grants for the specified customer master key
+     *            (CMK). This parameter is required.
      *            </p>
      *            <p>
      *            Specify the key ID or the Amazon Resource Name (ARN) of the
@@ -461,6 +537,129 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
     }
 
     /**
+     * <p>
+     * Returns only the grant with the specified grant ID. The grant ID uniquely
+     * identifies the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     *
+     * @return <p>
+     *         Returns only the grant with the specified grant ID. The grant ID
+     *         uniquely identifies the grant.
+     *         </p>
+     */
+    public String getGrantId() {
+        return grantId;
+    }
+
+    /**
+     * <p>
+     * Returns only the grant with the specified grant ID. The grant ID uniquely
+     * identifies the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     *
+     * @param grantId <p>
+     *            Returns only the grant with the specified grant ID. The grant
+     *            ID uniquely identifies the grant.
+     *            </p>
+     */
+    public void setGrantId(String grantId) {
+        this.grantId = grantId;
+    }
+
+    /**
+     * <p>
+     * Returns only the grant with the specified grant ID. The grant ID uniquely
+     * identifies the grant.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     *
+     * @param grantId <p>
+     *            Returns only the grant with the specified grant ID. The grant
+     *            ID uniquely identifies the grant.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ListGrantsRequest withGrantId(String grantId) {
+        this.grantId = grantId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Returns only grants where the specified principal is the grantee
+     * principal for the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
+     *
+     * @return <p>
+     *         Returns only grants where the specified principal is the grantee
+     *         principal for the grant.
+     *         </p>
+     */
+    public String getGranteePrincipal() {
+        return granteePrincipal;
+    }
+
+    /**
+     * <p>
+     * Returns only grants where the specified principal is the grantee
+     * principal for the grant.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
+     *
+     * @param granteePrincipal <p>
+     *            Returns only grants where the specified principal is the
+     *            grantee principal for the grant.
+     *            </p>
+     */
+    public void setGranteePrincipal(String granteePrincipal) {
+        this.granteePrincipal = granteePrincipal;
+    }
+
+    /**
+     * <p>
+     * Returns only grants where the specified principal is the grantee
+     * principal for the grant.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
+     *
+     * @param granteePrincipal <p>
+     *            Returns only grants where the specified principal is the
+     *            grantee principal for the grant.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ListGrantsRequest withGranteePrincipal(String granteePrincipal) {
+        this.granteePrincipal = granteePrincipal;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -476,7 +675,11 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
         if (getMarker() != null)
             sb.append("Marker: " + getMarker() + ",");
         if (getKeyId() != null)
-            sb.append("KeyId: " + getKeyId());
+            sb.append("KeyId: " + getKeyId() + ",");
+        if (getGrantId() != null)
+            sb.append("GrantId: " + getGrantId() + ",");
+        if (getGranteePrincipal() != null)
+            sb.append("GranteePrincipal: " + getGranteePrincipal());
         sb.append("}");
         return sb.toString();
     }
@@ -489,6 +692,9 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
         hashCode = prime * hashCode + ((getLimit() == null) ? 0 : getLimit().hashCode());
         hashCode = prime * hashCode + ((getMarker() == null) ? 0 : getMarker().hashCode());
         hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
+        hashCode = prime * hashCode + ((getGrantId() == null) ? 0 : getGrantId().hashCode());
+        hashCode = prime * hashCode
+                + ((getGranteePrincipal() == null) ? 0 : getGranteePrincipal().hashCode());
         return hashCode;
     }
 
@@ -514,6 +720,15 @@ public class ListGrantsRequest extends AmazonWebServiceRequest implements Serial
         if (other.getKeyId() == null ^ this.getKeyId() == null)
             return false;
         if (other.getKeyId() != null && other.getKeyId().equals(this.getKeyId()) == false)
+            return false;
+        if (other.getGrantId() == null ^ this.getGrantId() == null)
+            return false;
+        if (other.getGrantId() != null && other.getGrantId().equals(this.getGrantId()) == false)
+            return false;
+        if (other.getGranteePrincipal() == null ^ this.getGranteePrincipal() == null)
+            return false;
+        if (other.getGranteePrincipal() != null
+                && other.getGranteePrincipal().equals(this.getGranteePrincipal()) == false)
             return false;
         return true;
     }

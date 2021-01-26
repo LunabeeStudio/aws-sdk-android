@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -57,6 +58,13 @@ class BehaviorCriteriaJsonMarshaller {
             StatisticalThreshold statisticalThreshold = behaviorCriteria.getStatisticalThreshold();
             jsonWriter.name("statisticalThreshold");
             StatisticalThresholdJsonMarshaller.getInstance().marshall(statisticalThreshold,
+                    jsonWriter);
+        }
+        if (behaviorCriteria.getMlDetectionConfig() != null) {
+            MachineLearningDetectionConfig mlDetectionConfig = behaviorCriteria
+                    .getMlDetectionConfig();
+            jsonWriter.name("mlDetectionConfig");
+            MachineLearningDetectionConfigJsonMarshaller.getInstance().marshall(mlDetectionConfig,
                     jsonWriter);
         }
         jsonWriter.endObject();

@@ -89,8 +89,14 @@ class ActionJsonUnmarshaller implements Unmarshaller<Action, JsonUnmarshallerCon
             } else if (name.equals("stepFunctions")) {
                 action.setStepFunctions(StepFunctionsActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("timestream")) {
+                action.setTimestream(TimestreamActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("http")) {
                 action.setHttp(HttpActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("kafka")) {
+                action.setKafka(KafkaActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

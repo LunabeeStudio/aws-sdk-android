@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,7 +32,9 @@ import java.io.Serializable;
  * restriction, which is currently 256 KB (262,144 bytes). For more information,
  * see <a
  * href="https://docs.aws.amazon.com/sns/latest/dg/SNSMessageAttributes.html"
- * >Using Amazon SNS Message Attributes</a>.
+ * >Amazon SNS message attributes</a> and <a
+ * href="https://docs.aws.amazon.com/sns/latest/dg/sms_publish-to-phone.html"
+ * >Publishing to a mobile phone</a> in the <i>Amazon SNS Developer Guide.</i>
  * </p>
  */
 public class MessageAttributeValue implements Serializable {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sends a message to an Amazon SNS topic or sends a text message (SMS message)
- * directly to a phone number.
+ * Sends a message to an Amazon SNS topic, a text message (SMS message) directly
+ * to a phone number, or a message to a mobile platform endpoint (when you
+ * specify the <code>TargetArn</code>).
  * </p>
  * <p>
  * If you send a message to a topic, Amazon SNS delivers the message to each
@@ -44,6 +45,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * "https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-custommessage.html"
  * >Send Custom Platform-Specific Payloads in Messages to Mobile Devices</a>.
  * </p>
+ * <important>
+ * <p>
+ * You can publish messages only to topics and endpoints in the same AWS Region.
+ * </p>
+ * </important>
  */
 public class PublishRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -231,6 +237,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * </p>
      */
     private java.util.Map<String, MessageAttributeValue> messageAttributes = new java.util.HashMap<String, MessageAttributeValue>();
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     */
+    private String messageDeduplicationId;
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     */
+    private String messageGroupId;
 
     /**
      * Default constructor for PublishRequest object. Callers should use the
@@ -1695,6 +1742,266 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
     }
 
     /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     *
+     * @return <p>
+     *         This parameter applies only to FIFO (first-in-first-out) topics.
+     *         The <code>MessageDeduplicationId</code> can contain up to 128
+     *         alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *         <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *         </p>
+     *         <p>
+     *         Every message must have a unique
+     *         <code>MessageDeduplicationId</code>, which is a token used for
+     *         deduplication of sent messages. If a message with a particular
+     *         <code>MessageDeduplicationId</code> is sent successfully, any
+     *         message sent with the same <code>MessageDeduplicationId</code>
+     *         during the 5-minute deduplication interval is treated as a
+     *         duplicate.
+     *         </p>
+     *         <p>
+     *         If the topic has <code>ContentBasedDeduplication</code> set, the
+     *         system generates a <code>MessageDeduplicationId</code> based on
+     *         the contents of the message. Your
+     *         <code>MessageDeduplicationId</code> overrides the generated one.
+     *         </p>
+     */
+    public String getMessageDeduplicationId() {
+        return messageDeduplicationId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     *
+     * @param messageDeduplicationId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageDeduplicationId</code> can contain up
+     *            to 128 alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            Every message must have a unique
+     *            <code>MessageDeduplicationId</code>, which is a token used for
+     *            deduplication of sent messages. If a message with a particular
+     *            <code>MessageDeduplicationId</code> is sent successfully, any
+     *            message sent with the same <code>MessageDeduplicationId</code>
+     *            during the 5-minute deduplication interval is treated as a
+     *            duplicate.
+     *            </p>
+     *            <p>
+     *            If the topic has <code>ContentBasedDeduplication</code> set,
+     *            the system generates a <code>MessageDeduplicationId</code>
+     *            based on the contents of the message. Your
+     *            <code>MessageDeduplicationId</code> overrides the generated
+     *            one.
+     *            </p>
+     */
+    public void setMessageDeduplicationId(String messageDeduplicationId) {
+        this.messageDeduplicationId = messageDeduplicationId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param messageDeduplicationId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageDeduplicationId</code> can contain up
+     *            to 128 alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            Every message must have a unique
+     *            <code>MessageDeduplicationId</code>, which is a token used for
+     *            deduplication of sent messages. If a message with a particular
+     *            <code>MessageDeduplicationId</code> is sent successfully, any
+     *            message sent with the same <code>MessageDeduplicationId</code>
+     *            during the 5-minute deduplication interval is treated as a
+     *            duplicate.
+     *            </p>
+     *            <p>
+     *            If the topic has <code>ContentBasedDeduplication</code> set,
+     *            the system generates a <code>MessageDeduplicationId</code>
+     *            based on the contents of the message. Your
+     *            <code>MessageDeduplicationId</code> overrides the generated
+     *            one.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PublishRequest withMessageDeduplicationId(String messageDeduplicationId) {
+        this.messageDeduplicationId = messageDeduplicationId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     *
+     * @return <p>
+     *         This parameter applies only to FIFO (first-in-first-out) topics.
+     *         The <code>MessageGroupId</code> can contain up to 128
+     *         alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *         <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *         </p>
+     *         <p>
+     *         The <code>MessageGroupId</code> is a tag that specifies that a
+     *         message belongs to a specific message group. Messages that belong
+     *         to the same message group are processed in a FIFO manner
+     *         (however, messages in different message groups might be processed
+     *         out of order). Every message must include a
+     *         <code>MessageGroupId</code>.
+     *         </p>
+     */
+    public String getMessageGroupId() {
+        return messageGroupId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     *
+     * @param messageGroupId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageGroupId</code> can contain up to 128
+     *            alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            The <code>MessageGroupId</code> is a tag that specifies that a
+     *            message belongs to a specific message group. Messages that
+     *            belong to the same message group are processed in a FIFO
+     *            manner (however, messages in different message groups might be
+     *            processed out of order). Every message must include a
+     *            <code>MessageGroupId</code>.
+     *            </p>
+     */
+    public void setMessageGroupId(String messageGroupId) {
+        this.messageGroupId = messageGroupId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * (a-z, A-Z, 0-9) and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param messageGroupId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageGroupId</code> can contain up to 128
+     *            alphanumeric characters (a-z, A-Z, 0-9) and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            The <code>MessageGroupId</code> is a tag that specifies that a
+     *            message belongs to a specific message group. Messages that
+     *            belong to the same message group are processed in a FIFO
+     *            manner (however, messages in different message groups might be
+     *            processed out of order). Every message must include a
+     *            <code>MessageGroupId</code>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PublishRequest withMessageGroupId(String messageGroupId) {
+        this.messageGroupId = messageGroupId;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -1718,7 +2025,11 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
         if (getMessageStructure() != null)
             sb.append("MessageStructure: " + getMessageStructure() + ",");
         if (getMessageAttributes() != null)
-            sb.append("MessageAttributes: " + getMessageAttributes());
+            sb.append("MessageAttributes: " + getMessageAttributes() + ",");
+        if (getMessageDeduplicationId() != null)
+            sb.append("MessageDeduplicationId: " + getMessageDeduplicationId() + ",");
+        if (getMessageGroupId() != null)
+            sb.append("MessageGroupId: " + getMessageGroupId());
         sb.append("}");
         return sb.toString();
     }
@@ -1738,6 +2049,12 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
                 + ((getMessageStructure() == null) ? 0 : getMessageStructure().hashCode());
         hashCode = prime * hashCode
                 + ((getMessageAttributes() == null) ? 0 : getMessageAttributes().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getMessageDeduplicationId() == null) ? 0 : getMessageDeduplicationId()
+                        .hashCode());
+        hashCode = prime * hashCode
+                + ((getMessageGroupId() == null) ? 0 : getMessageGroupId().hashCode());
         return hashCode;
     }
 
@@ -1783,6 +2100,16 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
             return false;
         if (other.getMessageAttributes() != null
                 && other.getMessageAttributes().equals(this.getMessageAttributes()) == false)
+            return false;
+        if (other.getMessageDeduplicationId() == null ^ this.getMessageDeduplicationId() == null)
+            return false;
+        if (other.getMessageDeduplicationId() != null
+                && other.getMessageDeduplicationId().equals(this.getMessageDeduplicationId()) == false)
+            return false;
+        if (other.getMessageGroupId() == null ^ this.getMessageGroupId() == null)
+            return false;
+        if (other.getMessageGroupId() != null
+                && other.getMessageGroupId().equals(this.getMessageGroupId()) == false)
             return false;
         return true;
     }

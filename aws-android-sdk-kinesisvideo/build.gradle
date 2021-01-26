@@ -1,24 +1,13 @@
+apply from: rootProject.file('publishing.gradle')
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName '1.0'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    lintOptions {
-        abortOnError false
+        minSdkVersion 24 // https://developer.android.com/reference/javax/net/ssl/X509ExtendedTrustManager
+        targetSdkVersion 29
     }
 
     packagingOptions {
@@ -30,8 +19,9 @@ dependencies {
     api (project(':aws-android-sdk-core')) {
         exclude group: 'com.google.android', module: 'android'
     }
-    implementation 'com.android.support:support-annotations:24.2.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
     //noinspection DuplicatePlatformClasses
-    implementation 'org.apache.httpcomponents:httpclient:4.5.3'
+    compileOnly 'org.apache.httpcomponents:httpclient:4.5.12'
+    testImplementation 'junit:junit:4.13.1'
 }
 

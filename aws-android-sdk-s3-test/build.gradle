@@ -2,24 +2,15 @@ apply plugin: 'com.android.library'
 apply plugin: 'devicefarm'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName '1.0'
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        minSdkVersion 14 // ext junit
+        targetSdkVersion 29
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    useLibrary 'org.apache.http.legacy'
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
@@ -33,8 +24,9 @@ dependencies {
         exclude group: 'com.google.android', module: 'android'
     }
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support:appcompat-v7:27.0.0'
+    androidTestImplementation 'androidx.test:core:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'org.apache.commons:commons-io:1.3.2'
     androidTestImplementation project(':aws-android-sdk-testutils')
 }

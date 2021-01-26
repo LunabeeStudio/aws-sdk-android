@@ -61,10 +61,6 @@ public class AWSKeyValueStore {
     // SecureRandom is expensive.
     private SecureRandom secureRandom;
 
-    private static final int ANDROID_API_LEVEL_23 = 23;
-    private static final int ANDROID_API_LEVEL_18 = 18;
-    private static final int ANDROID_API_LEVEL_10 = 10;
-
     private static final String CIPHER_AES_GCM_NOPADDING = "AES/GCM/NoPadding";
     private static final int CIPHER_AES_GCM_NOPADDING_IV_LENGTH_IN_BYTES = 12;
     private static final int CIPHER_AES_GCM_NOPADDING_TAG_LENGTH_LENGTH_IN_BITS = 128;
@@ -102,8 +98,6 @@ public class AWSKeyValueStore {
 
     private static final int AWS_KEY_VALUE_STORE_VERSION = 1;
 
-    private int apiLevel;
-
     private static Map<String, String> getCacheForKey(String key) {
         if (cacheFactory.containsKey(key)) {
             return cacheFactory.get(key);
@@ -129,7 +123,6 @@ public class AWSKeyValueStore {
         this.secureRandom = new SecureRandom();
         this.cache = getCacheForKey(sharedPreferencesName);
         this.sharedPreferencesName = sharedPreferencesName;
-        this.apiLevel = Build.VERSION.SDK_INT;
         this.context = context;
         setPersistenceEnabled(isPersistenceEnabled);
     }
@@ -156,7 +149,7 @@ public class AWSKeyValueStore {
 
                 initKeyProviderBasedOnAPILevel();
 
-                logger.info("Detected Android API Level = " + apiLevel);
+                logger.info("Detected Android API Level = " + Build.VERSION.SDK_INT);
                 logger.info("Creating the AWSKeyValueStore with key for " +
                         "sharedPreferencesForData = " + sharedPreferencesName);
 
@@ -187,7 +180,11 @@ public class AWSKeyValueStore {
      */
     public synchronized boolean contains(final String dataKey) {
         if (isPersistenceEnabled) {
-            return sharedPreferencesForData.contains(getDataKeyUsedInPersistentStore(dataKey));
+            if (cache.containsKey(dataKey)) {
+                return true;
+            } else {
+                return sharedPreferencesForData.contains(getDataKeyUsedInPersistentStore(dataKey));
+            }
         } else {
             return cache.containsKey(dataKey);
         }
@@ -208,7 +205,7 @@ public class AWSKeyValueStore {
             return null;
         }
 
-        if (!isPersistenceEnabled) {
+        if (cache.containsKey(dataKey) || !isPersistenceEnabled) {
             return cache.get(dataKey);
         }
 
@@ -471,11 +468,11 @@ public class AWSKeyValueStore {
     }
 
     private AlgorithmParameterSpec getAlgorithmParameterSpecForIV(byte[] iv) {
-        return
-            //@apiLevel23Start
-            apiLevel >= ANDROID_API_LEVEL_23 ? new GCMParameterSpec(CIPHER_AES_GCM_NOPADDING_TAG_LENGTH_LENGTH_IN_BITS, iv) :
-            //@apiLevel23End
-            new IvParameterSpec(iv);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return new GCMParameterSpec(CIPHER_AES_GCM_NOPADDING_TAG_LENGTH_LENGTH_IN_BITS, iv);
+        } else {
+            return new IvParameterSpec(iv);
+        }
     }
 
     private synchronized Key retrieveEncryptionKey(final String encryptionKeyAlias) {
@@ -516,20 +513,14 @@ public class AWSKeyValueStore {
     }
 
     private String getEncryptionKeyAlias() {
-        if (apiLevel >= ANDROID_API_LEVEL_23) {
-            //@apiLevel23Start
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return sharedPreferencesName +
                     KeyProvider23.AWS_KEY_VALUE_STORE_VERSION_1_KEY_STORE_ALIAS_FOR_AES_SUFFIX;
-            //@apiLevel23End
-        } else if (apiLevel >= ANDROID_API_LEVEL_18) {
-            //@apiLevel18Start
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             return sharedPreferencesName +
                     KeyProvider18.AWS_KEY_VALUE_STORE_VERSION_1_KEY_STORE_ALIAS_FOR_RSA_SUFFIX;
-            //@apiLevel18End
-        } else if (apiLevel >= ANDROID_API_LEVEL_10) {
-            //@apiLevel10Start
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
             return KeyProvider10.KEY_ALIAS;
-            //@apiLevel10End
         } else {
             logger.error("API Level " +
                     String.valueOf(Build.VERSION.SDK_INT) +
@@ -545,18 +536,12 @@ public class AWSKeyValueStore {
      * based on the Android API Level.
      */
     private void initKeyProviderBasedOnAPILevel() {
-        if (apiLevel >= ANDROID_API_LEVEL_23) {
-            //@apiLevel23Start
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             keyProvider = new KeyProvider23();
-            //@apiLevel23End
-        } else if (apiLevel >= ANDROID_API_LEVEL_18) {
-            //@apiLevel18Start
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             keyProvider = new KeyProvider18(context, sharedPreferencesForEncryptionMaterials);
-            //@apiLevel18End
-        } else if (apiLevel >= ANDROID_API_LEVEL_10) {
-            //@apiLevel10Start
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
             keyProvider = new KeyProvider10(sharedPreferencesForEncryptionMaterials);
-            //@apiLevel10End
         } else {
             logger.error("API Level " +
                     String.valueOf(Build.VERSION.SDK_INT) +

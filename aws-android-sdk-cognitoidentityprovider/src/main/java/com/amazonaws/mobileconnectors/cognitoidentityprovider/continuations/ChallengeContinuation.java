@@ -46,6 +46,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
      */
     public static final boolean RUN_IN_CURRENT = false;
 
+    protected final Map<String, String> challengeResponses;
     private final RespondToAuthChallengeResult challengeResult;
     private final Context context;
     private final String clientId;
@@ -54,8 +55,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
     private final String username;
     private final AuthenticationHandler callback;
     private final boolean runInBackground;
-    protected Map<String, String> challengeResponses;
-    protected Map<String, String> clientMetaData;
+    private final Map<String, String> clientMetaData;
 
     /**
      * Constructs a continuation for a challenge to be presented to the user.
@@ -86,7 +86,8 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         this.username = username;
         this.callback = callback;
         this.runInBackground = runInBackground;
-        challengeResponses = new HashMap<String, String>();
+        this.challengeResponses = new HashMap<>();
+        this.clientMetaData = new HashMap<>();
     }
 
     /**
@@ -97,7 +98,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
      * @return ClientMetadata
      */
     public Map<String, String> getClientMetaData() {
-        return clientMetaData;
+        return Collections.unmodifiableMap(clientMetaData);
     }
 
     /**
@@ -105,7 +106,10 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
      * @param clientMetaData MetaData to be passed as input to the lambda triggers.
      */
     public void setClientMetaData(Map<String, String> clientMetaData) {
-        this.clientMetaData = Collections.unmodifiableMap(clientMetaData);
+        this.clientMetaData.clear();
+        if (clientMetaData != null) {
+            this.clientMetaData.putAll(clientMetaData);
+        }
     }
 
     /**
@@ -161,7 +165,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         respondToAuthChallengeRequest.setSession(challengeResult.getSession());
         respondToAuthChallengeRequest.setClientId(clientId);
         respondToAuthChallengeRequest.setChallengeResponses(challengeResponses);
-        if (clientMetaData != null) {
+        if (!clientMetaData.isEmpty()) {
             respondToAuthChallengeRequest.setClientMetadata(clientMetaData);
         }
         if (runInBackground) {
@@ -171,7 +175,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
                     final Handler handler = new Handler(context.getMainLooper());
                     Runnable nextStep;
                     try {
-                        nextStep = user.respondToChallenge(respondToAuthChallengeRequest, callback, RUN_IN_BACKGROUND);
+                        nextStep = user.respondToChallenge(clientMetaData, respondToAuthChallengeRequest, callback, RUN_IN_BACKGROUND);
                     } catch (final Exception e) {
                         nextStep = new Runnable() {
                             @Override
@@ -186,7 +190,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         } else {
             Runnable nextStep;
             try {
-                nextStep = user.respondToChallenge(respondToAuthChallengeRequest, callback, RUN_IN_CURRENT);
+                nextStep = user.respondToChallenge(clientMetaData, respondToAuthChallengeRequest, callback, RUN_IN_CURRENT);
             } catch (final Exception e) {
                 nextStep = new Runnable() {
                     @Override

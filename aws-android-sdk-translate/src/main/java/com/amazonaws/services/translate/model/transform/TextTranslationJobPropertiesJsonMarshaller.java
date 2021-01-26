@@ -16,6 +16,7 @@
 package com.amazonaws.services.translate.model.transform;
 
 import com.amazonaws.services.translate.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -71,6 +72,18 @@ class TextTranslationJobPropertiesJsonMarshaller {
             for (String terminologyNamesItem : terminologyNames) {
                 if (terminologyNamesItem != null) {
                     jsonWriter.value(terminologyNamesItem);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (textTranslationJobProperties.getParallelDataNames() != null) {
+            java.util.List<String> parallelDataNames = textTranslationJobProperties
+                    .getParallelDataNames();
+            jsonWriter.name("ParallelDataNames");
+            jsonWriter.beginArray();
+            for (String parallelDataNamesItem : parallelDataNames) {
+                if (parallelDataNamesItem != null) {
+                    jsonWriter.value(parallelDataNamesItem);
                 }
             }
             jsonWriter.endArray();

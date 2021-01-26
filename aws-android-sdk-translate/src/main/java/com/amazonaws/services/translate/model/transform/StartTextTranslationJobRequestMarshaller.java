@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -107,6 +109,18 @@ public class StartTextTranslationJobRequestMarshaller implements
                 for (String terminologyNamesItem : terminologyNames) {
                     if (terminologyNamesItem != null) {
                         jsonWriter.value(terminologyNamesItem);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (startTextTranslationJobRequest.getParallelDataNames() != null) {
+                java.util.List<String> parallelDataNames = startTextTranslationJobRequest
+                        .getParallelDataNames();
+                jsonWriter.name("ParallelDataNames");
+                jsonWriter.beginArray();
+                for (String parallelDataNamesItem : parallelDataNames) {
+                    if (parallelDataNamesItem != null) {
+                        jsonWriter.value(parallelDataNamesItem);
                     }
                 }
                 jsonWriter.endArray();

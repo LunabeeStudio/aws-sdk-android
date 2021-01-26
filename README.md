@@ -1,7 +1,8 @@
 # AWS SDK for Android 
 
+[![DiscordChat](https://img.shields.io/discord/308323056592486420?logo=discord)](https://discord.gg/amplify)
 [![GitHub release](https://img.shields.io/github/release/aws-amplify/aws-sdk-android.svg)](https://github.com/aws-amplify/aws-sdk-android/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/com.amazonaws/aws-android-sdk-pom.svg)](https://search.maven.org/search?q=a:aws-android-sdk-pom)
+[![Maven Central](https://img.shields.io/maven-central/v/com.amazonaws/aws-android-sdk-core.svg)](https://search.maven.org/search?q=a:aws-android-sdk-core)
 [![CircleCI](https://circleci.com/gh/aws-amplify/aws-sdk-android.svg?style=svg)](https://circleci.com/gh/aws-amplify/aws-sdk-android)
 
 For new projects, we recommend interacting with AWS using the [Amplify Framework](https://docs.amplify.aws/start/q/integration/android).
@@ -10,7 +11,7 @@ The AWS SDK for Android is a collection of low-level libraries for direct intera
 
 ## Installation
 
-The AWS SDK for Android can be directly embedded via `.jar` files, or you can download it from the Maven Central repository, by integrating it into your Android project's Gradle files.
+The AWS SDK for Android can be directly embedded via `.aar` files, or you can download it from the Maven Central repository, by integrating it into your Android project's Gradle files.
 
 ### From Maven
 We recommend obtaining the dependency from Maven. To do so, add a dependency to your app's (module-level) `build.gradle`, in the `dependencies` section:
@@ -23,16 +24,16 @@ dependencies {
 
 Above, SERVICE might be `s3`, `ddb`, `pinpoint`, etc. A full list is provided below.
 
-### Downloading SDK Jars
+### Downloading SDK libraries
 
-You can also download a `.zip` file containg `.jar` files for each of the SDK modules, [here](https://sdk-for-android.amazonwebservices.com/latest/aws-android-sdk.zip).
+You can also download a `.zip` file containg `.aar` files for each of the SDK modules, [here](https://sdk-for-android.amazonwebservices.com/latest/aws-android-sdk.zip).
 
-Add the jar files to a folder in your project called `libs` (create one if it doesn't already exist).
+Add the aar files to a folder in your project called `libs` (create one if it doesn't already exist).
 
 Ensure that the `libs` directory is included in your module-level `build.gradle`, under the `dependencies` block:
 ```groovy
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
 }
 ```
 
@@ -46,7 +47,6 @@ dependencies {
  * auth-userpools
  * autoscaling
  * cloudwatch
- * cognito
  * cognitoauth
  * cognitoidentityprovider
  * comprehend
@@ -66,10 +66,10 @@ dependencies {
  * kms
  * lambda
  * lex
+ * location
  * logs
  * machinelearning
  * mobile-client
- * mobileanalytics
  * pinpoint
  * polly
  * rekognition
@@ -113,9 +113,51 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 ./gradlew build
 ```
 
+### Consuming Development Versions
+
+Once you've built the SDK, you can manually install the SDK
+by publishing its artifacts to your local Maven repository.
+
+The local Maven repository is usually found in your home directory at
+`~/.m2/repository`.
+
+To publish the outputs of the build, execute the following command from
+the root of the `amplify-android` project:
+
+```shell
+./gradlew publishToMavenLocal
+```
+
+After this, you can use the published development artifacts from an app.
+To do so, specify `mavenLocal()` inside the app's top-level
+`build.gradle(Project)` file:
+
+```gradle
+buildscript {
+    repositories {
+        mavenLocal() // this should ideally appear before other repositories
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal() // this should ideally appear before other repositories
+    }
+}
+```
+Then, specify `local` instead of a version number to point to mavenLocal inside `build.gradle(Module)` file:
+```
+dependencies {
+    implementation 'com.amazonaws:aws-android-sdk-SERVICE:local'
+}
+```
+
 ## Talk to Us
 
-[Come chat with us on our Discord Channel](https://discord.gg/U5XyRx).
+[Come chat with us on our Discord Channel](https://discord.gg/amplify).
 
 Report bugs to our [GitHub Issues](https://github.com/aws-amplify/aws-sdk-android/issues) page.
 

@@ -16,6 +16,7 @@
 package com.amazonaws.services.textract.model.transform;
 
 import com.amazonaws.services.textract.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -39,6 +40,11 @@ class BlockJsonMarshaller {
             String text = block.getText();
             jsonWriter.name("Text");
             jsonWriter.value(text);
+        }
+        if (block.getTextType() != null) {
+            String textType = block.getTextType();
+            jsonWriter.name("TextType");
+            jsonWriter.value(textType);
         }
         if (block.getRowIndex() != null) {
             Integer rowIndex = block.getRowIndex();

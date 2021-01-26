@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,45 @@ import com.amazonaws.AmazonWebServiceRequest;
  * >Troubleshooting a Custom Key Store</a> in the <i>AWS Key Management Service
  * Developer Guide</i>.
  * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a custom
+ * key store in a different AWS account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:CreateCustomKeyStore</a> (IAM policy).
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>ConnectCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DeleteCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeCustomKeyStores</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DisconnectCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>UpdateCustomKeyStore</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 public class CreateCustomKeyStoreRequest extends AmazonWebServiceRequest implements Serializable {
     /**
