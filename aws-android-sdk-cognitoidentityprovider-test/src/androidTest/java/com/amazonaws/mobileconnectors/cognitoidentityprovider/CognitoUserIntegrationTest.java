@@ -90,7 +90,7 @@ public class CognitoUserIntegrationTest extends CognitoUserPoolsIntegrationTestB
 
             @Override
             public void authenticationChallenge(ChallengeContinuation continuation) {
-                Log.d(TAG, "Yo, Authentication Chanllenge is called Passwordless");
+                Log.v(TAG, "Yo, Authentication Chanllenge is called Passwordless");
                 continuation.setChallengeResponse(CognitoServiceConstants.CHLG_RESP_ANSWER, "1133");
                 continuation.continueTask();
             }

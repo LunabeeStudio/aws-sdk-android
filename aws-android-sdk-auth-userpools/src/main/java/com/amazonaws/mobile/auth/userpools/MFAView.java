@@ -108,7 +108,7 @@ public class MFAView extends LinearLayout {
 
     private void setupFontFamily() {
         if (this.typeFace != null) {
-            Log.d(LOG_TAG, "Setup font in MFAView: " + this.fontFamily);
+            Log.v(LOG_TAG, "Setup font in MFAView: " + this.fontFamily);
             mfaCodeEditText.setTypeface(typeFace);
         }
     }

@@ -93,7 +93,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
     @Test
     public void testCachedAWSCredentials() throws Exception {
-        Log.d(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
+        Log.v(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
                 ApplicationProvider.getApplicationContext()
                         .getSharedPreferences("com.amazonaws.android.auth", Context.MODE_PRIVATE)
                         .getAll()
@@ -105,15 +105,15 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
         assertNull(credentialsProvider.getCachedIdentityId());
 
         assertNotNull(credentialsProvider.getCredentials());
-        Log.d(TAG, "Credentials = " + credentialsProvider.getCredentials());
+        Log.v(TAG, "Credentials = " + credentialsProvider.getCredentials());
 
         assertNotNull(credentialsProvider.getIdentityId());
-        Log.d(TAG, "Identity Id = " + credentialsProvider.getIdentityId());
+        Log.v(TAG, "Identity Id = " + credentialsProvider.getIdentityId());
 
         assertNotNull(credentialsProvider.getCachedIdentityId());
-        Log.d(TAG, "Cached Identity Id = " + credentialsProvider.getCachedIdentityId());
+        Log.v(TAG, "Cached Identity Id = " + credentialsProvider.getCachedIdentityId());
 
-        Log.d(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
+        Log.v(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
                 ApplicationProvider.getApplicationContext()
                         .getSharedPreferences("com.amazonaws.android.auth", Context.MODE_PRIVATE)
                         .getAll()
@@ -134,16 +134,16 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
         final AWSSessionCredentials credentialsBeforeRefresh = credentialsProvider.getCredentials();
         assertNotNull(credentialsBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
 
 
         final String identityIdBeforeRefresh = credentialsProvider.getIdentityId();
         assertNotNull(identityIdBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
 
         final String cachedIdentityIdBeforeRefresh = credentialsProvider.getCachedIdentityId();
         assertNotNull(cachedIdentityIdBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
 
         assertEquals(identityIdBeforeRefresh, cachedIdentityIdBeforeRefresh);
 
@@ -151,7 +151,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
         credentialsProvider.refresh();
         final AWSSessionCredentials credentialsAfterRefresh = credentialsProvider.getCredentials();
         assertNotNull(credentialsAfterRefresh);
-        Log.d(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
+        Log.v(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
         assertNotEquals(credentialsAfterRefresh.getSessionToken(), credentialsBeforeRefresh.getSessionToken());
         assertNotEquals(credentialsAfterRefresh.getAWSSecretKey(), credentialsBeforeRefresh.getAWSSecretKey());
         assertNotEquals(credentialsAfterRefresh.getAWSAccessKeyId(), credentialsBeforeRefresh.getAWSAccessKeyId());
@@ -159,12 +159,12 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
         final String identityIdAfterRefresh = credentialsProvider.getIdentityId();
         assertNotNull(identityIdAfterRefresh);
-        Log.d(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
+        Log.v(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
         assertEquals(identityIdAfterRefresh, identityIdBeforeRefresh);
 
         final String cachedIdentityIdAfterRefresh = credentialsProvider.getCachedIdentityId();
         assertNotNull(cachedIdentityIdAfterRefresh);
-        Log.d(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
+        Log.v(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
         assertEquals(cachedIdentityIdAfterRefresh, cachedIdentityIdBeforeRefresh);
 
         assertEquals(identityIdAfterRefresh, cachedIdentityIdAfterRefresh);
@@ -195,15 +195,15 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
         for (CognitoCachingCredentialsProvider cccp: credentialsProviders) {
             assertNotNull(cccp.getCredentials());
-            Log.d(TAG, "Credentials = " + cccp.getCredentials());
+            Log.v(TAG, "Credentials = " + cccp.getCredentials());
         }
 
         for (CognitoCachingCredentialsProvider cccp: credentialsProviders) {
             assertNotNull(cccp.getIdentityId());
-            Log.d(TAG, "Identity Id = " + cccp.getIdentityId());
+            Log.v(TAG, "Identity Id = " + cccp.getIdentityId());
 
             assertNotNull(cccp.getCachedIdentityId());
-            Log.d(TAG, "Cached Identity Id = " + cccp.getCachedIdentityId());
+            Log.v(TAG, "Cached Identity Id = " + cccp.getCachedIdentityId());
 
             assertEquals(cccp.getIdentityId(), cccp.getCachedIdentityId());
         }
@@ -231,16 +231,16 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
             final AWSSessionCredentials credentialsBeforeRefresh = cccp.getCredentials();
             assertNotNull(credentialsBeforeRefresh);
-            Log.d(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
+            Log.v(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
 
 
             final String identityIdBeforeRefresh = cccp.getIdentityId();
             assertNotNull(identityIdBeforeRefresh);
-            Log.d(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
+            Log.v(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
 
             final String cachedIdentityIdBeforeRefresh = cccp.getCachedIdentityId();
             assertNotNull(cachedIdentityIdBeforeRefresh);
-            Log.d(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
+            Log.v(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
 
             assertEquals(identityIdBeforeRefresh, cachedIdentityIdBeforeRefresh);
 
@@ -249,7 +249,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
             final AWSSessionCredentials credentialsAfterRefresh = cccp.getCredentials();
             assertNotNull(credentialsAfterRefresh);
-            Log.d(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
+            Log.v(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
             assertNotEquals(credentialsAfterRefresh.getSessionToken(), credentialsBeforeRefresh.getSessionToken());
             assertNotEquals(credentialsAfterRefresh.getAWSSecretKey(), credentialsBeforeRefresh.getAWSSecretKey());
             assertNotEquals(credentialsAfterRefresh.getAWSAccessKeyId(), credentialsBeforeRefresh.getAWSAccessKeyId());
@@ -257,12 +257,12 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
             final String identityIdAfterRefresh = cccp.getIdentityId();
             assertNotNull(identityIdAfterRefresh);
-            Log.d(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
+            Log.v(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
             assertEquals(identityIdAfterRefresh, identityIdBeforeRefresh);
 
             final String cachedIdentityIdAfterRefresh = cccp.getCachedIdentityId();
             assertNotNull(cachedIdentityIdAfterRefresh);
-            Log.d(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
+            Log.v(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
             assertEquals(cachedIdentityIdAfterRefresh, cachedIdentityIdBeforeRefresh);
 
             assertEquals(identityIdAfterRefresh, cachedIdentityIdAfterRefresh);
@@ -271,7 +271,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
 
     @Test
     public void testCachedAWSCredentialsPersistence() throws Exception {
-        Log.d(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
+        Log.v(TAG, "SharedPreferences keys for com.amazonaws.android.auth => " +
                 sharedPreferencesForAuth
                         .getAll()
                         .toString());
@@ -295,7 +295,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
                 Regions.US_EAST_1);
         credentialsProviders.add(persistenceCredentialsProvider);
 
-        Log.d(TAG, "Persistence check: SharedPreferences keys for com.amazonaws.android.auth => " +
+        Log.v(TAG, "Persistence check: SharedPreferences keys for com.amazonaws.android.auth => " +
                 sharedPreferencesForAuth
                         .getAll()
                         .toString());
@@ -306,13 +306,13 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
         assertNull(persistenceCredentialsProvider.getCachedIdentityId());
 
         assertNotNull(persistenceCredentialsProvider.getCredentials());
-        Log.d(TAG, "Credentials = " + persistenceCredentialsProvider.getCredentials());
+        Log.v(TAG, "Credentials = " + persistenceCredentialsProvider.getCredentials());
 
         assertNotNull(persistenceCredentialsProvider.getIdentityId());
-        Log.d(TAG, "Identity Id = " + persistenceCredentialsProvider.getIdentityId());
+        Log.v(TAG, "Identity Id = " + persistenceCredentialsProvider.getIdentityId());
 
         assertNotNull(persistenceCredentialsProvider.getCachedIdentityId());
-        Log.d(TAG, "Cached Identity Id = " + persistenceCredentialsProvider.getCachedIdentityId());
+        Log.v(TAG, "Cached Identity Id = " + persistenceCredentialsProvider.getCachedIdentityId());
 
         assertEquals(persistenceCredentialsProvider.getIdentityId(), persistenceCredentialsProvider.getCachedIdentityId());
 
@@ -513,7 +513,7 @@ public class CognitoCachingCredentialsProviderIntegrationTest extends CoreIntegr
     private void verifySharedPreferencesContents() {
         assert sharedPreferencesForAuth.getAll().keySet().size() == credentialsProviders.size() * 5;
 
-        Log.d(TAG, "SharedPreferences Keys = " +
+        Log.v(TAG, "SharedPreferences Keys = " +
                 sharedPreferencesForAuth.getAll().keySet().toString());
 
         for (int iterator = 0; iterator < credentialsProviders.size(); iterator++) {

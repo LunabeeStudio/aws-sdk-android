@@ -195,14 +195,14 @@ public class AWSKeyValueStoreIntegrationTest extends CoreIntegrationTestBase {
 
         Map<String, ?> map = sharedPreferences.getAll();
         for (String spKey : map.keySet()) {
-            Log.d(TAG, "spKey = " + spKey + "; value = " + map.get(spKey));
+            Log.v(TAG, "spKey = " + spKey + "; value = " + map.get(spKey));
         }
 
         AWSKeyValueStore keyStore = new AWSKeyValueStore(ApplicationProvider.getApplicationContext(),
                 sharedPreferencesName,
                 true);
 
-        Log.d(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
+        Log.v(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
 
         assertNull(sharedPreferences.getString(key, null));
         assertNotNull(sharedPreferences.getString(
@@ -224,7 +224,7 @@ public class AWSKeyValueStoreIntegrationTest extends CoreIntegrationTestBase {
                 sharedPreferencesName,
                 true);
 
-        Log.d(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
+        Log.v(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
         assertEquals(value, keyStore2.get(key));
     }
 
@@ -284,7 +284,7 @@ public class AWSKeyValueStoreIntegrationTest extends CoreIntegrationTestBase {
 
         Map<String, ?> map = sharedPreferences.getAll();
         for (String spKey : map.keySet()) {
-            Log.d(TAG, "spKey = " + spKey + "; value = " + map.get(spKey));
+            Log.v(TAG, "spKey = " + spKey + "; value = " + map.get(spKey));
         }
 
         // Migrate from SharedPreferences to AWSKeyValueStore
@@ -292,7 +292,7 @@ public class AWSKeyValueStoreIntegrationTest extends CoreIntegrationTestBase {
                 sharedPreferencesName,
                 true);
 
-        Log.d(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
+        Log.v(TAG, "sharedPreferencesForData = " + sharedPreferences.getAll().toString());
 
         assertNull(sharedPreferences.getString(key, null));
         assertNotNull(sharedPreferences.getString(
@@ -432,6 +432,6 @@ public class AWSKeyValueStoreIntegrationTest extends CoreIntegrationTestBase {
 
         long end = System.nanoTime();
 
-        Log.d(TAG, "KeyStore load time: " + String.valueOf(end - begin) + " ns.");
+        Log.v(TAG, "KeyStore load time: " + String.valueOf(end - begin) + " ns.");
     }
 }

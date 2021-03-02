@@ -113,7 +113,7 @@ public class ForgotPasswordView extends LinearLayout {
 
     private void setupFontFamily() {
         if (this.typeFace != null) {
-            Log.d(LOG_TAG, "Setup font in ForgotPasswordView: " + this.fontFamily);
+            Log.v(LOG_TAG, "Setup font in ForgotPasswordView: " + this.fontFamily);
             verificationCodeEditText.setTypeface(this.typeFace);
             passwordEditText.setTypeface(this.typeFace);
         }

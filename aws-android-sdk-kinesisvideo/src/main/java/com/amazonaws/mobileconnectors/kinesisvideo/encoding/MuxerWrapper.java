@@ -76,7 +76,7 @@ public class MuxerWrapper {
                 .append(extension)
                 .toString();
 
-        Log.d(TAG, "Using '" + outputFullPath + "' for output");
+        Log.v(TAG, "Using '" + outputFullPath + "' for output");
         return outputFullPath;
     }
 

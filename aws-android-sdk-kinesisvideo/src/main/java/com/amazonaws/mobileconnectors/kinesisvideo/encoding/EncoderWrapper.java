@@ -85,15 +85,15 @@ public class EncoderWrapper {
             return;
         }
 
-        Log.d(TAG, "encoding frame" + threadId());
+        Log.v(TAG, "encoding frame" + threadId());
 
         mEncoderFrameSubmitter.submitFrameToEncoder(frameImageYUV420, endOfStream);
 
-        Log.d(TAG, "frame sent to encoder" + threadId());
+        Log.v(TAG, "frame sent to encoder" + threadId());
 
         getDataFromEncoder(endOfStream);
 
-        Log.d(TAG, "frame encoded" + threadId());
+        Log.v(TAG, "frame encoded" + threadId());
     }
 
 
@@ -105,7 +105,7 @@ public class EncoderWrapper {
             switch (outputBufferId) {
                 case MediaCodec.INFO_TRY_AGAIN_LATER:
                     if (endOfStream) {
-                        Log.d(TAG, "no output available, await end of stream");
+                        Log.v(TAG, "no output available, await end of stream");
                         sleep(15);
                     }
                     stopReadingFromEncoder = true;
@@ -157,7 +157,7 @@ public class EncoderWrapper {
         }
 
         if (isEndOfStream()) {
-            Log.d(TAG, "end of stream reached");
+            Log.v(TAG, "end of stream reached");
             return;
         }
 
@@ -178,7 +178,7 @@ public class EncoderWrapper {
     }
 
     private void notifyCodecPrivateDataAvailable(final ByteBuffer codecPrivateDataBuffer) {
-        Log.d(TAG, "got codec private data");
+        Log.v(TAG, "got codec private data");
         final ByteBuffer privateData = codecPrivateDataBuffer;
         final byte[] codecPrivateDataArray = convertToArray(privateData);
         mCodecPrivateDataListener.onCodecPrivateDataAvailable(codecPrivateDataArray);
@@ -186,7 +186,7 @@ public class EncoderWrapper {
 
     private void sendEncodedFrameToProducerSDK(final ByteBuffer encodedData) {
         final long currentTime = System.currentTimeMillis();
-        Log.d(TAG, "time between frames: " + (currentTime - mLastRecordedFrameTimestamp) + "ms");
+        Log.v(TAG, "time between frames: " + (currentTime - mLastRecordedFrameTimestamp) + "ms");
         mLastRecordedFrameTimestamp = currentTime;
 
         if (mFragmentStart == 0) {
@@ -204,7 +204,7 @@ public class EncoderWrapper {
     }
 
     public void stop() {
-        Log.d(TAG, "stopping encoder");
+        Log.v(TAG, "stopping encoder");
         mIsStopped = true;
         mEncoder.stop();
         mEncoder.release();

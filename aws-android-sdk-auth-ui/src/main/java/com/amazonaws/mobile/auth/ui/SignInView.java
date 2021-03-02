@@ -169,7 +169,7 @@ public class SignInView extends LinearLayout {
         this.logoResId = DEFAULT_LOGO_IMAGE_RES_ID;
         this.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
-        Log.d(LOG_TAG, "Using defaults: backgroundColor = "
+        Log.v(LOG_TAG, "Using defaults: backgroundColor = "
             + backgroundColor + "; logoResId = " + logoResId);
 
         /**
@@ -183,8 +183,8 @@ public class SignInView extends LinearLayout {
             }
         }
 
-        Log.d(LOG_TAG, "Background Color : " + this.backgroundColor);
-        Log.d(LOG_TAG, "Logo : " + this.logoResId);
+        Log.v(LOG_TAG, "Background Color : " + this.backgroundColor);
+        Log.v(LOG_TAG, "Logo : " + this.logoResId);
     }
 
     /**
@@ -236,7 +236,7 @@ public class SignInView extends LinearLayout {
          * Use Reflection for UserPoolSignIn dependency.
          */
         if (this.config != null && this.config.getSignInUserPoolsEnabled()) {
-            Log.d(LOG_TAG, "Trying to create an instance of UserPoolSignInView");
+            Log.v(LOG_TAG, "Trying to create an instance of UserPoolSignInView");
 
             userPoolsSignInView = createDependencyObject(USER_POOL_SIGN_IN_VIEW, context, USER_POOL_SIGN_IN_IMPORT);
             if (userPoolsSignInView != null) {
@@ -494,7 +494,7 @@ public class SignInView extends LinearLayout {
             if (this.config != null) {
                 ArrayList<Class<? extends SignInButton>> signInButtons = this.config.getSignInButtons();
                 if (signInButtons == null) {
-                    Log.d(LOG_TAG, "Skipping creating the SignInButtons. No SignInbuttons were added to the view.");
+                    Log.v(LOG_TAG, "Skipping creating the SignInButtons. No SignInbuttons were added to the view.");
                     return;
                 }
 
@@ -513,7 +513,7 @@ public class SignInView extends LinearLayout {
                       }
                 }
             } else {
-                Log.d(LOG_TAG, "AuthUIConfiguration is not configured with any SignInButtons. "
+                Log.v(LOG_TAG, "AuthUIConfiguration is not configured with any SignInButtons. "
                                 + "There are no buttons to add to the view");
             }
         } catch (Exception exception) {

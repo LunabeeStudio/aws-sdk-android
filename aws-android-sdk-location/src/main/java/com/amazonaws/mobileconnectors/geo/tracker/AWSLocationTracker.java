@@ -55,7 +55,7 @@ public class AWSLocationTracker {
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "ServiceConnection onServiceConnected triggered.");
+            Log.v(TAG, "ServiceConnection onServiceConnected triggered.");
             TrackingService.LocalBinder binder = (TrackingService.LocalBinder) service;
             trackingService = binder.getService();
             trackingService.startLocationUpdates(
@@ -86,7 +86,7 @@ public class AWSLocationTracker {
          */
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG, "ServiceConnection onServiceDisconnected triggered.");
+            Log.v(TAG, "ServiceConnection onServiceDisconnected triggered.");
             stopTracking();
         }
     };

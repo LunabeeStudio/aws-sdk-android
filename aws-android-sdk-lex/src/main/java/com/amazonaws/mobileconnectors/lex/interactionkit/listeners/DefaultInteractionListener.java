@@ -27,7 +27,7 @@ public class DefaultInteractionListener implements InteractionListener {
 
     @Override
     public void onReadyForFulfillment(Response response) {
-        Log.d(TAG, "ready to be fulfilled");
+        Log.v(TAG, "ready to be fulfilled");
     }
 
     @Override

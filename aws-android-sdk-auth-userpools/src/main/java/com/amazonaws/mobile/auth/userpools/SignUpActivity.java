@@ -89,10 +89,10 @@ public class SignUpActivity extends Activity {
         final String email = signUpView.getEmail();
         final String phone = signUpView.getPhone();
 
-        Log.d(LOG_TAG, "username = " + username);
-        Log.d(LOG_TAG, "given_name = " + givenName);
-        Log.d(LOG_TAG, "email = " + email);
-        Log.d(LOG_TAG, "phone = " + phone);
+        Log.v(LOG_TAG, "username = " + username);
+        Log.v(LOG_TAG, "given_name = " + givenName);
+        Log.v(LOG_TAG, "email = " + email);
+        Log.v(LOG_TAG, "phone = " + phone);
 
         if (username.isEmpty()) {
             showError(getString(R.string.sign_up_username_missing));

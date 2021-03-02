@@ -93,7 +93,7 @@ public class AWSKeyValueStoreMigrationIntegrationTest extends CoreIntegrationTes
 
     @Test
     public void testCachedAWSCredentialsMigrationFromNoEncryption() throws Exception {
-        Log.d(TAG, "SharedPreferences contents before migration for " + SHARED_PREFERENCES_NAME + "=> " +
+        Log.v(TAG, "SharedPreferences contents before migration for " + SHARED_PREFERENCES_NAME + "=> " +
                 sharedPreferencesForAuth.getAll().toString());
 
         assertEquals("accessKey", sharedPreferencesForAuth.getString(identityPoolId + ".accessKey", null));
@@ -114,7 +114,7 @@ public class AWSKeyValueStoreMigrationIntegrationTest extends CoreIntegrationTes
                 true);
         assertNotNull(awsKeyValueStore);
 
-        Log.d(TAG, "SharedPreferences contents after migration for " + SHARED_PREFERENCES_NAME + " => " +
+        Log.v(TAG, "SharedPreferences contents after migration for " + SHARED_PREFERENCES_NAME + " => " +
                 sharedPreferencesForAuth.getAll().toString());
 
         assertEquals("accessKey", awsKeyValueStore.get(identityPoolId + ".accessKey"));
@@ -149,7 +149,7 @@ public class AWSKeyValueStoreMigrationIntegrationTest extends CoreIntegrationTes
     private void verifySharedPreferencesContents() {
         assert sharedPreferencesForAuth.getAll().keySet().size() == credentialsProviders.size() * 5;
 
-        Log.d(TAG, "SharedPreferences Keys = " +
+        Log.v(TAG, "SharedPreferences Keys = " +
                 sharedPreferencesForAuth.getAll().keySet().toString());
 
         for (int iterator = 0; iterator < credentialsProviders.size(); iterator++) {

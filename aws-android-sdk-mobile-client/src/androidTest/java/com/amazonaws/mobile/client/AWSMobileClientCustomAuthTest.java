@@ -182,7 +182,7 @@ public class AWSMobileClientCustomAuthTest extends AWSMobileClientTestBase {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d(TAG, "Sign-in callback state: " + signInResult.getSignInState());
+                        Log.v(TAG, "Sign-in callback state: " + signInResult.getSignInState());
                         switch (signInResult.getSignInState()) {
                             case DONE:
                                 signUpLatch.countDown();
@@ -224,7 +224,7 @@ public class AWSMobileClientCustomAuthTest extends AWSMobileClientTestBase {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d(TAG, "Sign-in callback state: " + signInResult.getSignInState());
+                        Log.v(TAG, "Sign-in callback state: " + signInResult.getSignInState());
                         switch (signInResult.getSignInState()) {
                             default:
                                 Log.e(TAG, "Unexpected sign-in confirmation call: " + signInResult.getSignInState());

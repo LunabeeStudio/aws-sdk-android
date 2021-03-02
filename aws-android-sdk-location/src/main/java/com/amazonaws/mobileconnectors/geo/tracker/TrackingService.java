@@ -46,7 +46,7 @@ public class TrackingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "TrackingService onCreate triggered");
+        Log.v(TAG, "TrackingService onCreate triggered");
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -62,14 +62,14 @@ public class TrackingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "TrackingService onStartCommand triggered");
+        Log.v(TAG, "TrackingService onStartCommand triggered");
         super.onStartCommand(intent, flags, startId);
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "TrackingService onDestroy triggered");
+        Log.v(TAG, "TrackingService onDestroy triggered");
         super.onDestroy();
         stopLocationUpdates();
     }
@@ -77,13 +77,13 @@ public class TrackingService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG, "TrackingService onBind triggered");
+        Log.v(TAG, "TrackingService onBind triggered");
         return binder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.d(TAG, "TrackingService onUnbind triggered");
+        Log.v(TAG, "TrackingService onUnbind triggered");
         return super.onUnbind(intent);
     }
 

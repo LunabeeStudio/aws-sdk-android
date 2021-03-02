@@ -109,7 +109,7 @@ public class OAuth2Client {
         };
         if (!CustomTabsClient.bindCustomTabsService(mContext, CUSTOM_TABS_PACKAGE_NAME,
                 mCustomTabsServiceConnection)) {
-            Log.d(TAG, "OAuth2Client: Failed to pre-warm custom tab, first page load may be " +
+            Log.v(TAG, "OAuth2Client: Failed to pre-warm custom tab, first page load may be " +
                     "slower");
         }
     }

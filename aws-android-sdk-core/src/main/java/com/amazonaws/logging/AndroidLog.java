@@ -32,7 +32,7 @@ public class AndroidLog implements com.amazonaws.logging.Log {
     /**
      *
      * @param tag The tag that is present in
-     *            android.util.Log.d(TAG, "Hello world");
+     *            android.util.Log.v(TAG, "Hello world");
      */
     public AndroidLog(final String tag) {
         this.tag = tag;
@@ -85,14 +85,14 @@ public class AndroidLog implements com.amazonaws.logging.Log {
     @Override
     public void debug(Object message) {
         if (getLevel() == null || getLevel().getValue() <= LogFactory.Level.DEBUG.getValue()) {
-            Log.d(tag, message.toString());
+            Log.v(tag, message.toString());
         }
     }
 
     @Override
     public void debug(Object message, Throwable t) {
         if (getLevel() == null || getLevel().getValue() <= LogFactory.Level.DEBUG.getValue()) {
-            Log.d(tag, message.toString(), t);
+            Log.v(tag, message.toString(), t);
         }
     }
 

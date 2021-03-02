@@ -41,7 +41,7 @@ public abstract class DefaultSignInResultHandler implements SignInResultHandler 
      * @param provider the provider the user canceled with.
      */
     public void onIntermediateProviderCancel(Activity callingActivity, IdentityProvider provider) {
-        Log.d(LOG_TAG, String.format("%s Sign-In flow is canceled", provider.getDisplayName()));
+        Log.v(LOG_TAG, String.format("%s Sign-In flow is canceled", provider.getDisplayName()));
     }
 
     /**

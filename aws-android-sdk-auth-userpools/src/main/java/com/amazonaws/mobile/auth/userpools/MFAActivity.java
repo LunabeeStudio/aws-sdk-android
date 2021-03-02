@@ -52,7 +52,7 @@ public class MFAActivity extends Activity {
     public void verify(final View view) {
         final String verificationCode = mfaView.getMFACode();
 
-        Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+        Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
         final Intent intent = new Intent();
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.VERIFICATION_CODE, verificationCode);

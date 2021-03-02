@@ -115,7 +115,7 @@ public class LifecycleVersioningIntegrationTest extends S3IntegrationTestBase {
             BucketLifecycleConfiguration bucketLifecycleConfiguration = null;
 
             if ((bucketLifecycleConfiguration = s3.getBucketLifecycleConfiguration(bucketName)) == null) {
-                Log.d(TAG, "Waiting for BucketLifecycleConfiguration for bucket: " + bucketName + " to be created.");
+                Log.v(TAG, "Waiting for BucketLifecycleConfiguration for bucket: " + bucketName + " to be created.");
                 Thread.sleep(1000);
                 hits = 0;
             }

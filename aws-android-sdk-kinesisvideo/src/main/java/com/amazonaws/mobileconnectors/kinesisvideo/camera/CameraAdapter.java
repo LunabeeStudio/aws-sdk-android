@@ -100,7 +100,7 @@ public class CameraAdapter {
     }
 
     private void tryAcquireLock() throws InterruptedException {
-        Log.d(TAG, "try acquire" + threadId());
+        Log.v(TAG, "try acquire" + threadId());
         if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
             throw new RuntimeException("Time out waiting to lock camera opening." + threadId());
         }
@@ -143,7 +143,7 @@ public class CameraAdapter {
 
     private void stopActiveSession() {
         try {
-            Log.d(TAG, "stopping active capture session");
+            Log.v(TAG, "stopping active capture session");
             mActivePreviewSession.stopRepeating();
             mActivePreviewSession.close();
         } catch (final CameraAccessException e) {
@@ -152,7 +152,7 @@ public class CameraAdapter {
     }
 
     private void releaseCamera() {
-        Log.d(TAG, "releasing camera");
+        Log.v(TAG, "releasing camera");
         try {
             mCameraOpenCloseLock.acquire();
             if (null != mCameraDevice) {
@@ -167,11 +167,11 @@ public class CameraAdapter {
     }
 
     private void stopBackgroundThread() {
-        Log.d(TAG, "stopping background thread");
+        Log.v(TAG, "stopping background thread");
         mBackgroundThread.quit();
         mBackgroundThread = null;
         mBackgroundHandler = null;
-        Log.d(TAG, "stopped background thread");
+        Log.v(TAG, "stopped background thread");
     }
 
     public void startPreview(final List<Surface> previewSurfaces,
