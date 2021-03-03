@@ -52,7 +52,7 @@ public class ForgotPasswordActivity extends Activity {
         final String password = forgotPasswordView.getPassword();
         final String verificationCode = forgotPasswordView.getVerificationCode();
 
-        Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+        Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
         final Intent intent = new Intent();
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PASSWORD, password);

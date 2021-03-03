@@ -85,14 +85,14 @@ public class SignInUI implements AWSConfigurable {
      * Check if the user is not signed in and present the AuthUI screen.
      */
     private void presentAuthUI() {
-        Log.d(LOG_TAG, "Presenting the SignIn UI.");
+        Log.v(LOG_TAG, "Presenting the SignIn UI.");
         final IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
         final boolean canCancel = this.authUIConfiguration.getCanCancel();
         identityManager.login(this.loginCallingActivity, new DefaultSignInResultHandler() {
             @Override
             public void onSuccess(Activity activity, IdentityProvider identityProvider) {
                 if (identityProvider != null) {
-                    Log.d(LOG_TAG, "Sign-in succeeded. The identity provider name is available here using: " +
+                    Log.v(LOG_TAG, "Sign-in succeeded. The identity provider name is available here using: " +
                             identityProvider.getDisplayName());
                     startNextActivity(activity, loginNextActivity);
                 }
@@ -115,16 +115,16 @@ public class SignInUI implements AWSConfigurable {
      */
     private void loginWithBuilder(final LoginBuilder loginBuilder) {
          try {
-            Log.d(LOG_TAG, "Initiating the SignIn flow.");
+            Log.v(LOG_TAG, "Initiating the SignIn flow.");
             if (loginBuilder.getAuthUIConfiguration() != null) {
                 this.authUIConfiguration = loginBuilder.getAuthUIConfiguration();
             }
             final IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
             if (loginBuilder.shouldFederate && identityManager.isUserSignedIn()) {
-                Log.d(LOG_TAG, "User is already signed-in. Moving to the next activity.");
+                Log.v(LOG_TAG, "User is already signed-in. Moving to the next activity.");
                 startNextActivity(this.loginCallingActivity, this.loginNextActivity);
             } else {
-                Log.d(LOG_TAG, "User is not signed-in. Presenting the SignInUI.");
+                Log.v(LOG_TAG, "User is not signed-in. Presenting the SignInUI.");
                 presentAuthUI();
             }
         } catch (final Exception exception) {
@@ -228,7 +228,7 @@ public class SignInUI implements AWSConfigurable {
                 return jsonObject != null;
             }
         } catch (final Exception exception) {
-            Log.d(LOG_TAG, configurationKey + " not found in `awsconfiguration.json`");
+            Log.v(LOG_TAG, configurationKey + " not found in `awsconfiguration.json`");
             return false;
         }
     }
@@ -270,7 +270,7 @@ public class SignInUI implements AWSConfigurable {
     public AWSConfigurable initialize(final Context context,
                                                final AWSConfiguration configuration,
                                                final ClientConfiguration clientConfiguration) throws Exception {
-        Log.d(LOG_TAG, "Initializing SignInUI.");
+        Log.v(LOG_TAG, "Initializing SignInUI.");
         this.context = context;
         this.awsConfiguration = configuration;
         this.clientConfiguration = clientConfiguration;

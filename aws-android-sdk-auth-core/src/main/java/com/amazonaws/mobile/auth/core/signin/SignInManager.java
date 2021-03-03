@@ -141,13 +141,13 @@ public class SignInManager {
      */
     public SignInProvider getPreviouslySignedInProvider() {
     	
-    	Log.d(LOG_TAG, "Providers: " + Collections.singletonList(signInProviders)); 
+    	Log.v(LOG_TAG, "Providers: " + Collections.singletonList(signInProviders)); 
 
         for (final SignInProvider provider : signInProviders.values()) {
             // Note: This method may block. This loop could potentially be sped
             // up by running these calls in parallel using an executorService.
             if (provider.refreshUserSignInState()) {
-            	Log.d(LOG_TAG, "Refreshing provider: " + provider.getDisplayName());
+            	Log.v(LOG_TAG, "Refreshing provider: " + provider.getDisplayName());
                 return provider;
             }
         }

@@ -54,7 +54,7 @@ public class EncoderFactory {
                         MediaCodec.CONFIGURE_FLAG_ENCODE);
                 logSupportedColorFormats(encoder, mediaSourceConfiguration);
             } catch (MediaCodec.CodecException e) {
-                Log.d(TAG, "Failed configuring MediaCodec with Semi-planar pixel format, falling back to planar");
+                Log.v(TAG, "Failed configuring MediaCodec with Semi-planar pixel format, falling back to planar");
 
                 encoder.configure(
                         configureMediaFormat(mediaSourceConfiguration,
@@ -75,7 +75,7 @@ public class EncoderFactory {
             final CameraMediaSourceConfiguration mediaSourceConfiguration,
             final int colorFormat) {
 
-        Log.d(TAG, mediaSourceConfiguration.getEncoderMimeType() + " output "
+        Log.v(TAG, mediaSourceConfiguration.getEncoderMimeType() + " output "
                 + mediaSourceConfiguration.getHorizontalResolution() + "x"
                 + mediaSourceConfiguration.getVerticalResolution() + " @"
                 + mediaSourceConfiguration.getBitRate());
@@ -93,7 +93,7 @@ public class EncoderFactory {
         format.setInteger(MediaFormat.KEY_FRAME_RATE, mediaSourceConfiguration.getFrameRate());
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_EVERY_2_SEC);
 
-        Log.d(TAG, "format: " + format);
+        Log.v(TAG, "format: " + format);
 
         return format;
     }
@@ -111,6 +111,6 @@ public class EncoderFactory {
             formatsList.add(fmt);
         }
 
-        Log.d(TAG, "Supported color formats: " + formatsList.toString());
+        Log.v(TAG, "Supported color formats: " + formatsList.toString());
     }
 }

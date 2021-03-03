@@ -118,7 +118,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
                            final AWSConfiguration awsConfig) {
         this.context = activityContext;
         this.awsConfiguration = awsConfig;
-        Log.d(LOG_TAG, "Initializing Google SDK...");
+        Log.v(LOG_TAG, "Initializing Google SDK...");
 
         try {
             GoogleSignInProvider.setPermissions(
@@ -140,14 +140,14 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
             }
         }
         final GoogleSignInOptions gso = builder.requestEmail().requestProfile().build();
-        Log.d(LOG_TAG, "Created Google SignInOptions.");
+        Log.v(LOG_TAG, "Created Google SignInOptions.");
 
         // Build GoogleApiClient with access to basic profile
         mGoogleApiClient = new GoogleApiClient.Builder(context)
             .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
             .build();
         mGoogleApiClient.connect();
-        Log.d(LOG_TAG, "Connected to the Google SignIn API Client.");
+        Log.v(LOG_TAG, "Connected to the Google SignIn API Client.");
     }
 
     /** {@inheritDoc} */
@@ -167,7 +167,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
 
             final GoogleSignInResult result = opr.get();
             if (result == null) {
-                Log.d(LOG_TAG, "GoogleSignInResult is null. Not signed-in with Google.");
+                Log.v(LOG_TAG, "GoogleSignInResult is null. Not signed-in with Google.");
                 return false;
             }
 
@@ -223,7 +223,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
     /** {@inheritDoc} */
     @Override
     public String refreshToken() {
-        Log.d(LOG_TAG, "Google provider refreshing token...");
+        Log.v(LOG_TAG, "Google provider refreshing token...");
 
         try {
             authToken = getGoogleAuthToken(signedInAccount.getEmail());
@@ -237,10 +237,10 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
     /** {@inheritDoc} */
     @Override
     public void signOut() {
-        Log.d(LOG_TAG, "Google provider signing out...");
+        Log.v(LOG_TAG, "Google provider signing out...");
 
         final Status status = Auth.GoogleSignInApi.signOut(mGoogleApiClient).await();
-        Log.d(LOG_TAG, "signOut:onResult:" + status);
+        Log.v(LOG_TAG, "signOut:onResult:" + status);
         authToken = null;
     }
 
@@ -287,7 +287,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
                 public void run() {
                     try {
                         handleGoogleSignInSuccessResult(result);
-                        Log.d(LOG_TAG, "Google provider sign-in succeeded!");
+                        Log.v(LOG_TAG, "Google provider sign-in succeeded!");
                         ThreadUtils.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -410,7 +410,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
             return false;
         }
 
-        Log.d(LOG_TAG, "Google sign-in was cached, attempting to retrieve auth token.");
+        Log.v(LOG_TAG, "Google sign-in was cached, attempting to retrieve auth token.");
         try {
             authToken = getGoogleAuthToken(accountEmail);
             return true;
@@ -434,7 +434,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
     }
 
     private void initiateGoogleSignIn(final Activity signInActivity) {
-        Log.d(LOG_TAG, "Launching sign-in activity.");
+        Log.v(LOG_TAG, "Launching sign-in activity.");
         final Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         signInActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -449,7 +449,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
         } else {
             Log.i(LOG_TAG, "GoogleSignInResult indicates not signed in with an account.");
             final GoogleSignInException ex = new GoogleSignInException(result);
-            Log.d(LOG_TAG, ex.getMessage(), ex);
+            Log.v(LOG_TAG, ex.getMessage(), ex);
 
             authToken = null;
             throw ex;
@@ -459,12 +459,12 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
     }
 
     private String getGoogleClientId() throws IOException {
-        Log.d(LOG_TAG, "Getting Google Client Id from AWSConfiguration...");
+        Log.v(LOG_TAG, "Getting Google Client Id from AWSConfiguration...");
         final String clientId;
 
         try {
             clientId = awsConfiguration.optJsonObject("GoogleSignIn").getString("ClientId-WebApp");
-            Log.d(LOG_TAG, "clientId=" + clientId);
+            Log.v(LOG_TAG, "clientId=" + clientId);
             return clientId;
         } catch (Exception exception) {
             throw new IllegalArgumentException("Couldn't find Google ClientId from the AWSConfiguration."
@@ -473,7 +473,7 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
     }
 
     private String getGoogleAuthToken(final String accountEmail) throws GoogleAuthException, IOException {
-        Log.d(LOG_TAG, "Google provider getting token...");
+        Log.v(LOG_TAG, "Google provider getting token...");
 
         final Account googleAccount = new Account(accountEmail, GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
         final String scopes = "audience:server:client_id:" + getGoogleClientId();
@@ -483,9 +483,9 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
         // UserRecoverableAuthException will be thrown from GoogleAuthUtil.getToken() if not signed in.
 
         if (token != null) {
-            Log.d(LOG_TAG, "Google Token is OK. Token hashcode = " + token.hashCode());
+            Log.v(LOG_TAG, "Google Token is OK. Token hashcode = " + token.hashCode());
         } else {
-            Log.d(LOG_TAG, "Google Token is NULL.");
+            Log.v(LOG_TAG, "Google Token is NULL.");
         }
 
         return token;

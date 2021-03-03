@@ -183,7 +183,7 @@ public class UploadInputStreamTest {
     private static final class UploadListener implements TransferListener {
         @Override
         public void onStateChanged(int id, TransferState state) {
-            Log.d(TAG, "onStateChanged: " + id + ", " + state);
+            Log.v(TAG, "onStateChanged: " + id + ", " + state);
         }
 
         @Override

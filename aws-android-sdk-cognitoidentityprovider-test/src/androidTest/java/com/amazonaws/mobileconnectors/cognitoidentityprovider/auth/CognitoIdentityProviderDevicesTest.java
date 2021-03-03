@@ -282,8 +282,8 @@ public class CognitoIdentityProviderDevicesTest extends CognitoIdentityProviderU
 				ArgumentCaptor<ForgetDeviceRequest> argumentCaptor = ArgumentCaptor.forClass(ForgetDeviceRequest.class);
 		        verify(mockCSIClient).forgetDevice(argumentCaptor.capture());
 		        ForgetDeviceRequest requestSent = argumentCaptor.getValue();
-		        Log.d(TAG, "testAccessToken = " + testAccessToken);
-                Log.d(TAG, "requestSent.getAccessToken() = " + requestSent.getAccessToken());
+		        Log.v(TAG, "testAccessToken = " + testAccessToken);
+                Log.v(TAG, "requestSent.getAccessToken() = " + requestSent.getAccessToken());
 		        assertEquals(testAccessToken, requestSent.getAccessToken());
                 countDownLatch.countDown();
 			}

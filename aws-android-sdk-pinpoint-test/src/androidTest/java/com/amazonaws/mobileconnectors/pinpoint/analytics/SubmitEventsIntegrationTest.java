@@ -149,7 +149,7 @@ public final class SubmitEventsIntegrationTest extends AWSTestBase {
             @Override
             public boolean isMet() {
                 int currentCount = analyticsClient.getAllEvents().size();
-                Log.d(TAG, "Current count = " + currentCount + " but want " + eventualCount);
+                Log.v(TAG, "Current count = " + currentCount + " but want " + eventualCount);
                 return currentCount == eventualCount;
             }
         }, 10, 5);

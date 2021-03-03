@@ -163,7 +163,7 @@ public final class LexServiceContinuation{
      * Use this method to continue with the current audio input and output mode, and current session attributes.
      */
     public void continueWithCurrentMode() {
-        Log.d("SDK", " -- responseMode: " + responseMode + "; requestMode: " + requestMode);
+        Log.v("SDK", " -- responseMode: " + responseMode + "; requestMode: " + requestMode);
         if (ResponseType.AUDIO_MPEG.equals(responseMode) && ResponseType.AUDIO_MPEG.equals(requestMode)) {
             continueWithAudioInForAudioOut();
         } else {

@@ -128,7 +128,7 @@ public class AWSMobileClientPersistenceWithRestartabilityTest extends AWSMobileC
                 boolean retryConfirmSignUp = false;
                 do {
                     try {
-                        Log.d(TAG, "deleteAllUsers: " + user.getUsername());
+                        Log.v(TAG, "deleteAllUsers: " + user.getUsername());
                         getCognitoUserPoolLowLevelClient().adminDeleteUser(new AdminDeleteUserRequest().withUsername(user.getUsername()).withUserPoolId(userPoolId));
                     } catch (UserNotConfirmedException e) {
                         if (!retryConfirmSignUp) {

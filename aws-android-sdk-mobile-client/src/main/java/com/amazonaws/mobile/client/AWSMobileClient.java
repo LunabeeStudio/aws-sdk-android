@@ -363,7 +363,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
         try {
             if (waitForSignIn()) {
-                Log.d(TAG, "getCredentials: Validated user is signed-in");
+                Log.v(TAG, "getCredentials: Validated user is signed-in");
             }
 
             AWSSessionCredentials credentials = cognitoIdentity.getCredentials();
@@ -492,7 +492,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                     identityManager.addSignInStateChangeListener(new SignInStateChangeListener() {
                         @Override
                         public void onUserSignedIn() {
-                            Log.d(TAG, "onUserSignedIn: Updating user state from drop-in UI");
+                            Log.v(TAG, "onUserSignedIn: Updating user state from drop-in UI");
                             signInState = SignInState.DONE;
                             com.amazonaws.mobile.auth.core.IdentityProvider currentIdentityProvider = identityManager.getCurrentIdentityProvider();
                             String token = currentIdentityProvider.getToken();
@@ -500,7 +500,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                             federatedSignInWithoutAssigningState(providerKey, token, new Callback<UserStateDetails>() {
                                 @Override
                                 public void onResult(UserStateDetails result) {
-                                    Log.d(TAG, "onResult: showSignIn federated");
+                                    Log.v(TAG, "onResult: showSignIn federated");
                                     setUserState(getUserStateDetails(false));
                                     getSignInUILatch().countDown();
                                 }
@@ -516,7 +516,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
                         @Override
                         public void onUserSignedOut() {
-                            Log.d(TAG, "onUserSignedOut: Updating user state from drop-in UI");
+                            Log.v(TAG, "onUserSignedOut: Updating user state from drop-in UI");
                             setUserState(getUserStateDetails(false));
                             showSignInWaitLatch.countDown();
                         }
@@ -586,7 +586,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                         try {
                             // Pre-warm the Custom Tabs based on
                             if (hostedUIJSON.has("TokenURI")) {
-                                Log.d(TAG, "initialize: OAuth2 client detected");
+                                Log.v(TAG, "initialize: OAuth2 client detected");
                                 mOAuth2Client = new OAuth2Client(mContext, AWSMobileClient.this);
                                 mOAuth2Client.setPersistenceEnabled(mIsPersistenceEnabled);
                                 mOAuth2Client.setUserAgentOverride(userAgentOverride);
@@ -616,7 +616,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
     }
 
     private void _initializeHostedUI(JSONObject hostedUIJSON) throws JSONException {
-        Log.d(TAG, "initialize: Cognito HostedUI client detected");
+        Log.v(TAG, "initialize: Cognito HostedUI client detected");
         final JSONArray scopesJSONArray = hostedUIJSON.getJSONArray("Scopes");
         final Set<String> scopes = new HashSet<String>();
         for (int i = 0; i < scopesJSONArray.length(); i++) {
@@ -691,7 +691,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
             }
             return hostedUIJSON;
         } catch (Exception e) {
-            Log.d(TAG, "getHostedUIJSON: Failed to read config", e);
+            Log.v(TAG, "getHostedUIJSON: Failed to read config", e);
         }
         return null;
     }
@@ -927,7 +927,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
             mWaitForSignInLock.lock();
             mSignedOutWaitLatch = new CountDownLatch(1);
             userStateDetails = getUserStateDetails(false);
-            Log.d(TAG, "waitForSignIn: userState:" + userStateDetails.getUserState());
+            Log.v(TAG, "waitForSignIn: userState:" + userStateDetails.getUserState());
             switch (userStateDetails.getUserState()) {
                 case SIGNED_IN:
                     setUserState(userStateDetails);
@@ -981,7 +981,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
         final String identityId = _getCachedIdentityId();
 
         final boolean federationEnabled = isFederationEnabled();
-        Log.d(TAG, "Inspecting user state details");
+        Log.v(TAG, "Inspecting user state details");
 
         final boolean hasUsefulToken = providerKey != null && token != null;
 
@@ -1021,7 +1021,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
                     // If token has already been federated
                     if (hasFederatedToken(providerKey, refreshedToken)) {
-                        Log.d(TAG, "getUserStateDetails: token already federated just fetch credentials");
+                        Log.v(TAG, "getUserStateDetails: token already federated just fetch credentials");
                         if (cognitoIdentity != null) {
                             cognitoIdentity.getCredentials();
                         }
@@ -1125,7 +1125,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
             return false;
         }
         boolean hasFederatedToken = token.equals(mFederatedLoginsMap.get(providerKey));
-        Log.d(TAG, "hasFederatedToken: " + hasFederatedToken + " provider: " + providerKey);
+        Log.v(TAG, "hasFederatedToken: " + hasFederatedToken + " provider: " + providerKey);
         return hasFederatedToken;
     }
 
@@ -1215,7 +1215,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
                             @Override
                             public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
-                                Log.d(TAG, "Sending password.");
+                                Log.v(TAG, "Sending password.");
                                 try {
                                     if (
                                             awsConfiguration.optJsonObject(AUTH_KEY) != null &&
@@ -1692,7 +1692,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
         try {
             loginsMap.put(providerKey, token);
 
-            Log.d(TAG, String.format("_federatedSignIn: Putting provider and token in store"));
+            Log.v(TAG, String.format("_federatedSignIn: Putting provider and token in store"));
             HashMap<String, String> details = new HashMap<String, String>();
             details.put(PROVIDER_KEY, providerKey);
             details.put(TOKEN_KEY, token);
@@ -3303,7 +3303,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
                             @Override
                             public void onSuccess(AuthUserSession session) {
-                                Log.d(TAG, "onSuccess: HostedUI signed-in");
+                                Log.v(TAG, "onSuccess: HostedUI signed-in");
                                 hasSucceededOnce = true;
                                 if (isFederationEnabled()) {
                                     federatedSignInWithoutAssigningState(userpoolsLoginKey,
@@ -3311,7 +3311,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                                             new Callback<UserStateDetails>() {
                                                 @Override
                                                 public void onResult(UserStateDetails result) {
-                                                    Log.d(TAG, "onResult: Federation from the Hosted UI " +
+                                                    Log.v(TAG, "onResult: Federation from the Hosted UI " +
                                                             "succeeded");
                                                 }
 
@@ -3335,13 +3335,13 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
 
                             @Override
                             public void onSignout() {
-                                Log.d(TAG, "onSignout: HostedUI signed-out");
+                                Log.v(TAG, "onSignout: HostedUI signed-out");
                             }
 
                             @Override
                             public void onFailure(final Exception e) {
                                 if (hasSucceededOnce) {
-                                    Log.d(TAG, "onFailure: Ignoring failure because HostedUI " +
+                                    Log.v(TAG, "onFailure: Ignoring failure because HostedUI " +
                                             "has signaled success at least once.");
                                     return;
                                 }
@@ -3423,7 +3423,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                     try {
                         showSignInWaitLatch.await();
                         callback.onResult(getUserStateDetails(false));
-                        Log.d(TAG, "run: showSignIn completed");
+                        Log.v(TAG, "run: showSignIn completed");
                     } catch (InterruptedException e) {
                         callback.onError(e);
                     }
@@ -3486,7 +3486,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
     public AWSConfigurable getClient(final Context context,
                                      final Class<? extends AWSConfigurable> clientClass) {
 
-        Log.d(TAG, "Retrieving the client instance for class: " + clientClass);
+        Log.v(TAG, "Retrieving the client instance for class: " + clientClass);
 
         AWSConfigurable client = clientMap.get(clientClass);
 
@@ -3494,7 +3494,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
             if (client == null) {
                 client = clientClass.newInstance().initialize(context.getApplicationContext(), this.awsConfiguration);
                 clientMap.put(clientClass, client);
-                Log.d(TAG, "Created the new client: " + client.toString());
+                Log.v(TAG, "Created the new client: " + client.toString());
             }
         } catch (final Exception exception) {
             Log.e(TAG, "Error occurred in creating and initializing client. "
@@ -3518,7 +3518,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
     private void fetchCognitoIdentity(final Context context,
                                       final StartupAuthResultHandler startupAuthResultHandler) {
         try {
-            Log.d(TAG, "Fetching the Cognito Identity.");
+            Log.v(TAG, "Fetching the Cognito Identity.");
 
             // Create IdentityManager, register the providers and set the permissions.
             final IdentityManager identityManager = new IdentityManager(context, this.awsConfiguration);
@@ -3540,7 +3540,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
      * supplied by the user.
      */
     private void registerUserSignInProvidersWithPermissions() {
-        Log.d(TAG, "Using the SignInProviderConfig supplied by the user.");
+        Log.v(TAG, "Using the SignInProviderConfig supplied by the user.");
         final IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
 
         for (final SignInProviderConfig config : signInProviderConfig) {
@@ -3561,7 +3561,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
      * AWSConfiguration.
      */
     private void registerConfigSignInProviders() {
-        Log.d(TAG, "Using the SignInProviderConfig from `awsconfiguration.json`.");
+        Log.v(TAG, "Using the SignInProviderConfig from `awsconfiguration.json`.");
         final IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
 
         if (isConfigurationKeyPresent(USER_POOLS, this.awsConfiguration)
@@ -3603,7 +3603,7 @@ public final class AWSMobileClient implements AWSCredentialsProvider {
                 return jsonObject != null;
             }
         } catch (final Exception exception) {
-            Log.d(TAG, configurationKey + " not found in `awsconfiguration.json`");
+            Log.v(TAG, configurationKey + " not found in `awsconfiguration.json`");
             return false;
         }
     }

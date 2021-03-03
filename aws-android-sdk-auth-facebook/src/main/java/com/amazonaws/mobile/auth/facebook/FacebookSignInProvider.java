@@ -83,11 +83,11 @@ public class FacebookSignInProvider implements SignInProvider {
                             final AWSConfiguration awsConfig) {
         this.awsConfiguration = awsConfig;
         if (!FacebookSdk.isInitialized()) {
-            Log.d(LOG_TAG, "Initializing Facebook SDK...");
+            Log.v(LOG_TAG, "Initializing Facebook SDK...");
             FacebookSdk.sdkInitialize(context);
         }
         initializedLatch.countDown();
-        Log.d(LOG_TAG, "Facebook SDK initialization completed");
+        Log.v(LOG_TAG, "Facebook SDK initialization completed");
 
         // Read the awsconfiguration.json and apply the permissions.
         try {
@@ -112,15 +112,15 @@ public class FacebookSignInProvider implements SignInProvider {
         try {
             initializedLatch.await();
         } catch (final InterruptedException ex) {
-            Log.d(LOG_TAG, "Unexpected interrupt.");
+            Log.v(LOG_TAG, "Unexpected interrupt.");
         }
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null && !accessToken.isExpired()) {
-            Log.d(LOG_TAG, "Facebook Access Token is OK. Token hashcode = " + accessToken.hashCode());
+            Log.v(LOG_TAG, "Facebook Access Token is OK. Token hashcode = " + accessToken.hashCode());
             return accessToken;
         }
 
-        Log.d(LOG_TAG, "Facebook Access Token is null or expired.");
+        Log.v(LOG_TAG, "Facebook Access Token is null or expired.");
         return null;
     }
 
@@ -161,13 +161,13 @@ public class FacebookSignInProvider implements SignInProvider {
         LoginManager.getInstance().registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
-                Log.d(LOG_TAG, "Facebook provider sign-in succeeded.");
+                Log.v(LOG_TAG, "Facebook provider sign-in succeeded.");
                 resultsHandler.onSuccess(FacebookSignInProvider.this);
             }
 
             @Override
             public void onCancel() {
-                Log.d(LOG_TAG, "Facebook provider sign-in canceled.");
+                Log.v(LOG_TAG, "Facebook provider sign-in canceled.");
                 resultsHandler.onCancel(FacebookSignInProvider.this);
             }
 
@@ -263,7 +263,7 @@ public class FacebookSignInProvider implements SignInProvider {
                     // The user may have revoked permissions by going to his settings and deleting your app.
                     // This will cause the call to fail, and the app will likely want to send the user
                     // back to the sign-in page.
-                    Log.d(LOG_TAG, "Facebook token can't be refreshed, perhaps the user revoked permissions.");
+                    Log.v(LOG_TAG, "Facebook token can't be refreshed, perhaps the user revoked permissions.");
                 } else {
                     Log.i(LOG_TAG, "Facebook provider token has been updated.");
                 }
@@ -282,7 +282,7 @@ public class FacebookSignInProvider implements SignInProvider {
             });
 
             try {
-                Log.d(LOG_TAG, "Facebook provider is waiting for token update...");
+                Log.v(LOG_TAG, "Facebook provider is waiting for token update...");
                 if (!countDownLatch.await(REFRESH_TOKEN_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
                     Log.w(LOG_TAG, "Facebook provider timed out refreshing the token.");
                     return null;
@@ -307,7 +307,7 @@ public class FacebookSignInProvider implements SignInProvider {
     /** {@inheritDoc} */
     @Override
     public void signOut() {
-        Log.d(LOG_TAG, "Facebook provider signing out...");
+        Log.v(LOG_TAG, "Facebook provider signing out...");
         LoginManager.getInstance().logOut();
     }
 }

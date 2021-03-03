@@ -69,8 +69,8 @@ public class SignUpConfirmActivity extends Activity {
         final String verificationCode =
             signUpConfirmView.getConfirmCodeEditText().getText().toString();
 
-        Log.d(LOG_TAG, "username = " + username);
-        Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+        Log.v(LOG_TAG, "username = " + username);
+        Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
         final Intent intent = new Intent();
         intent.putExtra(USERNAME, username);

@@ -76,10 +76,10 @@ final class IotClient {
     String getEndpointAddress(@Nullable String endpointType) {
         String cachedValue = endpointsCache.get(endpointType);
         if (cachedValue != null) {
-            Log.d(TAG, "Retrieved cached endpoint = " + cachedValue + " for type = " + endpointType);
+            Log.v(TAG, "Retrieved cached endpoint = " + cachedValue + " for type = " + endpointType);
             return cachedValue;
         }
-        Log.d(TAG, "No cached endpoint of type " + endpointType + ", retrieving now.");
+        Log.v(TAG, "No cached endpoint of type " + endpointType + ", retrieving now.");
 
         DescribeEndpointRequest request = new DescribeEndpointRequest();
         if (endpointType != null) {
@@ -102,7 +102,7 @@ final class IotClient {
     void deleteCertificate(@NonNull String certificateId) {
         Objects.requireNonNull(certificateId);
 
-        Log.d(TAG, "Deleting certificate with ID = " + certificateId);
+        Log.v(TAG, "Deleting certificate with ID = " + certificateId);
 
         DeleteCertificateRequest deleteCertificateRequest = new DeleteCertificateRequest();
         deleteCertificateRequest.setCertificateId(certificateId);
@@ -114,7 +114,7 @@ final class IotClient {
         Objects.requireNonNull(certificateId);
         Objects.requireNonNull(certificateStatus);
 
-        Log.d(TAG, "Updating certificate status for = " + certificateId + ", to " + certificateStatus);
+        Log.v(TAG, "Updating certificate status for = " + certificateId + ", to " + certificateStatus);
 
         UpdateCertificateRequest updateCertificateRequest = new UpdateCertificateRequest();
         updateCertificateRequest.setCertificateId(certificateId);
@@ -124,7 +124,7 @@ final class IotClient {
 
     @NonNull
     KeysAndCertificateInfo createActiveKeysAndCertificate() {
-        Log.d(TAG, "Creating keys & certificate info.");
+        Log.v(TAG, "Creating keys & certificate info.");
         CreateKeysAndCertificateRequest certRequest = new CreateKeysAndCertificateRequest();
         certRequest.setSetAsActive(true);
         CreateKeysAndCertificateResult result = iot.createKeysAndCertificate(certRequest);
@@ -137,7 +137,7 @@ final class IotClient {
         Objects.requireNonNull(policyName);
         Objects.requireNonNull(policyDocument);
 
-        Log.d(TAG, "Creating & attaching policy, name = " + policyName + ", document = " + policyDocument);
+        Log.v(TAG, "Creating & attaching policy, name = " + policyName + ", document = " + policyDocument);
 
         KeysAndCertificateInfo keysAndCertificateInfo = createActiveKeysAndCertificate();
         createPolicy(policyName, policyDocument);
@@ -146,12 +146,12 @@ final class IotClient {
     }
 
     List<Certificate> listCertificates() {
-        Log.d(TAG, "Listing certificates...");
+        Log.v(TAG, "Listing certificates...");
         List<Certificate> certificates = new ArrayList<>();
         String nextToken = null;
         int pageNum = 0;
         do {
-            Log.d(TAG, "Processing page " + pageNum++ + " of certificates.");
+            Log.v(TAG, "Processing page " + pageNum++ + " of certificates.");
             ListCertificatesRequest request = new ListCertificatesRequest();
             request.setMarker(nextToken);
             request.setPageSize(PAGE_SIZE);
@@ -164,7 +164,7 @@ final class IotClient {
 
     // Deletes any associated certificates, and detaches/deletes the policy.
     void cleanupPolicy(String policyName) {
-        Log.d(TAG, "Cleaning up policy " + policyName + ". Will remove any/all certificates/documents.");
+        Log.v(TAG, "Cleaning up policy " + policyName + ". Will remove any/all certificates/documents.");
         List<String> certificateArns = listTargetsForPolicy(policyName);
         for (String certificateArn : certificateArns) {
             detachPolicy(policyName, certificateArn);
@@ -177,7 +177,7 @@ final class IotClient {
     }
 
     List<String> listTargetsForPolicy(String policyName) {
-        Log.d(TAG, "Listing all targets for policy named = " + policyName);
+        Log.v(TAG, "Listing all targets for policy named = " + policyName);
         List<String> targets = new ArrayList<>();
         String nextToken = null;
         int pageNum = 0;
@@ -188,7 +188,7 @@ final class IotClient {
             request.setMarker(nextToken);
             ListTargetsForPolicyResult result;
             try {
-                Log.d(TAG, "Processing page " + pageNum++ + " of policy targets.");
+                Log.v(TAG, "Processing page " + pageNum++ + " of policy targets.");
                 result = iot.listTargetsForPolicy(request);
                 targets.addAll(result.getTargets());
                 nextToken = result.getNextMarker();
@@ -200,7 +200,7 @@ final class IotClient {
     }
 
     void createPolicy(String policyName, String policyDocument) {
-        Log.d(TAG, "Creating policy " + policyName + " with document = " + policyDocument);
+        Log.v(TAG, "Creating policy " + policyName + " with document = " + policyDocument);
         CreatePolicyRequest createPolicyRequest;
         createPolicyRequest = new CreatePolicyRequest();
         createPolicyRequest.setPolicyName(policyName);
@@ -209,7 +209,7 @@ final class IotClient {
     }
 
     void attachPolicy(String policyName, String certificateArn) {
-        Log.d(TAG, "Attaching policy " + policyName + " from certificate ARN = " + certificateArn);
+        Log.v(TAG, "Attaching policy " + policyName + " from certificate ARN = " + certificateArn);
         AttachPolicyRequest attachPolicyRequest = new AttachPolicyRequest();
         attachPolicyRequest.setPolicyName(policyName);
         attachPolicyRequest.setTarget(certificateArn);
@@ -218,7 +218,7 @@ final class IotClient {
 
     void detachPolicy(@NonNull String policyName, @NonNull String certificateArn) {
         Objects.requireNonNull(policyName);
-        Log.d(TAG, "Detaching policy " + policyName + " from certificate ARN = " + certificateArn);
+        Log.v(TAG, "Detaching policy " + policyName + " from certificate ARN = " + certificateArn);
         DetachPolicyRequest detachPolicyRequest = new DetachPolicyRequest();
         detachPolicyRequest.setPolicyName(policyName);
         detachPolicyRequest.setTarget(certificateArn);
@@ -230,7 +230,7 @@ final class IotClient {
     // throws exceptions in other cases where there was something to delete, but
     // that process failed for some reason.
     boolean deletePolicy(String policyName) {
-        Log.d(TAG, "Deleting policy: " + policyName);
+        Log.v(TAG, "Deleting policy: " + policyName);
         DeletePolicyRequest deletePolicyRequest = new DeletePolicyRequest();
         deletePolicyRequest.setPolicyName(policyName);
         try {

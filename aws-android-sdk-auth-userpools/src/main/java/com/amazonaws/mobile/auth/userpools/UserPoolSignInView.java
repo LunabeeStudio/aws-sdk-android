@@ -224,7 +224,7 @@ public class UserPoolSignInView extends LinearLayout {
         this.fontFamily = (String) (intent.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.FONT_FAMILY));
         if (this.fontFamily != null) {
             Typeface typeFace = Typeface.create(this.fontFamily, Typeface.NORMAL);
-            Log.d(LOG_TAG, "Setup font in UserPoolSignInView: " + this.fontFamily);
+            Log.v(LOG_TAG, "Setup font in UserPoolSignInView: " + this.fontFamily);
             signUpTextView.setTypeface(typeFace);
             forgotPasswordTextView.setTypeface(typeFace);
             signInButton.setTypeface(typeFace);

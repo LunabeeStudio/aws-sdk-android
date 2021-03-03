@@ -177,7 +177,7 @@ public class AWSMobileClientTest extends AWSMobileClientTestBase {
                 boolean retryConfirmSignUp = false;
                 do {
                     try {
-                        Log.d(TAG, "deleteAllUsers: " + user.getUsername());
+                        Log.v(TAG, "deleteAllUsers: " + user.getUsername());
                         getUserpoolLL().adminDeleteUser(new AdminDeleteUserRequest().withUsername(user.getUsername()).withUserPoolId(userpoolId));
                     } catch (UserNotConfirmedException e) {
                         if (!retryConfirmSignUp) {
@@ -620,7 +620,7 @@ public class AWSMobileClientTest extends AWSMobileClientTestBase {
         auth.addUserStateListener(new UserStateListener() {
             @Override
             public void onUserStateChanged(UserStateDetails details) {
-                Log.d(TAG, "onUserStateChanged: " + details.getUserState());
+                Log.v(TAG, "onUserStateChanged: " + details.getUserState());
             }
         });
 
@@ -652,7 +652,7 @@ public class AWSMobileClientTest extends AWSMobileClientTestBase {
         }
 
         Thread.sleep(2 * 1000);
-        Log.d(TAG, "testStress: signOut");
+        Log.v(TAG, "testStress: signOut");
         auth.signOut();
         Thread.sleep(1 * 1000);
         stop.set(true);
@@ -669,7 +669,7 @@ public class AWSMobileClientTest extends AWSMobileClientTestBase {
         auth.addUserStateListener(new UserStateListener() {
             @Override
             public void onUserStateChanged(UserStateDetails details) {
-                Log.d(TAG, "onUserStateChanged: " + details.getUserState());
+                Log.v(TAG, "onUserStateChanged: " + details.getUserState());
             }
         });
 
@@ -700,7 +700,7 @@ public class AWSMobileClientTest extends AWSMobileClientTestBase {
         }
 
         Thread.sleep(2 * 1000);
-        Log.d(TAG, "testStress: signOut");
+        Log.v(TAG, "testStress: signOut");
         auth.signOut();
         Thread.sleep(1 * 1000);
         stop.set(true);

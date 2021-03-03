@@ -99,13 +99,13 @@ public class AWSKeyValueStoreNoCachingIntegrationTest extends CoreIntegrationTes
         assertNull(credentialsProvider.getCachedIdentityId());
 
         assertNotNull(credentialsProvider.getCredentials());
-        Log.d(TAG, "Credentials = " + credentialsProvider.getCredentials());
+        Log.v(TAG, "Credentials = " + credentialsProvider.getCredentials());
 
         assertNotNull(credentialsProvider.getIdentityId());
-        Log.d(TAG, "Identity Id = " + credentialsProvider.getIdentityId());
+        Log.v(TAG, "Identity Id = " + credentialsProvider.getIdentityId());
 
         assertNotNull(credentialsProvider.getCachedIdentityId());
-        Log.d(TAG, "Cached Identity Id = " + credentialsProvider.getCachedIdentityId());
+        Log.v(TAG, "Cached Identity Id = " + credentialsProvider.getCachedIdentityId());
 
         assertEquals(credentialsProvider.getIdentityId(), credentialsProvider.getCachedIdentityId());
 
@@ -122,16 +122,16 @@ public class AWSKeyValueStoreNoCachingIntegrationTest extends CoreIntegrationTes
 
         final AWSSessionCredentials credentialsBeforeRefresh = credentialsProvider.getCredentials();
         assertNotNull(credentialsBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Credentials = " + credentialsBeforeRefresh);
 
 
         final String identityIdBeforeRefresh = credentialsProvider.getIdentityId();
         assertNotNull(identityIdBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Identity Id = " + identityIdBeforeRefresh);
 
         final String cachedIdentityIdBeforeRefresh = credentialsProvider.getCachedIdentityId();
         assertNotNull(cachedIdentityIdBeforeRefresh);
-        Log.d(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
+        Log.v(TAG, "Before Refresh: Cached Identity Id = " + cachedIdentityIdBeforeRefresh);
 
         assertEquals(identityIdBeforeRefresh, cachedIdentityIdBeforeRefresh);
 
@@ -140,7 +140,7 @@ public class AWSKeyValueStoreNoCachingIntegrationTest extends CoreIntegrationTes
 
         final AWSSessionCredentials credentialsAfterRefresh = credentialsProvider.getCredentials();
         assertNotNull(credentialsAfterRefresh);
-        Log.d(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
+        Log.v(TAG, "After Refresh: Credentials = " + credentialsAfterRefresh);
         assertNotEquals(credentialsAfterRefresh.getSessionToken(), credentialsBeforeRefresh.getSessionToken());
         assertNotEquals(credentialsAfterRefresh.getAWSSecretKey(), credentialsBeforeRefresh.getAWSSecretKey());
         assertNotEquals(credentialsAfterRefresh.getAWSAccessKeyId(), credentialsBeforeRefresh.getAWSAccessKeyId());
@@ -148,12 +148,12 @@ public class AWSKeyValueStoreNoCachingIntegrationTest extends CoreIntegrationTes
 
         final String identityIdAfterRefresh = credentialsProvider.getIdentityId();
         assertNotNull(identityIdAfterRefresh);
-        Log.d(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
+        Log.v(TAG, "After Refresh: Identity Id = " + identityIdAfterRefresh);
         assertEquals(identityIdAfterRefresh, identityIdBeforeRefresh);
 
         final String cachedIdentityIdAfterRefresh = credentialsProvider.getCachedIdentityId();
         assertNotNull(cachedIdentityIdAfterRefresh);
-        Log.d(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
+        Log.v(TAG, "After Refresh: Cached Identity Id = " + cachedIdentityIdAfterRefresh);
         assertEquals(cachedIdentityIdAfterRefresh, cachedIdentityIdBeforeRefresh);
 
         assertEquals(identityIdAfterRefresh, cachedIdentityIdAfterRefresh);

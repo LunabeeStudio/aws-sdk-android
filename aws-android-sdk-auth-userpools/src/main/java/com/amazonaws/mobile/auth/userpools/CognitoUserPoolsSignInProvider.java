@@ -198,7 +198,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     private ForgotPasswordHandler forgotPasswordHandler = new ForgotPasswordHandler() {
         @Override
         public void onSuccess() {
-            Log.d(LOG_TAG, "Password change succeeded.");
+            Log.v(LOG_TAG, "Password change succeeded.");
             ViewHelper.showDialog(activity, activity.getString(R.string.title_activity_forgot_password),
                     activity.getString(R.string.password_change_success));
             final CognitoUser cognitoUser = cognitoUserPool.getUser(username);
@@ -373,7 +373,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         this.context = context;
         this.awsConfiguration = awsConfiguration;
 
-        Log.d(LOG_TAG, "Initializing Cognito User Pools");
+        Log.v(LOG_TAG, "Initializing Cognito User Pools");
 
         this.cognitoUserPool = new CognitoUserPool(context, awsConfiguration);
 
@@ -415,7 +415,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                         return;
                     }
 
-                    Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+                    Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
                     forgotPasswordContinuation.setPassword(password);
                     forgotPasswordContinuation.setVerificationCode(verificationCode);
@@ -427,10 +427,10 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                     final boolean isSignUpConfirmed = data.getBooleanExtra(IS_SIGN_UP_CONFIRMED, true);
                     signUpConfirmationDestination = data.getStringExtra(CONFIRMATION_DESTINATION);
 
-                    Log.d(LOG_TAG, "sign up result username = " + username);
+                    Log.v(LOG_TAG, "sign up result username = " + username);
 
                     if (isSignUpConfirmed) {
-                        Log.d(LOG_TAG, "Signed up. User ID = " + username);
+                        Log.v(LOG_TAG, "Signed up. User ID = " + username);
                         ViewHelper.showDialog(activity, activity.getString(R.string.title_activity_sign_up),
                                 activity.getString(R.string.sign_up_success) + " " + username);
                         signInUser();
@@ -449,14 +449,14 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                         return;
                     }
 
-                    Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+                    Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
                     multiFactorAuthenticationContinuation.setMfaCode(verificationCode);
                     multiFactorAuthenticationContinuation.continueTask();
 
                     break;
                 case VERIFICATION_REQUEST_CODE:
-                    Log.d(LOG_TAG, "handleActivityResult: VERIFICATION_REQUEST_CODE");
+                    Log.v(LOG_TAG, "handleActivityResult: VERIFICATION_REQUEST_CODE");
                     username = data.getStringExtra(USERNAME);
                     verificationCode = data.getStringExtra(VERIFICATION_CODE);
 
@@ -474,15 +474,15 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                         return;
                     }
 
-                    Log.d(LOG_TAG, "username = " + username);
-                    Log.d(LOG_TAG, "verificationCode = " + verificationCode);
+                    Log.v(LOG_TAG, "username = " + username);
+                    Log.v(LOG_TAG, "verificationCode = " + verificationCode);
 
                     final CognitoUser cognitoUser = cognitoUserPool.getUser(username);
                     cognitoUser.confirmSignUpInBackground(verificationCode, true, signUpConfirmationHandler);
 
                     break;
                 case FORCE_CHANGE_PASSWORD_REQUEST_CODE:
-                    Log.d(LOG_TAG, "handleActivityResult: FORCE_CHANGE_PASSWORD_REQUEST_CODE");
+                    Log.v(LOG_TAG, "handleActivityResult: FORCE_CHANGE_PASSWORD_REQUEST_CODE");
                     password = data.getStringExtra(PASSWORD);
 
                     mForceChangePasswordContinuation.setPassword(password);
@@ -581,7 +581,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         @Override
         public void getAuthenticationDetails(final AuthenticationContinuation authenticationContinuation,
                                              final String UserId) {
-            Log.d(LOG_TAG, "Can't refresh the session silently, due to authentication details needed.");
+            Log.v(LOG_TAG, "Can't refresh the session silently, due to authentication details needed.");
         }
 
         @Override

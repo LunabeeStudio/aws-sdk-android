@@ -115,7 +115,7 @@ public class SignUpView extends LinearLayout {
 
     private void setupFontFamily() {
         if (this.typeFace != null) {
-            Log.d(LOG_TAG, "Setup font in SignUpView: " + this.fontFamily);
+            Log.v(LOG_TAG, "Setup font in SignUpView: " + this.fontFamily);
             userNameEditText.setTypeface(typeFace);
             passwordEditText.setTypeface(typeFace);
             givenNameEditText.setTypeface(typeFace);

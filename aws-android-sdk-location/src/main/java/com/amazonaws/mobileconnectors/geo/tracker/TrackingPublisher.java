@@ -105,7 +105,7 @@ public class TrackingPublisher {
      * @param location - Location reported by the Android OS.
      */
     public synchronized void enqueue(Location location) {
-        Log.d(TAG, "Enqueuing location.");
+        Log.v(TAG, "Enqueuing location.");
         DevicePositionUpdate positionUpdate = TrackingModelFactory.createDevicePositionUpdate(deviceId, location);
         try {
             positionUpdateQueue.add(positionUpdate);
@@ -216,13 +216,13 @@ public class TrackingPublisher {
 
         @Override
         public void run() {
-            Log.d(TAG, "Device location batches ready:" + requestQueue.size());
+            Log.v(TAG, "Device location batches ready:" + requestQueue.size());
             while (!requestQueue.isEmpty()) {
                 Log.i(TAG, "Publishing device location update batches.");
                 try {
                     BatchUpdateDevicePositionRequest request = requestQueue.take();
                     BatchUpdateDevicePositionResult result = locationClient.batchUpdateDevicePosition(request);
-                    Log.d(TAG, "Invoking onDataPublished callback.");
+                    Log.v(TAG, "Invoking onDataPublished callback.");
                     listener.onDataPublished(new TrackingPublishedEvent(request, result));
                 } catch (InterruptedException exception) {
                     Log.e(TAG, "BatchPublisher interrupted.", exception);

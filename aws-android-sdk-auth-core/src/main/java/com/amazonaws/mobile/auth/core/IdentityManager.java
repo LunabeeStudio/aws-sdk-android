@@ -187,7 +187,7 @@ public class IdentityManager {
         public String refresh() {
 
             if (currentIdentityProvider != null) {
-                Log.d(LOG_TAG, "Storing the Refresh token in the loginsMap.");
+                Log.v(LOG_TAG, "Storing the Refresh token in the loginsMap.");
                 final String newToken = currentIdentityProvider.refreshToken();
                 getLogins().put(currentIdentityProvider.getCognitoLoginKey(), newToken);
             }
@@ -344,7 +344,7 @@ public class IdentityManager {
             credentialsProviderHolder.getUnderlyingProvider().getSessionCredentialsExpiration();
 
         if (credentialsExpirationDate == null) {
-            Log.d(LOG_TAG, "Credentials are EXPIRED.");
+            Log.v(LOG_TAG, "Credentials are EXPIRED.");
             return true;
         }
 
@@ -354,7 +354,7 @@ public class IdentityManager {
         final boolean credsAreExpired =
                 (credentialsExpirationDate.getTime() - currentTime) < 0;
 
-        Log.d(LOG_TAG, "Credentials are " + (credsAreExpired ? "EXPIRED." : "OK"));
+        Log.v(LOG_TAG, "Credentials are " + (credsAreExpired ? "EXPIRED." : "OK"));
 
         return credsAreExpired;
     }
@@ -415,7 +415,7 @@ public class IdentityManager {
                     Log.e(LOG_TAG, exception.getMessage(), exception);
                 } finally {
                     final String result = identityId;
-                    Log.d(LOG_TAG, "Got Amazon Cognito Federated Identity ID: " + identityId);
+                    Log.v(LOG_TAG, "Got Amazon Cognito Federated Identity ID: " + identityId);
 
                     if (handler != null) {
                         ThreadUtils.runOnUiThread(new Runnable() {
@@ -447,7 +447,7 @@ public class IdentityManager {
 
         @Override
         public void onSuccess(final IdentityProvider provider) {
-            Log.d(LOG_TAG,
+            Log.v(LOG_TAG,
                     String.format("SignInProviderResultAdapter.onSuccess(): %s provider sign-in succeeded.",
                             provider.getDisplayName()));
             // Update Cognito login with the token.
@@ -455,12 +455,12 @@ public class IdentityManager {
         }
 
         private void onCognitoSuccess() {
-            Log.d(LOG_TAG, "SignInProviderResultAdapter.onCognitoSuccess()");
+            Log.v(LOG_TAG, "SignInProviderResultAdapter.onCognitoSuccess()");
             handler.onSuccess(currentIdentityProvider);
         }
 
         private void onCognitoError(final Exception ex) {
-            Log.d(LOG_TAG, "SignInProviderResultAdapter.onCognitoError()", ex);
+            Log.v(LOG_TAG, "SignInProviderResultAdapter.onCognitoError()", ex);
             final IdentityProvider provider = currentIdentityProvider;
             // Sign out of parent provider. This clears the currentIdentityProvider.
             IdentityManager.this.signOut();
@@ -469,7 +469,7 @@ public class IdentityManager {
 
         @Override
         public void onCancel(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format(
+            Log.v(LOG_TAG, String.format(
                 "SignInProviderResultAdapter.onCancel(): %s provider sign-in canceled.",
                 provider.getDisplayName()));
             handler.onCancel(provider);
@@ -523,7 +523,7 @@ public class IdentityManager {
      * anonymous (guest) identity, call {@link #getUserID(IdentityHandler)}.
      */
     public void signOut() {
-        Log.d(LOG_TAG, "Signing out...");
+        Log.v(LOG_TAG, "Signing out...");
 
         if (currentIdentityProvider != null) {
             executorService.submit(new Runnable() {
@@ -567,7 +567,7 @@ public class IdentityManager {
         credentialsProvider.withLogins(loginMap);
 
         // Calling refresh is equivalent to calling getIdentityId() + getCredentials().
-        Log.d(LOG_TAG, "refresh credentials");
+        Log.v(LOG_TAG, "refresh credentials");
         credentialsProvider.refresh();
 
         // Set the expiration key of the Credentials Provider to 8 minutes, 30 seconds.
@@ -596,7 +596,7 @@ public class IdentityManager {
      * @param provider A sign-in provider.
      */
     public void federateWithProvider(final IdentityProvider provider) {
-        Log.d(LOG_TAG, "federate with provider: Populate loginsMap with token.");
+        Log.v(LOG_TAG, "federate with provider: Populate loginsMap with token.");
         final Map<String, String> loginMap = new HashMap<String, String>();
         loginMap.put(provider.getCognitoLoginKey(), provider.getToken());
         currentIdentityProvider = provider;
@@ -700,7 +700,7 @@ public class IdentityManager {
                 try {
                     startupAuthTimeoutLatch.await();
                 } catch (InterruptedException e) {
-                    Log.d(LOG_TAG, "Interrupted while waiting for startup auth minimum delay.");
+                    Log.v(LOG_TAG, "Interrupted while waiting for startup auth minimum delay.");
                 }
 
                 // Notify user by invoking the callback on the UI thread
@@ -723,11 +723,11 @@ public class IdentityManager {
                               final StartupAuthResultHandler startupAuthResultHandler,
                               final long minimumDelay) {
 
-        Log.d(LOG_TAG, "Resume Session called.");
+        Log.v(LOG_TAG, "Resume Session called.");
 
         executorService.submit(new Runnable() {
             public void run() {
-                Log.d(LOG_TAG, "Looking for a previously signed-in session.");
+                Log.v(LOG_TAG, "Looking for a previously signed-in session.");
                 final SignInManager signInManager =
                         SignInManager.getInstance(callingActivity.getApplicationContext());
 
@@ -737,7 +737,7 @@ public class IdentityManager {
                 // if the user was previously signed-in with an sign-in provider and
                 // we are able to verify with the sign-in provider.
                 if (signInProvider != null) {
-                    Log.d(LOG_TAG, "Refreshing credentials with sign-in provider "
+                    Log.v(LOG_TAG, "Refreshing credentials with sign-in provider "
                         + signInProvider.getDisplayName());
 
                     // Use the token from the previously signed-in session to
@@ -751,7 +751,7 @@ public class IdentityManager {
 
                                 @Override
                                 public void onSuccess(final IdentityProvider provider) {
-                                    Log.d(LOG_TAG, "Successfully got AWS Credentials.");
+                                    Log.v(LOG_TAG, "Successfully got AWS Credentials.");
 
                                     runAfterStartupAuthDelay(callingActivity, new Runnable() {
                                         @Override
@@ -904,7 +904,7 @@ public class IdentityManager {
      */
     private void createCredentialsProvider(final Context context,
                                            final ClientConfiguration clientConfiguration) {
-        Log.d(LOG_TAG, "Creating the Cognito Caching Credentials Provider "
+        Log.v(LOG_TAG, "Creating the Cognito Caching Credentials Provider "
                 + "with a refreshing Cognito Identity Provider.");
 
         if (!shouldFederate) {

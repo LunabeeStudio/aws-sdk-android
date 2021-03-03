@@ -108,7 +108,7 @@ public class SignUpConfirmView extends LinearLayout {
 
     private void setupFontFamily() {
         if (this.typeFace != null) {
-            Log.d(LOG_TAG, "Setup font in SignUpConfirmView: " + this.fontFamily);
+            Log.v(LOG_TAG, "Setup font in SignUpConfirmView: " + this.fontFamily);
             userNameEditText.setTypeface(this.typeFace);
             confirmCodeEditText.setTypeface(this.typeFace);
         }

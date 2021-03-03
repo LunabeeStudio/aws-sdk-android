@@ -117,7 +117,7 @@ public class AWSMobileClientPersistenceTest extends AWSMobileClientTestBase {
                 boolean retryConfirmSignUp = false;
                 do {
                     try {
-                        Log.d(TAG, "deleteAllUsers: " + user.getUsername());
+                        Log.v(TAG, "deleteAllUsers: " + user.getUsername());
                         getUserpoolLL().adminDeleteUser(new AdminDeleteUserRequest().withUsername(user.getUsername()).withUserPoolId(userpoolId));
                     } catch (UserNotConfirmedException e) {
                         if (!retryConfirmSignUp) {
